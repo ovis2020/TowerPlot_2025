@@ -1,6 +1,10 @@
 import numpy as np
 from toolkit import Toolkit  # Import the Toolkit class
-from typing import Dict
+from typing import Dict, Union, Optional
+from angle_bar import ANGLE_BARS  # Import ANGLE_BARS module
+
+VALID_CROSS_SECTIONS = {'square', 'triangular'}
+DECIMAL_PLACES = 4
 
 class Panel:
     """A class representing a tower panel.
@@ -8,23 +12,22 @@ class Panel:
     Attributes:
         panel_type (int): The type of panel (e.g., 1 or 2).
         segment (dict): Geometric properties of the tower segment.
-        leg_width (float): Width of the leg.
-        diagonal_width (float): Width of the diagonal braces.
+        angle_bar_type (str): The type of angle bar used (e.g., 'L50x50x5').
         main_belt_width (float): Width of the main belt.
     """
 
     def __init__(self, panel_type: int, segment: Dict, 
-                 leg_width: float, diagonal_width: float, 
-                 main_belt_width: float) -> None:
+                 angle_bar_type: str, main_belt_width: float) -> None:
         if not isinstance(panel_type, int) or panel_type not in [1, 2]:
             raise ValueError("panel_type must be 1 or 2")
-        if not all(isinstance(x, (int, float)) for x in [leg_width, diagonal_width, main_belt_width]):
-            raise ValueError("Width values must be numeric")
+        if angle_bar_type not in ANGLE_BARS:
+            raise ValueError(f"Invalid angle bar type: {angle_bar_type}")
+        if not isinstance(main_belt_width, (int, float)):
+            raise ValueError("Main belt width must be numeric")
             
         self.panel_type = panel_type
         self.segment = segment
-        self.leg_width = float(leg_width)
-        self.diagonal_width = float(diagonal_width)
+        self.angle_bar = ANGLE_BARS[angle_bar_type]
         self.main_belt_width = float(main_belt_width)
         self.toolkit = Toolkit(segment)
 
@@ -33,17 +36,18 @@ class Panel:
         """Calculate the leg geometry.
 
         Returns:
-            dict: Contains leg length, leg width, and leg area.
+            dict: Contains leg length, projected width, and leg area.
         
         Raises:
             ValueError: If calculation fails.
         """
         try:
             leg_length = self.toolkit.calculate_leg_length()
-            leg_area = round(leg_length * self.leg_width, 4)
+            projected_width = self.angle_bar["b1"] + self.angle_bar["b2"] - self.angle_bar["t"]
+            leg_area = round(leg_length * (projected_width / 1000), 4)  # Convert mm to meters
             return {
                 "leg_length": leg_length,
-                "leg_width": round(self.leg_width, 4),
+                "projected_width": projected_width,
                 "leg_area": leg_area,
             }
         except Exception as e:
@@ -54,17 +58,18 @@ class Panel:
         """Calculate the diagonal geometry.
 
         Returns:
-            dict: Contains diagonal length, diagonal width, and diagonal area.
+            dict: Contains diagonal length, projected width, and diagonal area.
         
         Raises:
             ValueError: If calculation fails.
         """
         try:
             diagonal_length = self.toolkit.calculate_diagonal_length()
-            diagonal_area = round(diagonal_length * self.diagonal_width, 4)
+            projected_width = self.angle_bar["b1"] + self.angle_bar["b2"] - self.angle_bar["t"]
+            diagonal_area = round(diagonal_length * (projected_width / 1000), 4)  # Convert mm to meters
             return {
                 "diagonal_length": diagonal_length,
-                "diagonal_width": round(self.diagonal_width, 4),
+                "projected_width": projected_width,
                 "diagonal_area": diagonal_area,
             }
         except Exception as e:
@@ -78,7 +83,7 @@ class Panel:
             dict: Contains main belt length, main belt width, and main belt area.
         """
         main_belt_length = self.toolkit.calculate_main_belt()
-        main_belt_area = round(main_belt_length * self.main_belt_width, 4)
+        main_belt_area = round(main_belt_length * (self.main_belt_width / 1000), 4)  # Convert mm to meters
 
         return {
             "main_belt_length": main_belt_length,
@@ -159,58 +164,45 @@ class Panel:
         else:
             raise ValueError("Invalid cross-section type. Use 'square' or 'triangular'.")
 
-    def effective_projected_area(self, cross_section, wind_angle=None):
-        """
-        Calculate the effective projected area.
-
-        Args:
-            cross_section (str): Cross-section type ('square' or 'triangular').
-            wind_angle (float, optional): Wind angle in degrees.
-
-        Returns:
-            dict: Effective projected areas for relevant wind angles.
-        """
+    def effective_projected_area(self, cross_section: str) -> Dict[str, float]:
+        """Calculate effective projected area based on cross section type."""
+        if cross_section.lower() not in VALID_CROSS_SECTIONS:
+            raise ValueError(f"Cross-section must be one of {VALID_CROSS_SECTIONS}")
+        
         cf = self.cf()
         af = self.projected_area()
-
+        
         if cross_section.lower() == "square":
-            epa0 = round(cf * self.wind_direction_factor(cross_section, 0) * af, 4)
-            epa45 = round(cf * self.wind_direction_factor(cross_section, 45) * af, 4)
+            epa0 = round(cf * self.wind_direction_factor(cross_section, 0) * af, DECIMAL_PLACES)
+            epa45 = round(cf * self.wind_direction_factor(cross_section, 45) * af, DECIMAL_PLACES)
             return {"epa0": epa0, "epa45": epa45}
-        elif cross_section.lower() == "triangular":
-            epa0 = round(cf * self.wind_direction_factor(cross_section, 0) * af, 4)
-            epa60 = round(cf * self.wind_direction_factor(cross_section, 60) * af, 4)
-            epa90 = round(cf * self.wind_direction_factor(cross_section, 90) * af, 4)
+        else:  # triangular
+            epa0 = round(cf * self.wind_direction_factor(cross_section, 0) * af, DECIMAL_PLACES)
+            epa60 = round(cf * self.wind_direction_factor(cross_section, 60) * af, DECIMAL_PLACES)
+            epa90 = round(cf * self.wind_direction_factor(cross_section, 90) * af, DECIMAL_PLACES)
             return {"epa0": epa0, "epa60": epa60, "epa90": epa90}
-        else:
-            raise ValueError("Invalid cross-section type.")
 
-    def summary(self, cross_section, wind_angle=None):
+    def summary(self, cross_section: str, wind_angle: Optional[float] = None) -> Dict[str, Union[str, dict, float]]:
         """
         Generate a summary of all panel properties.
 
         Args:
-            cross_section (str): Cross-section type ('square' or 'triangular').
-            wind_angle (float, optional): Wind angle in degrees.
+            cross_section: Cross-section type ('square' or 'triangular')
+            wind_angle: Wind angle in degrees
 
         Returns:
-            dict: Summary of panel properties.
+            Dictionary containing panel properties summary
         """
-        leg = self.leg_geometry()
-        diagonal = self.diagonal_geometry()
-        main_belt = self.main_belt_geometry()
-        projected_area = self.projected_area()
-        solidity_ratio = self.solidity_ratio()
-        cf_value = self.cf()
-        epa = self.effective_projected_area(cross_section)
-
+        if cross_section.lower() not in VALID_CROSS_SECTIONS:
+            raise ValueError(f"Cross-section must be one of {VALID_CROSS_SECTIONS}")
+            
         return {
             "panel_type": self.panel_type,
-            "leg_geometry": leg,
-            "diagonal_geometry": diagonal,
-            "main_belt_geometry": main_belt,
-            "projected_area": projected_area,
-            "solidity_ratio": solidity_ratio,
-            "cf": cf_value,
-            "effective_projected_area": epa,
+            "leg_geometry": self.leg_geometry(),
+            "diagonal_geometry": self.diagonal_geometry(),
+            "main_belt_geometry": self.main_belt_geometry(),
+            "projected_area": self.projected_area(),
+            "solidity_ratio": self.solidity_ratio(),
+            "cf": self.cf(),
+            "effective_projected_area": self.effective_projected_area(cross_section),
         }
