@@ -1,4 +1,4 @@
-import numpy as np
+import curses
 from panel import Panel  # Import the Panel class
 
 class Geometry:
@@ -41,7 +41,7 @@ class Geometry:
                 "height": segment_height,
                 "area": (base_width + top_width) * segment_height / 2,
                 "rwidth": (base_width - top_width) / 2,
-                "cross_section": cross_section
+                "cross_section": self.cross_section
             }
             segments.append(segment)
 
@@ -52,120 +52,67 @@ class Geometry:
                 "height": segment_height,
                 "area": self.top_width * segment_height,
                 "rwidth": 0,
-                "cross_section": cross_section
+                "cross_section": self.cross_section
             }
             segments.append(segment)
         return segments
 
-    def effective_projected_area(self, cross_section, wind_angle=None):
-        """
-        Calculate the effective projected area.
 
-        Args:
-            cross_section (str): Cross-section type ('square' or 'triangular').
-            wind_angle (float, optional): Wind angle in degrees.
+def display_menu(stdscr, title, options):
+    """Display a menu and return the selected option."""
+    curses.curs_set(0)
+    current_row = 0
 
-        Returns:
-            dict: Effective projected areas for relevant wind angles.
-        """
-        cf = self.cf()
-        af = self.projected_area()
+    while True:
+        stdscr.clear()
+        stdscr.addstr(0, 0, title, curses.A_BOLD | curses.A_UNDERLINE)
 
-        if (cross_section.lower() == "square"):
-            epa0 = round(cf * self.wind_direction_factor(cross_section, 0) * af, 4)
-            epa45 = round(cf * self.wind_direction_factor(cross_section, 45) * af, 4)
-            return {"epa0": epa0, "epa45": epa45}
-        elif (cross_section.lower() == "triangular"):
-            epa0 = round(cf * self.wind_direction_factor(cross_section, 0) * af, 4)
-            epa60 = round(cf * self.wind_direction_factor(cross_section, 60) * af, 4)
-            epa90 = round(cf * self.wind_direction_factor(cross_section, 90) * af, 4)
-            return {"epa0": epa0, "epa60": epa60, "epa90": epa90}
-        else:
-            raise ValueError("Invalid cross-section type. Use 'square' or 'triangular'.")
+        for idx, option in enumerate(options):
+            x = 0
+            y = idx + 2
+            if idx == current_row:
+                stdscr.addstr(y, x, f"> {option}", curses.A_REVERSE)
+            else:
+                stdscr.addstr(y, x, f"  {option}")
 
-# Input variables
-tower_base_width = float(input("Enter the tower base width: "))
-top_width = float(input("Enter the top width of the tower: "))
-height = float(input("Enter the height of the tower: "))
-variable_segments = int(input("Enter the number of variable segments: "))
-constant_segments = int(input("Enter the number of constant segments: "))
-cross_section = input("Enter the cross-section type (square/triangular): ")
+        key = stdscr.getch()
 
-# Create a Geometry object
-geometry = Geometry(tower_base_width, top_width, height, variable_segments, constant_segments, cross_section)
+        if key == curses.KEY_UP and current_row > 0:
+            current_row -= 1
+        elif key == curses.KEY_DOWN and current_row < len(options) - 1:
+            current_row += 1
+        elif key == curses.KEY_ENTER or key in [10, 13]:
+            return options[current_row]
 
-# Calculate segments
-segments = geometry.calculate_segments()
-
-# Create panels and calculate their properties
-panels = []
-
-# Determine wind angle based on cross-section
-wind_angle = 45 if geometry.cross_section == 'square' else 60
-
-for i, segment in enumerate(segments):  # Unpack index and segment correctly
-    try:
-        panel_type = int(input("Please enter the panel type (e.g., 1): "))
-        
-        if panel_type == 1:
-
-            # Get user inputs for the widths
-            leg_width = float(input("Please enter the leg width:... "))
-            diagonal_width = float(input("Please enter the diagonal width:.. "))
-            main_belt = 0
-
-            # Ensure inputs are valid
-            if leg_width <= 0 or diagonal_width <= 0:
-                print("Width values must be positive numbers. Please try again.")
-                continue
-            
-            # Create a Panel object with user inputs
-            panel = Panel(panel_type=panel_type, segment=segment, 
-              leg_width=leg_width, diagonal_width=diagonal_width, main_belt_width=main_belt)
+        stdscr.refresh()
 
 
-            # Append to the panels list
-            panels.append(panel)
-        
-        if panel_type == 2:
+def main(stdscr):
+    # Input variables through curses menu
+    tower_base_width = float(display_menu(stdscr, "Enter the tower base width:", ["10.0", "20.0", "30.0"]))
+    top_width = float(display_menu(stdscr, "Enter the top width of the tower:", ["5.0", "10.0", "15.0"]))
+    height = float(display_menu(stdscr, "Enter the height of the tower:", ["50.0", "60.0", "70.0"]))
+    variable_segments = int(display_menu(stdscr, "Enter the number of variable segments:", ["1", "2", "3"]))
+    constant_segments = int(display_menu(stdscr, "Enter the number of constant segments:", ["1", "2", "3"]))
+    cross_section = display_menu(stdscr, "Select the cross-section type:", ["square", "triangular"])
 
-            # Get user inputs for the widths
-            leg_width = float(input("Please enter the leg width:... "))
-            diagonal_width = float(input("Please enter the diagonal width:... "))
-            main_belt = float(input("Please enter the main belt width:... "))
+    # Create Geometry object
+    geometry = Geometry(tower_base_width, top_width, height, variable_segments, constant_segments, cross_section)
 
-            # Ensure inputs are valid
-            if leg_width <= 0 or diagonal_width <= 0:
-                print("Width values must be positive numbers. Please try again.")
-                continue
-            
-            # Create a Panel object with user inputs
-            panel = Panel(panel_type=panel_type, segment=segment, 
-              leg_width=leg_width, diagonal_width=diagonal_width, main_belt_width=main_belt)
+    # Calculate segments
+    segments = geometry.calculate_segments()
 
-            # Append to the panels list
-            panels.append(panel)
+    # Display segment summaries
+    stdscr.clear()
+    stdscr.addstr(0, 0, "Segment Details:", curses.A_BOLD | curses.A_UNDERLINE)
 
-        else:
-            print("Invalid panel type. Only type 1 and 2 are supported currently.")
+    for i, segment in enumerate(segments):
+        stdscr.addstr(i + 2, 0, f"Segment {i + 1}: {segment}")
+
+    stdscr.addstr(len(segments) + 3, 0, "Press any key to exit...")
+    stdscr.refresh()
+    stdscr.getch()
 
 
-    except ValueError as e:
-        print(f"Invalid input: {e}. Please enter numeric values.")
-
-# Print a summary of all panels
-if not panels:
-    print("No valid panels were created.")
-else:
-    print("\nPanel Summary:")
-    for i, panel in enumerate(panels):
-        summary = panel.summary(panel.segment['cross_section'], wind_angle=wind_angle)
-        print(f"Panel {i + 1} Summary:")
-        print(f"  Base Width: {panel.segment['base_width']} meters")
-        print(f"  Top Width: {panel.segment['top_width']} meters")
-        print(f"  Height: {panel.segment['height']} meters")
-        for key, value in summary.items():
-            print(f"  {key}: {value}")
-
-        print(f"  cross_section: {geometry.cross_section}")
-        print()
+# Run curses application
+curses.wrapper(main)
