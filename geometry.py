@@ -55,8 +55,33 @@ class Geometry:
                 "cross_section": cross_section
             }
             segments.append(segment)
-
         return segments
+
+    def effective_projected_area(self, cross_section, wind_angle=None):
+        """
+        Calculate the effective projected area.
+
+        Args:
+            cross_section (str): Cross-section type ('square' or 'triangular').
+            wind_angle (float, optional): Wind angle in degrees.
+
+        Returns:
+            dict: Effective projected areas for relevant wind angles.
+        """
+        cf = self.cf()
+        af = self.projected_area()
+
+        if (cross_section.lower() == "square"):
+            epa0 = round(cf * self.wind_direction_factor(cross_section, 0) * af, 4)
+            epa45 = round(cf * self.wind_direction_factor(cross_section, 45) * af, 4)
+            return {"epa0": epa0, "epa45": epa45}
+        elif (cross_section.lower() == "triangular"):
+            epa0 = round(cf * self.wind_direction_factor(cross_section, 0) * af, 4)
+            epa60 = round(cf * self.wind_direction_factor(cross_section, 60) * af, 4)
+            epa90 = round(cf * self.wind_direction_factor(cross_section, 90) * af, 4)
+            return {"epa0": epa0, "epa60": epa60, "epa90": epa90}
+        else:
+            raise ValueError("Invalid cross-section type. Use 'square' or 'triangular'.")
 
 # Input variables
 tower_base_width = float(input("Enter the tower base width: "))
