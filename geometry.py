@@ -89,11 +89,11 @@ def display_menu(stdscr, title, options):
 
 def main(stdscr):
     # Input variables through curses menu
-    tower_base_width = float(display_menu(stdscr, "Enter the tower base width:", ["10.0", "20.0", "30.0"]))
-    top_width = float(display_menu(stdscr, "Enter the top width of the tower:", ["5.0", "10.0", "15.0"]))
-    height = float(display_menu(stdscr, "Enter the height of the tower:", ["50.0", "60.0", "70.0"]))
-    variable_segments = int(display_menu(stdscr, "Enter the number of variable segments:", ["1", "2", "3"]))
-    constant_segments = int(display_menu(stdscr, "Enter the number of constant segments:", ["1", "2", "3"]))
+    tower_base_width = float(display_menu(stdscr, "Enter the tower base width:", ["3", "4", "5", "6", "7", "8"]))
+    top_width = float(display_menu(stdscr, "Enter the top width of the tower:", ["1", "1.5", "2"]))
+    height = float(display_menu(stdscr, "Enter the height of the tower:", ["18", "24", "30", "36", "42", "48", "54", "60", "66", "72"]))
+    variable_segments = int(display_menu(stdscr, "Enter the number of variable segments:", ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]))
+    constant_segments = int(display_menu(stdscr, "Enter the number of constant segments:", ["1", "2"]))
     cross_section = display_menu(stdscr, "Select the cross-section type:", ["square", "triangular"])
 
     # Create Geometry object
