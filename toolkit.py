@@ -58,9 +58,39 @@ class Toolkit:
             raise ValueError(f"Missing key in segment data: {e}")
 
         diagonal_length = round(((base_width - rwidth)**2 + height**2)**0.5, 4)
-        angle = np.arcsin(height/diagonal_length) #in radians
-        hc = (np.tan(angle))*(base_width*0.5)
-        rc = rwidth*hc/height
-        main_belt = base_width*0.5 - rc
+        angle = np.arcsin(height / diagonal_length)  # in radians
+        hc = (np.tan(angle)) * (base_width * 0.5)
+        rc = rwidth * hc / height
+        main_belt = base_width * 0.5 - rc
 
-        return  main_belt
+        return main_belt
+
+    def wind_direction_factor(self, cross_section, wind_angle):
+        """
+        Calculate the wind direction factor based on cross-section type and wind angle.
+
+        Args:
+            cross_section (str): Cross-section type ('square' or 'triangular').
+            wind_angle (float): Wind angle in degrees.
+
+        Returns:
+            float: Wind direction factor.
+        """
+        if cross_section.lower() == 'square':
+            if wind_angle == 0:
+                return 1.0
+            elif wind_angle == 45:
+                return 1.2
+            else:
+                raise ValueError("Unsupported wind angle for square cross-section.")
+        elif cross_section.lower() == 'triangular':
+            if wind_angle == 0:
+                return 1.0
+            elif wind_angle == 60:
+                return 0.8
+            elif abs(wind_angle) == 90:
+                return 0.85
+            else:
+                raise ValueError("Unsupported wind angle for triangular cross-section.")
+        else:
+            raise ValueError("Invalid cross-section type. Use 'square' or 'triangular'.")
