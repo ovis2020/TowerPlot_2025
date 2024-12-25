@@ -1,33 +1,29 @@
-import curses
-from panel import Panel  # Import the Panel class
-
 class Geometry:
-    def __init__(self, tower_base_width, top_width, height, variable_segments, constant_segments, cross_section):
-        """
-        Initialize the Geometry object.
+    VALID_CROSS_SECTIONS = {'square', 'triangular'}
 
-        Parameters:
-        - tower_base_width (float): Width of the tower base.
-        - top_width (float): Width of the tower top.
-        - height (float): Height of the tower.
-        - variable_segments (int): Number of variable-width segments.
-        - constant_segments (int): Number of constant-width segments.
-        - cross_section (str): Type of cross-section ('square' or 'triangular').
-        """
+    def __init__(self, tower_base_width, top_width, height, variable_segments, constant_segments, cross_section):
         self.tower_base_width = tower_base_width
         self.top_width = top_width
         self.height = height
         self.variable_segments = variable_segments
         self.constant_segments = constant_segments
-        self.cross_section = cross_section
+        self.cross_section = cross_section.lower()
+
+        self._validate_inputs()
+
+    def _validate_inputs(self):
+        if self.tower_base_width <= 0 or self.top_width <= 0 or self.height <= 0:
+            raise ValueError("Dimensions must be positive numbers")
+        if not isinstance(self.variable_segments, int) or not isinstance(self.constant_segments, int):
+            raise ValueError("Segment counts must be integers")
+        if self.variable_segments < 0 or self.constant_segments < 0:
+            raise ValueError("Segment counts must be non-negative")
+        if self.cross_section not in self.VALID_CROSS_SECTIONS:
+            raise ValueError(f"Cross section must be one of {self.VALID_CROSS_SECTIONS}")
+        if self.tower_base_width <= self.top_width:
+            raise ValueError("Base width must be greater than top width")
 
     def calculate_segments(self):
-        """
-        Calculate the segments of the tower.
-
-        Returns:
-        - list: A list of segment dictionaries.
-        """
         segments = []
         total_segments = self.variable_segments + self.constant_segments
         segment_height = self.height / total_segments
@@ -35,84 +31,23 @@ class Geometry:
         for i in range(self.variable_segments):
             base_width = self.tower_base_width - (i * (self.tower_base_width - self.top_width) / self.variable_segments)
             top_width = self.tower_base_width - ((i + 1) * (self.tower_base_width - self.top_width) / self.variable_segments)
-            segment = {
+            segments.append({
                 "base_width": base_width,
                 "top_width": top_width,
                 "height": segment_height,
                 "area": (base_width + top_width) * segment_height / 2,
                 "rwidth": (base_width - top_width) / 2,
                 "cross_section": self.cross_section
-            }
-            segments.append(segment)
+            })
 
         for _ in range(self.constant_segments):
-            segment = {
+            segments.append({
                 "base_width": self.top_width,
                 "top_width": self.top_width,
                 "height": segment_height,
                 "area": self.top_width * segment_height,
                 "rwidth": 0,
                 "cross_section": self.cross_section
-            }
-            segments.append(segment)
+            })
+
         return segments
-
-
-def display_menu(stdscr, title, options):
-    """Display a menu and return the selected option."""
-    curses.curs_set(0)
-    current_row = 0
-
-    while True:
-        stdscr.clear()
-        stdscr.addstr(0, 0, title, curses.A_BOLD | curses.A_UNDERLINE)
-
-        for idx, option in enumerate(options):
-            x = 0
-            y = idx + 2
-            if idx == current_row:
-                stdscr.addstr(y, x, f"> {option}", curses.A_REVERSE)
-            else:
-                stdscr.addstr(y, x, f"  {option}")
-
-        key = stdscr.getch()
-
-        if key == curses.KEY_UP and current_row > 0:
-            current_row -= 1
-        elif key == curses.KEY_DOWN and current_row < len(options) - 1:
-            current_row += 1
-        elif key == curses.KEY_ENTER or key in [10, 13]:
-            return options[current_row]
-
-        stdscr.refresh()
-
-
-def main(stdscr):
-    # Input variables through curses menu
-    tower_base_width = float(display_menu(stdscr, "Enter the tower base width:", ["3", "4", "5", "6", "7", "8"]))
-    top_width = float(display_menu(stdscr, "Enter the top width of the tower:", ["1", "1.5", "2"]))
-    height = float(display_menu(stdscr, "Enter the height of the tower:", ["18", "24", "30", "36", "42", "48", "54", "60", "66", "72"]))
-    variable_segments = int(display_menu(stdscr, "Enter the number of variable segments:", ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]))
-    constant_segments = int(display_menu(stdscr, "Enter the number of constant segments:", ["1", "2"]))
-    cross_section = display_menu(stdscr, "Select the cross-section type:", ["square", "triangular"])
-
-    # Create Geometry object
-    geometry = Geometry(tower_base_width, top_width, height, variable_segments, constant_segments, cross_section)
-
-    # Calculate segments
-    segments = geometry.calculate_segments()
-
-    # Display segment summaries
-    stdscr.clear()
-    stdscr.addstr(0, 0, "Segment Details:", curses.A_BOLD | curses.A_UNDERLINE)
-
-    for i, segment in enumerate(segments):
-        stdscr.addstr(i + 2, 0, f"Segment {i + 1}: {segment}")
-
-    stdscr.addstr(len(segments) + 3, 0, "Press any key to exit...")
-    stdscr.refresh()
-    stdscr.getch()
-
-
-# Run curses application
-curses.wrapper(main)
