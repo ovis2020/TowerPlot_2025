@@ -1,0 +1,74 @@
+[
+    {
+        "panel_type": 1,
+        "leg_geometry": {
+            "leg_length": 6.0208,
+            "leg_width": 0.05,
+            "leg_area": 0.301
+        },
+        "diagonal_geometry": {
+            "diagonal_length": 6.5,
+            "diagonal_width": 0.05,
+            "diagonal_area": 0.325
+        },
+        "main_belt_geometry": {
+            "main_belt_length": 1.2,
+            "main_belt_width": 0.05,
+            "main_belt_area": 0.06
+        },
+        "gross area": 15.0,
+        "projected_area": 1.372,
+        "solidity_ratio": 0.0915,
+        "cf": 2.9984,
+        "effective_projected_area": 4.1138,
+        "section_number": 1
+    },
+    {
+        "panel_type": 1,
+        "leg_geometry": {
+            "leg_length": 6.0208,
+            "leg_width": 0.05,
+            "leg_area": 0.301
+        },
+        "diagonal_geometry": {
+            "diagonal_length": 6.1847,
+            "diagonal_width": 0.05,
+            "diagonal_area": 0.3092
+        },
+        "main_belt_geometry": {
+            "main_belt_length": 0.6667047408830075,
+            "main_belt_width": 0.05,
+            "main_belt_area": 0.0333
+        },
+        "gross area": 9.0,
+        "projected_area": 1.287,
+        "solidity_ratio": 0.143,
+        "cf": 2.7974,
+        "effective_projected_area": 3.6003,
+        "section_number": 2
+    },
+    {
+        "panel_type": 1,
+        "leg_geometry": {
+            "leg_length": 6.0,
+            "leg_width": 0.05,
+            "leg_area": 0.3
+        },
+        "diagonal_geometry": {
+            "diagonal_length": 6.0828,
+            "diagonal_width": 0.05,
+            "diagonal_area": 0.3041
+        },
+        "main_belt_geometry": {
+            "main_belt_length": 0.5,
+            "main_belt_width": 0.05,
+            "main_belt_area": 0.025
+        },
+        "gross area": 6.0,
+        "projected_area": 1.2582,
+        "solidity_ratio": 0.2097,
+        "cf": 2.5639,
+        "effective_projected_area": 3.2259,
+        "section_number": 3
+    }
+]

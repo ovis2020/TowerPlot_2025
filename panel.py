@@ -64,6 +64,7 @@ class Panel:
             "leg_geometry": self.leg_geometry(),
             "diagonal_geometry": self.diagonal_geometry(),
             "main_belt_geometry": self.main_belt_geometry(),
+            "gross area": self.segment.get("area", 0),
             "projected_area": self.projected_area(),
             "solidity_ratio": self.solidity_ratio(),
             "cf": self.cf(),
