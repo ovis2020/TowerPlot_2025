@@ -1,0 +1,80 @@
+[
+    {
+        "panel_type": 1,
+        "leg_geometry": {
+            "leg_length": 6.0208,
+            "leg_width": 0.05,
+            "leg_area": 0.301
+        },
+        "diagonal_geometry": {
+            "diagonal_length": 6.5,
+            "diagonal_width": 0.05,
+            "diagonal_area": 0.325
+        },
+        "main_belt_geometry": {
+            "main_belt_length": 1.2,
+            "main_belt_width": 0.05,
+            "main_belt_area": 0.06
+        },
+        "projected_area": 1.372,
+        "solidity_ratio": 0.0915,
+        "cf": 3.4936,
+        "effective_projected_area": {
+            "epa_0": 4.7932,
+            "epa_45": 5.122
+        },
+        "section_number": 1
+    },
+    {
+        "panel_type": 1,
+        "leg_geometry": {
+            "leg_length": 6.0208,
+            "leg_width": 0.05,
+            "leg_area": 0.301
+        },
+        "diagonal_geometry": {
+            "diagonal_length": 6.1847,
+            "diagonal_width": 0.05,
+            "diagonal_area": 0.3092
+        },
+        "main_belt_geometry": {
+            "main_belt_length": 0.6667047408830075,
+            "main_belt_width": 0.05,
+            "main_belt_area": 0.0333
+        },
+        "projected_area": 1.287,
+        "solidity_ratio": 0.143,
+        "cf": 3.2381,
+        "effective_projected_area": {
+            "epa_0": 4.1674,
+            "epa_45": 4.6142
+        },
+        "section_number": 2
+    },
+    {
+        "panel_type": 1,
+        "leg_geometry": {
+            "leg_length": 6.0,
+            "leg_width": 0.05,
+            "leg_area": 0.3
+        },
+        "diagonal_geometry": {
+            "diagonal_length": 6.0828,
+            "diagonal_width": 0.05,
+            "diagonal_area": 0.3041
+        },
+        "main_belt_geometry": {
+            "main_belt_length": 0.5,
+            "main_belt_width": 0.05,
+            "main_belt_area": 0.025
+        },
+        "projected_area": 1.2582,
+        "solidity_ratio": 0.2097,
+        "cf": 2.9387,
+        "effective_projected_area": {
+            "epa_0": 3.6975,
+            "epa_45": 4.2791
+        },
+        "section_number": 3
+    }
+]
