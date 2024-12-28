@@ -16,11 +16,14 @@
             "main_belt_width": 0.05,
             "main_belt_area": 0.06
         },
-        "gross area": 15.0,
         "projected_area": 1.372,
         "solidity_ratio": 0.0915,
         "cf": 2.9984,
-        "effective_projected_area": 4.1138,
+        "effective_projected_area": {
+            "epa_0": 4.1138,
+            "epa_60": 3.291,
+            "epa_90": 3.4967
+        },
         "section_number": 1
     },
     {
@@ -40,11 +43,14 @@
             "main_belt_width": 0.05,
             "main_belt_area": 0.0333
         },
-        "gross area": 9.0,
         "projected_area": 1.287,
         "solidity_ratio": 0.143,
         "cf": 2.7974,
-        "effective_projected_area": 3.6003,
+        "effective_projected_area": {
+            "epa_0": 3.6003,
+            "epa_60": 2.8802,
+            "epa_90": 3.0602
+        },
         "section_number": 2
     },
     {
@@ -64,11 +70,14 @@
             "main_belt_width": 0.05,
             "main_belt_area": 0.025
         },
-        "gross area": 6.0,
         "projected_area": 1.2582,
         "solidity_ratio": 0.2097,
         "cf": 2.5639,
-        "effective_projected_area": 3.2259,
+        "effective_projected_area": {
+            "epa_0": 3.2259,
+            "epa_60": 2.5807,
+            "epa_90": 2.742
+        },
         "section_number": 3
     }
 ]
