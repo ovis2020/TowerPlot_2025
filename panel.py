@@ -26,7 +26,7 @@ class Panel:
         }
 
     def main_belt_geometry(self):
-        main_belt_length = self.toolkit.calculate_main_belt()
+        main_belt_length = self.toolkit.calculate_main_belt_length()
         return {
             "main_belt_length": main_belt_length,
             "main_belt_width": round(self.main_belt_width, 4),
@@ -48,25 +48,55 @@ class Panel:
     def cf(self):
         solidity_ratio = self.solidity_ratio()
         if self.segment['cross_section'] == "triangular":
-            return round(3.4 * solidity_ratio**2 - 4.7 * solidity_ratio + 3.4, 4)
+            return round(((3.4 * solidity_ratio**2) - (4.7 * solidity_ratio )+ 3.4), 4)
         elif self.segment['cross_section'] == "square":
-            return round(4.0 * solidity_ratio**2 - 5.9 * solidity_ratio + 4.0, 4)
+            return round(((4.0 * solidity_ratio**2) - (5.9 * solidity_ratio) + 4.0), 4)
 
-    def effective_projected_area(self, cross_section, wind_angle):
+    def wind_direction_factor(self, cross_section, wind_angle):
+        if cross_section.lower() == 'square':
+            if wind_angle == 0:
+                return 1.0
+            elif wind_angle == 45:
+                epsilon = self.solidity_ratio()
+                return round(min(1 + 0.75 * epsilon, 1.2), 4)
+        elif cross_section.lower() == 'triangular':
+            if wind_angle == 0:
+                return 1.0
+            elif wind_angle == 60:
+                return 0.80
+            elif abs(wind_angle) == 90:
+                return 0.85
+        else:
+            raise ValueError("Invalid cross-section type. Use 'square' or 'triangular'.")
+
+    def effective_projected_area(self, cross_section):
         cf = self.cf()
         af = self.projected_area()
-        df = self.toolkit.wind_direction_factor(cross_section, wind_angle)
-        return round(cf * df * af, 4)
+        wind_angles = [0, 45] if cross_section.lower() == 'square' else [0, 60, 90]
+        epa_dict = {}
+
+        for angle in wind_angles:
+            df = self.wind_direction_factor(cross_section, angle)
+            epa_dict[f'epa_{angle}'] = round(cf * df * af, 4)
+
+        return epa_dict
 
     def summary(self, cross_section, wind_angle):
+        leg = self.leg_geometry()
+        diagonal = self.diagonal_geometry()
+        main_belt = self.main_belt_geometry()
+        projected_area = self.projected_area()
+        solidity_ratio = self.solidity_ratio()
+        cf_value = self.cf()
+        epa = self.effective_projected_area(cross_section)
+
         return {
             "panel_type": self.panel_type,
-            "leg_geometry": self.leg_geometry(),
-            "diagonal_geometry": self.diagonal_geometry(),
-            "main_belt_geometry": self.main_belt_geometry(),
-            "gross area": self.segment.get("area", 0),
-            "projected_area": self.projected_area(),
-            "solidity_ratio": self.solidity_ratio(),
-            "cf": self.cf(),
-            "effective_projected_area": self.effective_projected_area(cross_section, wind_angle)
+            "leg_geometry": leg,
+            "diagonal_geometry": diagonal,
+            "main_belt_geometry": main_belt,
+            "projected_area": projected_area,
+            "solidity_ratio": solidity_ratio,
+            "cf": cf_value,
+            "effective_projected_area": epa
         }
