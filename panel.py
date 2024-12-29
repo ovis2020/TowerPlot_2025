@@ -1,12 +1,30 @@
 from toolkit import Toolkit  # Import your Toolkit class
+from angle_bar import ANGLE_BARS_SI, ANGLE_BARS_IMPERIAL, ROUND_BARS_SI, ROUND_BARS_IMPERIAL
 
 class Panel:
-    def __init__(self, panel_type, segment, leg_width, diagonal_width, main_belt_width):
+    
+    def __init__(self, panel_type, segment, leg_bar, diagonal_bar, main_belt_bar, cross_section, measurement_system, bar_type):
         self.panel_type = panel_type
         self.segment = segment
-        self.leg_width = leg_width
-        self.diagonal_width = diagonal_width
-        self.main_belt_width = main_belt_width
+        self.cross_section = cross_section
+        self.bar_type = bar_type
+
+        # Determine which bar dictionary to use based on bar type and measurement system
+        if self.bar_type == "Angle Bar":
+            bars = ANGLE_BARS_SI if measurement_system == "SI (Metric)" else ANGLE_BARS_IMPERIAL
+        elif self.bar_type == "Round Bar":
+            bars = ROUND_BARS_SI if measurement_system == "SI (Metric)" else ROUND_BARS_IMPERIAL
+        else:
+            raise ValueError("Invalid bar type. Must be 'Angle Bar' or 'Round Bar'.")
+
+        # Extract dimensions from the dynamic bars dictionary
+        try:
+            self.leg_width = bars[leg_bar]['pa'] / 1000  # Convert mm to meters
+            self.diagonal_width = bars[diagonal_bar]['pa'] / 1000  # Convert mm to meters
+            self.main_belt_width = bars[main_belt_bar]['pa'] / 1000  # Convert mm to meters
+        except KeyError as e:
+            raise ValueError(f"Bar key {e} not found in the selected dictionary.") from e
+
         self.toolkit = Toolkit(segment)
 
     def leg_geometry(self):
@@ -43,14 +61,19 @@ class Panel:
 
     def solidity_ratio(self):
         gross_area = self.segment.get("area", 0)
-        return round(self.projected_area() / gross_area, 4)
+        if gross_area <= 0:
+            raise ValueError("Invalid or missing gross area in segment data.")
+        projected_area = self.projected_area()
+        return round(projected_area / gross_area, 4)
 
     def cf(self):
         solidity_ratio = self.solidity_ratio()
-        if self.segment['cross_section'] == "triangular":
-            return round(((3.4 * solidity_ratio**2) - (4.7 * solidity_ratio )+ 3.4), 4)
-        elif self.segment['cross_section'] == "square":
-            return round(((4.0 * solidity_ratio**2) - (5.9 * solidity_ratio) + 4.0), 4)
+        if self.cross_section.lower() == "triangular":
+            return round(3.4 * solidity_ratio**2 - 4.7 * solidity_ratio + 3.4, 4)
+        elif self.cross_section.lower() == "square":
+            return round(4.0 * solidity_ratio**2 - 5.9 * solidity_ratio + 4.0, 4)
+        else:
+            raise ValueError("Invalid cross-section type.")
 
     def wind_direction_factor(self, cross_section, wind_angle):
         if cross_section.lower() == 'square':
@@ -81,7 +104,7 @@ class Panel:
 
         return epa_dict
 
-    def summary(self, cross_section, wind_angle):
+    def summary(self, cross_section):
         leg = self.leg_geometry()
         diagonal = self.diagonal_geometry()
         main_belt = self.main_belt_geometry()
@@ -92,6 +115,7 @@ class Panel:
 
         return {
             "panel_type": self.panel_type,
+            "bar_type": self.bar_type,
             "leg_geometry": leg,
             "diagonal_geometry": diagonal,
             "main_belt_geometry": main_belt,

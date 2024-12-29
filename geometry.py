@@ -1,4 +1,5 @@
 class Geometry:
+    
     VALID_CROSS_SECTIONS = {'square', 'triangular'}
 
     def __init__(self, tower_base_width, top_width, height, variable_segments, constant_segments, cross_section):

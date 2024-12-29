@@ -54,7 +54,7 @@ class Toolkit:
             base_width = self.segment['base_width']
             rwidth = self.segment['rwidth']
             height = self.segment['height']
-        except KeyError as e:
+        except KeyError as e: 
             raise ValueError(f"Missing key in segment data: {e}")
 
         diagonal_length = round(((base_width - rwidth)**2 + height**2)**0.5, 4)
