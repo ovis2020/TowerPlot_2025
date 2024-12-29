@@ -79,31 +79,51 @@ def main(stdscr):
     panels = []
     for section_number, segment in enumerate(segments, start=1):
         # Get bar type choice (Angle or Round)
-        bar_type = display_menu(
+        leg_type = display_menu(
             stdscr,
-            f"Select bar type for Panel {section_number}:",
+            f"Select leg bar type for Panel {section_number}:",
+            ["Angle Bar", "Round Bar"]
+        )
+
+        diagonal_type = display_menu(
+            stdscr,
+            f"Select diagonal bar type for Panel {section_number}:",
+            ["Angle Bar", "Round Bar"]
+        )
+
+        main_belt_type = display_menu(
+            stdscr,
+            f"Select main belt bar type for Panel {section_number}:",
             ["Angle Bar", "Round Bar"]
         )
 
         # Get bar choices based on type
-        if bar_type == "Angle Bar":
+        if leg_type == "Angle Bar":
             leg_bar = select_bar_type(stdscr, f"Select leg angle bar for Panel {section_number}:", ANGLE_BARS)
-            diagonal_bar = select_bar_type(stdscr, f"Select diagonal angle bar for Panel {section_number}:", ANGLE_BARS)
-            main_belt_bar = select_bar_type(stdscr, f"Select main belt angle bar for Panel {section_number}:", ANGLE_BARS)
         else:
             leg_bar = select_bar_type(stdscr, f"Select leg round bar for Panel {section_number}:", ROUND_BARS)
+
+        if diagonal_type == "Angle Bar":
+            diagonal_bar = select_bar_type(stdscr, f"Select diagonal angle bar for Panel {section_number}:", ANGLE_BARS)
+        else:
             diagonal_bar = select_bar_type(stdscr, f"Select diagonal round bar for Panel {section_number}:", ROUND_BARS)
+
+        if main_belt_type == "Angle Bar":
+            main_belt_bar = select_bar_type(stdscr, f"Select main belt angle bar for Panel {section_number}:", ANGLE_BARS)
+        else:
             main_belt_bar = select_bar_type(stdscr, f"Select main belt round bar for Panel {section_number}:", ROUND_BARS)
 
         panel = Panel(
             panel_type=1,
             segment=segment,
             leg_bar=leg_bar,
+            leg_type=leg_type,
             diagonal_bar=diagonal_bar,
+            diagonal_type=diagonal_type,
             main_belt_bar=main_belt_bar,
+            main_belt_type=main_belt_type,
             cross_section=cross_section,
-            measurement_system=measurement_system,
-            bar_type = bar_type
+            measurement_system=measurement_system
         )
 
         panel_summary = panel.summary(cross_section)
