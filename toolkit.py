@@ -3,7 +3,7 @@ import numpy as np
 class Toolkit:
     def __init__(self, segment):
         """
-        Initialize the Toolkit object.
+        Initialize Toolkit with segment geometry.
 
         Parameters:
         - segment (dict): Segment geometry containing base width, top width, height, and rwidth.
@@ -43,7 +43,7 @@ class Toolkit:
         diagonal_length = round(((base_width - rwidth)**2 + height**2)**0.5, 4)
         return diagonal_length
 
-    def calculate_main_belt(self):
+    def calculate_main_belt_length(self):
         """
         Calculate the length of the belt at the joint of the two diagonals.
 
@@ -54,13 +54,15 @@ class Toolkit:
             base_width = self.segment['base_width']
             rwidth = self.segment['rwidth']
             height = self.segment['height']
-        except KeyError as e:
+        except KeyError as e: 
             raise ValueError(f"Missing key in segment data: {e}")
 
         diagonal_length = round(((base_width - rwidth)**2 + height**2)**0.5, 4)
-        angle = np.arcsin(height/diagonal_length) #in radians
-        hc = (np.tan(angle))*(base_width*0.5)
-        rc = rwidth*hc/height
-        main_belt = base_width*0.5 - rc
+        angle = np.arcsin(height / diagonal_length)  # in radians
+        hc = (np.tan(angle)) * (base_width * 0.5)
+        rc = rwidth * hc / height
+        main_belt_length = base_width * 0.5 - rc
 
-        return  main_belt
+        return main_belt_length
+
+   
