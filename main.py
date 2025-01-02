@@ -135,6 +135,11 @@ def main(stdscr):
     with open(output_file, "w") as f:
         json.dump(panels, f, indent=4)
 
+    # Save geometry summary to a JSON file
+    output_geometry_file = "geometry_summary.json"
+    with open(output_geometry_file, "w") as f:
+        json.dump(segments, f, indent=4)
+
     stdscr.addstr(len(panels) + 2, 0, f"Panel summaries saved to {output_file}")
     stdscr.refresh()
     stdscr.getch()

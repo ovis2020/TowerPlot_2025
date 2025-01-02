@@ -32,22 +32,26 @@ class Geometry:
         for i in range(self.variable_segments):
             base_width = self.tower_base_width - (i * (self.tower_base_width - self.top_width) / self.variable_segments)
             top_width = self.tower_base_width - ((i + 1) * (self.tower_base_width - self.top_width) / self.variable_segments)
+            z_heigth = segment_height/2 + i * segment_height
             segments.append({
                 "base_width": base_width,
                 "top_width": top_width,
                 "height": segment_height,
                 "area": (base_width + top_width) * segment_height / 2,
                 "rwidth": (base_width - top_width) / 2,
+                "z_heigth": z_heigth,
                 "cross_section": self.cross_section
             })
 
-        for _ in range(self.constant_segments):
+        for j in range(self.constant_segments):
+
             segments.append({
                 "base_width": self.top_width,
                 "top_width": self.top_width,
                 "height": segment_height,
                 "area": self.top_width * segment_height,
                 "rwidth": 0,
+                "z_heigth": z_heigth + (segment_height / 2) + j * segment_height,
                 "cross_section": self.cross_section
             })
 
