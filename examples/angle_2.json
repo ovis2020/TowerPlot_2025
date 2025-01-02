@@ -1,0 +1,89 @@
+[
+    {
+        "panel_type": 1,
+        "leg_geometry": {
+            "leg_length": 6.0208,
+            "leg_width": 0.0762,
+            "leg_area": 0.4588
+        },
+        "diagonal_geometry": {
+            "diagonal_length": 6.5,
+            "diagonal_width": 0.0508,
+            "diagonal_area": 0.3302
+        },
+        "main_belt_geometry": {
+            "main_belt_length": 1.2,
+            "main_belt_width": 0.0508,
+            "main_belt_area": 0.061
+        },
+        "projected_area": {
+            "round_projected_area": 0,
+            "angle_projected_area": 1.7
+        },
+        "solidity_ratio": 0.1133,
+        "cf": 3.3829,
+        "effective_projected_area": {
+            "epa_0": 5.7509,
+            "epa_45": 6.2398
+        },
+        "section_number": 1
+    },
+    {
+        "panel_type": 1,
+        "leg_geometry": {
+            "leg_length": 6.0208,
+            "leg_width": 0.0762,
+            "leg_area": 0.4588
+        },
+        "diagonal_geometry": {
+            "diagonal_length": 6.1847,
+            "diagonal_width": 0.0508,
+            "diagonal_area": 0.3142
+        },
+        "main_belt_geometry": {
+            "main_belt_length": 0.6667047408830075,
+            "main_belt_width": 0.0508,
+            "main_belt_area": 0.0339
+        },
+        "projected_area": {
+            "round_projected_area": 0,
+            "angle_projected_area": 1.6138
+        },
+        "solidity_ratio": 0.1793,
+        "cf": 3.0707,
+        "effective_projected_area": {
+            "epa_0": 4.9555,
+            "epa_45": 5.622
+        },
+        "section_number": 2
+    },
+    {
+        "panel_type": 1,
+        "leg_geometry": {
+            "leg_length": 6.0,
+            "leg_width": 0.0508,
+            "leg_area": 0.3048
+        },
+        "diagonal_geometry": {
+            "diagonal_length": 6.0828,
+            "diagonal_width": 0.0508,
+            "diagonal_area": 0.309
+        },
+        "main_belt_geometry": {
+            "main_belt_length": 0.5,
+            "main_belt_width": 0.0508,
+            "main_belt_area": 0.0254
+        },
+        "projected_area": {
+            "round_projected_area": 0,
+            "angle_projected_area": 1.2784
+        },
+        "solidity_ratio": 0.2131,
+        "cf": 2.9244,
+        "effective_projected_area": {
+            "epa_0": 3.7386,
+            "epa_45": 4.336
+        },
+        "section_number": 3
+    }
+]
