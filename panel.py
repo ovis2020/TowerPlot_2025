@@ -51,6 +51,8 @@ class Panel:
 
         self.toolkit = Toolkit(segment)
 
+    # methods to calculate geometry
+    
     def leg_geometry(self):
         leg_length = self.toolkit.calculate_leg_length()
         return {
@@ -74,6 +76,8 @@ class Panel:
             "main_belt_width": round(self.main_belt_width, 4),
             "main_belt_area": round(main_belt_length * self.main_belt_width, 4)
         }
+
+    # methods to calculate projected area, solidity ratio, force coefficient, wind direction factor, and effective projected area
 
     def projected_area(self):
 
@@ -107,6 +111,8 @@ class Panel:
             "round_projected_area": round_projected_area,
             "angle_projected_area": angle_projected_area
         }
+
+    # method to calculate reduction factor for a round element. 
 
 
     def solidity_ratio(self):
@@ -184,6 +190,8 @@ class Panel:
 
         return epa_dict
 
+
+    # method to summarize panel data and results
 
     def summary(self, cross_section):
         leg = self.leg_geometry()
