@@ -43,8 +43,9 @@ def display_menu(stdscr, title, options):
 
         stdscr.refresh()
 
-def select_bar_type(stdscr, title, bar_options):
-    return display_menu(stdscr, title, list(bar_options.keys()))
+def select_bar_type(stdscr, title, bar_dict):
+    bar_options = list(bar_dict.keys())
+    return display_menu(stdscr, title, bar_options)
 
 def main(stdscr):
     global ANGLE_BARS, ROUND_BARS
@@ -123,7 +124,9 @@ def main(stdscr):
             main_belt_bar=main_belt_bar,
             main_belt_type=main_belt_type,
             cross_section=cross_section,
-            measurement_system=measurement_system
+            measurement_system=measurement_system,
+            exposure_category='Exposure C',  # Default value for exposure category
+            z_height=segment['z_height']  # Default value for z_height
         )
 
         panel_summary = panel.summary(cross_section)
