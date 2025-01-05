@@ -123,7 +123,9 @@ def main(stdscr):
             main_belt_bar=main_belt_bar,
             main_belt_type=main_belt_type,
             cross_section=cross_section,
-            measurement_system=measurement_system
+            measurement_system=measurement_system,
+            exposure_category= 'Exposure C', # Default value for exposure category   
+            z_height= segment['z_heigth'] # Default value for z height
         )
 
         panel_summary = panel.summary(cross_section)
