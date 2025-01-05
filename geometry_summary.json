@@ -1,0 +1,29 @@
+[
+    {
+        "base_width": 3.0,
+        "top_width": 2.0,
+        "height": 6.0,
+        "area": 15.0,
+        "rwidth": 0.5,
+        "z_heigth": 3.0,
+        "cross_section": "square"
+    },
+    {
+        "base_width": 2.0,
+        "top_width": 1.0,
+        "height": 6.0,
+        "area": 9.0,
+        "rwidth": 0.5,
+        "z_heigth": 9.0,
+        "cross_section": "square"
+    },
+    {
+        "base_width": 1.0,
+        "top_width": 1.0,
+        "height": 6.0,
+        "area": 6.0,
+        "rwidth": 0,
+        "z_heigth": 12.0,
+        "cross_section": "square"
+    }
+]
