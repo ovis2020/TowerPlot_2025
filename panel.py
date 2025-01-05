@@ -2,11 +2,15 @@ import math
 from toolkit import Toolkit
 from angle_bar import ANGLE_BARS_SI, ANGLE_BARS_IMPERIAL, ROUND_BARS_SI, ROUND_BARS_IMPERIAL
 from tables import table_2_4
+from tables import table_2_5
+from tables import table_2_6
 
 
 class Panel:
 
-    def __init__(self, panel_type, segment, leg_bar, leg_type, diagonal_bar, diagonal_type, main_belt_bar, main_belt_type, cross_section, measurement_system, exposure_category, z_height):
+    def __init__(self,tower_data, panel_type, segment, leg_bar, leg_type, diagonal_bar, diagonal_type, main_belt_bar, main_belt_type, cross_section, measurement_system, exposure_category, z_height):
+        
+        self.tower_data = tower_data
         self.panel_type = panel_type
         self.segment = segment
         self.cross_section = cross_section
@@ -196,32 +200,32 @@ class Panel:
         except Exception as e:
             raise ValueError(f"Error calculating Kz: {str(e)}")
 
-    def wind_direction_factor(self, cross_section, wind_angle):
-        """
-        Calculate the wind direction factor (Df) based on cross-section type and wind angle.
+    def calculateKzt(self, exposure_category, z_height, crest_height):
 
-        Args:
-            cross_section (str): The cross-section type ("square" or "triangular").
-            wind_angle (int): The wind angle in degrees.
+        # Retrieve parameters from Table 2-4
+        ke = table_2_4["Ke"][exposure_category]  # terrain constant given table 2-4
+        kt = table_2_5["Topographic Category"]["2"]["Kt"]
+        f  = table_2_5 ["Topographic Category"]["2"]["f"] 
+        z= z_height
+        h = crest_height
+        e = 2.718
+        Kh = e**(f*z/h)
+        kzt =(1 + ((ke*kt)/Kh))**2
+
+        return round(kzt, 4)
+    
+    def reduction_round_factor(self):
+        """
+        Calculate the reduction factor for round bars based on the solidity ratio.
 
         Returns:
-            float: Wind direction factor (Df).
+            float: Reduction factor for round bars.
         """
-        if cross_section.lower() == "square":
-            if wind_angle == 0:
-                return 1.0
-            elif wind_angle == 45:
-                epsilon = self.solidity_ratio()
-                return round(min(1 + 0.75 * epsilon, 1.2), 4)
-        elif cross_section.lower() == "triangular":
-            if wind_angle == 0:
-                return 1.0
-            elif wind_angle == 60:
-                return 0.80
-            elif abs(wind_angle) == 90:
-                return 0.85
-        else:
-            raise ValueError("Invalid cross-section type. Must be 'square' or 'triangular'.")
+        solidity_ratio = self.solidity_ratio()
+
+        rr = min((0.57 - 0.14*solidity_ratio + 0.86*solidity_ratio**2 - 0.24*solidity_ratio**3), 1)
+
+        return rr
 
     def effective_projected_area(self, cross_section):
         """
@@ -233,29 +237,52 @@ class Panel:
         Returns:
             dict: Effective projected areas for each wind angle.
         """
+        # Normalize and validate the cross-section type
+        cross_section = cross_section.lower().strip()  # Ensure lowercase and no extra spaces
+        valid_cross_sections = ["square", "triangular"]
+        if cross_section not in valid_cross_sections:
+            raise ValueError(
+                f"Invalid cross-section type '{cross_section}'. Must be one of {valid_cross_sections}."
+            )
+
+        # Ensure cross_section exists in table_2_6
+        if cross_section not in table_2_6:
+            raise ValueError(f"Cross-section '{cross_section}' not found in table_2_6.")
+
         # Fetch force coefficient (Cf) and projected areas
         cf = self.cf()
+        rr = self.reduction_round_factor()
         projected_areas = self.projected_area()
         round_projected_area = projected_areas.get("round_projected_area", 0)
         angle_projected_area = projected_areas.get("angle_projected_area", 0)
-        total_projected_area = round_projected_area + angle_projected_area  # Total projected area
+        total_projected_area = angle_projected_area + (round_projected_area * rr)  # Total projected area
 
-        # Define wind angles based on cross-section type
-        if cross_section.lower() == "square":
-            wind_angles = [0, 45]
-        elif cross_section.lower() == "triangular":
-            wind_angles = [0, 60, 90]
-        else:
-            raise ValueError("Invalid cross-section type. Must be 'square' or 'triangular'.")
+        # Get wind angles from Table 2-6 for the given cross-section
+        wind_angles = table_2_6[cross_section].keys()  # Extract wind angle keys as integers
 
         # Calculate EPA for each wind angle
         epa_dict = {}
-        for angle in wind_angles:
-            wind_direction_factor = self.wind_direction_factor(cross_section, angle)
-            epa_dict[f'epa_{angle}'] = round(cf * wind_direction_factor * total_projected_area, 4)
+        for angle_key in wind_angles:
+            # Retrieve Df from Table 2-6
+            df_value = table_2_6[cross_section][angle_key]["Df"]
+
+            # Handle None or formula-based Df values
+            if df_value is None:
+                if cross_section == "square" and angle_key == "45":  # Dynamic calculation for square at 45°
+                    epsilon = self.solidity_ratio()
+                    df_value = min(1 + 0.75 * epsilon, 1.2)  # Calculate dynamically
+                else:
+                    raise ValueError(f"Df is undefined for {cross_section} at {angle_key}°.")
+
+            # Calculate EPA
+            epa = cf * df_value * total_projected_area
+            epa_dict[f'epa_{angle_key}°'] = round(epa, 4)  # Add angle in ° as part of the key
 
         return epa_dict
-    
+
+
+
+
     ### Summary
 
     def summary(self, cross_section):
@@ -267,6 +294,7 @@ class Panel:
         kz_value = self.calculateKz(self.exposure_category, self.z_height)
         cf_value = self.cf()
         epa = self.effective_projected_area(cross_section)
+        kzt = self.calculateKzt(self.exposure_category, self.z_height, 10)
 
         return {
             "panel_type": self.panel_type,
@@ -277,5 +305,6 @@ class Panel:
             "solidity_ratio": solidity_ratio,
             "cf": cf_value,
             "kz": kz_value,
+            "kzt": kzt,
             "effective_projected_area": epa
         }

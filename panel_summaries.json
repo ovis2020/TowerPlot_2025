@@ -23,9 +23,10 @@
         "solidity_ratio": 0.0457,
         "cf": 3.7387,
         "kz": 0.85,
+        "kzt": 1.6784,
         "effective_projected_area": {
-            "epa_0": 2.5647,
-            "epa_45": 2.6527
+            "epa_Normal\u00b0": 2.5647,
+            "epa_45\u00b0": 2.6527
         },
         "section_number": 1
     },
@@ -53,9 +54,10 @@
         "solidity_ratio": 0.0715,
         "cf": 3.5986,
         "kz": 0.9792,
+        "kzt": 1.2987,
         "effective_projected_area": {
-            "epa_0": 2.3161,
-            "epa_45": 2.4402
+            "epa_Normal\u00b0": 2.3161,
+            "epa_45\u00b0": 2.4403
         },
         "section_number": 2
     },
@@ -82,10 +84,11 @@
         },
         "solidity_ratio": 0.1049,
         "cf": 3.4251,
-        "kz": 1.0404,
+        "kz": 1.0904,
+        "kzt": 1.1363,
         "effective_projected_area": {
-            "epa_0": 2.1551,
-            "epa_45": 2.3247
+            "epa_Normal\u00b0": 2.1551,
+            "epa_45\u00b0": 2.3246
         },
         "section_number": 3
     }

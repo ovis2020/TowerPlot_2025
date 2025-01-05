@@ -61,3 +61,35 @@ table_2_4 = {
     ]
 }
 
+table_2_5 = {
+    "Topographic Category": {
+        "2": {"Kt": 0.43, "f": 1.25},  # Isolated hill or ridge
+        "3": {"Kt": 0.53, "f": 2.00},  # Hill or ridge within a group
+        "4": {"Kt": 0.72, "f": 1.50}   # Escarpment
+    },
+    "Notes": [
+        "Kt: Topographic constant representing the wind speed-up effect.",
+        "f: Height attenuation factor for the topographic feature.",
+        "Category 2: Isolated hill or ridge.",
+        "Category 3: Hill or ridge within a group.",
+        "Category 4: Escarpment."
+    ]
+}
+
+table_2_6 = {
+    "square": {
+        "Normal": {"Df": 1.0, "Dr": 1.0},
+        "45": {"Df": None, "Dr": None}  # Indicates dynamic calculation using ε
+    },
+    "triangular": {
+        "Normal": {"Df": 1.0, "Dr": 1.0},
+        "60": {"Df": 0.80, "Dr": 1.0},
+        "90": {"Df": 0.85, "Dr": 1.0}
+    },
+    "Notes": [
+        "Df: Wind direction factor in the face direction.",
+        "Dr: Wind direction factor in the diagonal direction.",
+        "Wind directions are measured from a line normal to the face of the structure.",
+        "For Square at 45°, Df and Dr are calculated as '1 + 0.75 * ε', with a maximum value of 1.2."
+    ]
+}

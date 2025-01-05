@@ -5,8 +5,8 @@
         "height": 6.0,
         "area": 15.0,
         "rwidth": 0.5,
-        "z_heigth": 3.0,
-        "cross_section": "square"
+        "cross_section": "square",
+        "z_height": 3.0
     },
     {
         "base_width": 2.0,
@@ -14,8 +14,8 @@
         "height": 6.0,
         "area": 9.0,
         "rwidth": 0.5,
-        "z_heigth": 9.0,
-        "cross_section": "square"
+        "cross_section": "square",
+        "z_height": 9.0
     },
     {
         "base_width": 1.0,
@@ -23,7 +23,7 @@
         "height": 6.0,
         "area": 6.0,
         "rwidth": 0,
-        "z_heigth": 12.0,
-        "cross_section": "square"
+        "cross_section": "square",
+        "z_height": 15.0
     }
 ]
