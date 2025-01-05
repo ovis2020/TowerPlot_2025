@@ -74,6 +74,7 @@ def main(stdscr):
     # Create a Geometry object and calculate segments
     geometry = Geometry(tower_base_width, top_width, height, variable_segments, constant_segments, cross_section)
     segments = geometry.calculate_segments()
+    tower_data = geometry.initiate_tower_data()
 
     # Create panels based on segments
     panels = []
@@ -114,6 +115,7 @@ def main(stdscr):
             main_belt_bar = select_bar_type(stdscr, f"Select main belt round bar for Panel {section_number}:", ROUND_BARS)
 
         panel = Panel(
+            tower_data=tower_data,  
             panel_type=1,
             segment=segment,
             leg_bar=leg_bar,
@@ -125,7 +127,7 @@ def main(stdscr):
             cross_section=cross_section,
             measurement_system=measurement_system,
             exposure_category= 'Exposure C', # Default value for exposure category   
-            z_height= segment['z_heigth'] # Default value for z height
+            z_height= segment['z_height'] # Default value for z height
         )
 
         panel_summary = panel.summary(cross_section)
