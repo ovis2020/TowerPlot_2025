@@ -1,15 +1,20 @@
 from toolkit import Toolkit  # Import your Toolkit class
 from angle_bar import ANGLE_BARS_SI, ANGLE_BARS_IMPERIAL, ROUND_BARS_SI, ROUND_BARS_IMPERIAL
+from tables import table_2_4  # Importing table data
 
 class Panel:
 
-    def __init__(self, panel_type, segment, leg_bar, leg_type, diagonal_bar, diagonal_type, main_belt_bar, main_belt_type, cross_section, measurement_system):
+    def __init__(self, panel_type, segment, leg_bar, leg_type, diagonal_bar, diagonal_type, main_belt_bar, main_belt_type, cross_section, measurement_system,exposure_category, z_height):
+       
+        # Initialize panel data
         self.panel_type = panel_type
         self.segment = segment
         self.cross_section = cross_section
         self.leg_type = leg_type
         self.diagonal_type = diagonal_type
         self.main_belt_type = main_belt_type
+        self.exposure_category = exposure_category
+        self.z_height = z_height
 
         # Determine which bar dictionary to use based on bar type and measurement system
         if self.leg_type == "Angle Bar":
@@ -159,7 +164,35 @@ class Panel:
             elif abs(wind_angle) == 90:
                 return 0.85
         else:
-            raise ValueError("Invalid cross-section type. Use 'square' or 'triangular'.")
+            raise ValueError("Invalid cross-section type. Use 'square' or 'triangular'.") 
+        
+    def calculateKz(self, exposure_category, z_height):
+        """
+        Calculate the velocity pressure coefficient Kz based on the exposure category and height.
+
+        Args:
+            exposure_category (str): Exposure category ("Exposure B", "Exposure C", or "Exposure D").
+            height (float): Height above ground level in feet.
+
+        Returns:
+            float: Velocity pressure coefficient (Kz).
+        """
+        try:
+            # Retrieve parameters for the given exposure category
+            zg = table_2_4["zg"][exposure_category]
+            alpha = table_2_4["alpha"][exposure_category]
+            Kzmin = table_2_4["Kzmin"][exposure_category]
+
+            # Calculate Kz using the equation: Kz = 2.01 * (z / zg)^(2/alpha)
+            Kz = 2.01 * (z_height / zg) ** (2 / alpha)
+
+            # Ensure Kz is not below the minimum value and not mayor than 2.01
+            return round(min(max(Kz, Kzmin), 2.01), 4)
+
+        except KeyError:
+            raise ValueError(f"Invalid exposure category '{exposure_category}'. Valid options are: {list(table_2_4['zg'].keys())}")
+        except Exception as e:
+            raise ValueError(f"Error calculating Kz: {str(e)}")
 
     def effective_projected_area(self, cross_section):
         """
@@ -199,7 +232,9 @@ class Panel:
         main_belt = self.main_belt_geometry()
         projected_area = self.projected_area()
         solidity_ratio = self.solidity_ratio()
+        kz_value = self.calculateKz(self.exposure_category, self.z_height)  
         cf_value = self.cf()
+
         epa = self.effective_projected_area(cross_section)
 
         return {
@@ -210,5 +245,6 @@ class Panel:
             "projected_area": projected_area,
             "solidity_ratio": solidity_ratio,
             "cf": cf_value,
+            "kz": kz_value,
             "effective_projected_area": epa
         }

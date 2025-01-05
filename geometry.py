@@ -29,30 +29,34 @@ class Geometry:
         total_segments = self.variable_segments + self.constant_segments
         segment_height = self.height / total_segments
 
+        z_height = 0  # Initialize z_height to start from the base
         for i in range(self.variable_segments):
             base_width = self.tower_base_width - (i * (self.tower_base_width - self.top_width) / self.variable_segments)
             top_width = self.tower_base_width - ((i + 1) * (self.tower_base_width - self.top_width) / self.variable_segments)
-            z_heigth = segment_height/2 + i * segment_height
+            z_height += segment_height / 2  # Increment z_height
             segments.append({
                 "base_width": base_width,
                 "top_width": top_width,
                 "height": segment_height,
                 "area": (base_width + top_width) * segment_height / 2,
                 "rwidth": (base_width - top_width) / 2,
-                "z_heigth": z_heigth,
+                "z_height": z_height,  # Correctly assign z_height
                 "cross_section": self.cross_section
             })
+            z_height += segment_height / 2  # Increment z_height after appending
 
         for j in range(self.constant_segments):
-
+            z_height += segment_height / 2  # Increment z_height
             segments.append({
                 "base_width": self.top_width,
                 "top_width": self.top_width,
                 "height": segment_height,
                 "area": self.top_width * segment_height,
                 "rwidth": 0,
-                "z_heigth": z_heigth + (segment_height / 2) + j * segment_height,
+                "z_height": z_height,  # Correctly assign z_height
                 "cross_section": self.cross_section
             })
+            z_height += segment_height / 2  # Increment z_height after appending
 
         return segments
+
