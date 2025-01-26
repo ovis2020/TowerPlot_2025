@@ -1,7 +1,6 @@
 class Geometry:
 
     # Inputs from the menu
-
     VALID_CROSS_SECTIONS = {'square', 'triangular'}
 
     def __init__(self, tower_base_width, top_width, height, variable_segments, constant_segments, cross_section):
@@ -26,8 +25,6 @@ class Geometry:
         if self.tower_base_width <= self.top_width:
             raise ValueError("Base width must be greater than top width")
         
-    # Calculate the segments of the tower wiht all the general propieties
-
     def calculate_segments(self):
         """
         Calculate the segments of the tower.
@@ -40,11 +37,13 @@ class Geometry:
         segment_height = self.height / total_segments
 
         # Calculate variable-width segments
-
         for i in range(self.variable_segments):
             base_width = self.tower_base_width - (i * (self.tower_base_width - self.top_width) / self.variable_segments)
             top_width = self.tower_base_width - ((i + 1) * (self.tower_base_width - self.top_width) / self.variable_segments)
             segment = {
+                "segment_number": i + 1,
+                "bottom level": i * segment_height,
+                "top level": (i + 1) * segment_height,
                 "base_width": base_width,
                 "top_width": top_width,
                 "height": segment_height,
@@ -55,9 +54,11 @@ class Geometry:
             segments.append(segment)
 
         # Calculate constant-width segments
-
         for i in range(self.constant_segments):
             segment = {
+                "segment_number": self.variable_segments + i + 1,
+                "bottom level": ((self.variable_segments* segment_height)+ (i * segment_height)),
+                "top level": ((self.variable_segments* segment_height)+ (i * segment_height + segment_height)),
                 "base_width": self.top_width,
                 "top_width": self.top_width,
                 "height": segment_height,
@@ -69,34 +70,33 @@ class Geometry:
 
         return segments
     
-    def calculate_gh(height):
+    def calculate_gh(self):
         """
         Calculate the gust effect factor (G_h) for self-supporting or bracketed latticed structures.
-
-        Args:
-            height (float): Height of the structure in meters.
 
         Returns:
             float: Gust effect factor (G_h).
         """
-        if not isinstance(height, (int, float)) or height <= 0:
+        if self.height <= 0:
             raise ValueError("Height must be a positive number.")
 
         # Calculate G_h
-        gh = 0.85 + 0.15 * ((height / 45.7) - 3.0)
+        gh = 0.85 + 0.15 * ((self.height / 45.7) - 3.0)
 
         # Ensure G_h is within bounds (0.85 to 1.0)
         return max(0.85, min(gh, 1.0))
     
-
     def initiate_tower_data(self):
-
-        gh = self.calculate_gh(self.height)
+        """
+        Initiate the tower data dictionary with all relevant properties.
+        """
+        gh = self.calculate_gh()
         
         tower_data = {
             "Tower Base Width": self.tower_base_width,
             "Top Width": self.top_width,
             "Height": self.height,
+            "total Segments": self.variable_segments + self.constant_segments,
             "Variable Segments": self.variable_segments,
             "Constant Segments": self.constant_segments,
             "Cross Section": self.cross_section,
@@ -105,8 +105,7 @@ class Geometry:
             "basic_wind_speed_service": 33.33,
             "basic_wind_speed_ultimate": 44.44,
             "gust_effect_factor": gh,
+            "ice thickness": 0.0,
             "segment_list": self.calculate_segments()
         }
-
         return tower_data
-        

@@ -4,11 +4,22 @@ from geometry import Geometry
 from panel import Panel
 from angle_bar import ANGLE_BARS_SI, ANGLE_BARS_IMPERIAL, ROUND_BARS_SI, ROUND_BARS_IMPERIAL
 
-# Function to dynamically set ANGLE_BARS and ROUND_BARS based on user selection
+# Global variables for bar dictionaries
 ANGLE_BARS = {}
 ROUND_BARS = {}
 
 def display_menu(stdscr, title, options):
+    """
+    Display a menu to the user with options to select.
+
+    Args:
+        stdscr: Curses standard screen object.
+        title (str): Title of the menu.
+        options (list): List of options to display.
+
+    Returns:
+        str: Selected option.
+    """
     curses.curs_set(0)
     current_row = 0
     max_rows, max_cols = stdscr.getmaxyx()
@@ -44,6 +55,17 @@ def display_menu(stdscr, title, options):
         stdscr.refresh()
 
 def select_bar_type(stdscr, title, bar_options):
+    """
+    Select a bar type from the given bar options.
+
+    Args:
+        stdscr: Curses standard screen object.
+        title (str): Title of the menu.
+        bar_options (dict): Dictionary of bar options.
+
+    Returns:
+        str: Selected bar key.
+    """
     return display_menu(stdscr, title, list(bar_options.keys()))
 
 def main(stdscr):
@@ -64,6 +86,7 @@ def main(stdscr):
         ANGLE_BARS = ANGLE_BARS_IMPERIAL
         ROUND_BARS = ROUND_BARS_IMPERIAL
 
+    # Collect tower data inputs from the user
     tower_base_width = float(display_menu(stdscr, "Enter the tower base width in meters:", ["3", "4", "5", "6"]))
     top_width = float(display_menu(stdscr, "Enter the top width in meters:", ["1", "1.5", "2"]))
     height = float(display_menu(stdscr, "Enter the height in meters:", ["18", "24", "30", "36", "42", "48", "54", "60", "66", "72"]))
@@ -71,27 +94,24 @@ def main(stdscr):
     constant_segments = int(display_menu(stdscr, "Enter the number of constant segments:", ["1", "2"]))
     cross_section = display_menu(stdscr, "Select cross-section type:", ["square", "triangular"])
 
-    # Create a Geometry object and calculate segments
+    # Create Geometry object and tower data
     geometry = Geometry(tower_base_width, top_width, height, variable_segments, constant_segments, cross_section)
-    segments = geometry.calculate_segments()
     tower_data = geometry.initiate_tower_data()
 
     # Create panels based on segments
     panels = []
-    for section_number, segment in enumerate(segments, start=1):
+    for section_number, segment in enumerate(tower_data["segment_list"], start=1):
         # Get bar type choice (Angle or Round)
         leg_type = display_menu(
             stdscr,
             f"Select leg bar type for Panel {section_number}:",
             ["Angle Bar", "Round Bar"]
         )
-
         diagonal_type = display_menu(
             stdscr,
             f"Select diagonal bar type for Panel {section_number}:",
             ["Angle Bar", "Round Bar"]
         )
-
         main_belt_type = display_menu(
             stdscr,
             f"Select main belt bar type for Panel {section_number}:",
@@ -99,23 +119,12 @@ def main(stdscr):
         )
 
         # Get bar choices based on type
-        if leg_type == "Angle Bar":
-            leg_bar = select_bar_type(stdscr, f"Select leg angle bar for Panel {section_number}:", ANGLE_BARS)
-        else:
-            leg_bar = select_bar_type(stdscr, f"Select leg round bar for Panel {section_number}:", ROUND_BARS)
-
-        if diagonal_type == "Angle Bar":
-            diagonal_bar = select_bar_type(stdscr, f"Select diagonal angle bar for Panel {section_number}:", ANGLE_BARS)
-        else:
-            diagonal_bar = select_bar_type(stdscr, f"Select diagonal round bar for Panel {section_number}:", ROUND_BARS)
-
-        if main_belt_type == "Angle Bar":
-            main_belt_bar = select_bar_type(stdscr, f"Select main belt angle bar for Panel {section_number}:", ANGLE_BARS)
-        else:
-            main_belt_bar = select_bar_type(stdscr, f"Select main belt round bar for Panel {section_number}:", ROUND_BARS)
+        leg_bar = select_bar_type(stdscr, f"Select leg bar for Panel {section_number}:", ANGLE_BARS if leg_type == "Angle Bar" else ROUND_BARS)
+        diagonal_bar = select_bar_type(stdscr, f"Select diagonal bar for Panel {section_number}:", ANGLE_BARS if diagonal_type == "Angle Bar" else ROUND_BARS)
+        main_belt_bar = select_bar_type(stdscr, f"Select main belt bar for Panel {section_number}:", ANGLE_BARS if main_belt_type == "Angle Bar" else ROUND_BARS)
 
         panel = Panel(
-            tower_data=tower_data,  
+            tower_data=tower_data,
             panel_type=1,
             segment=segment,
             leg_bar=leg_bar,
@@ -126,27 +135,25 @@ def main(stdscr):
             main_belt_type=main_belt_type,
             cross_section=cross_section,
             measurement_system=measurement_system,
-            exposure_category= 'Exposure C', # Default value for exposure category   
-            z_height= segment['z_height'] # Default value for z height
+            exposure_category=tower_data["exposure_category"],
+            z_height=segment["z_height"],
+            ground_elevation=0.0  # Set default ground elevation
         )
 
         panel_summary = panel.summary(cross_section)
-        panel_summary["section_number"] = section_number  # Add section number to the summary
+        panel_summary["section_number"] = section_number
         panels.append(panel_summary)
 
-    # Save summaries to a JSON file
-    output_file = "panel_summaries.json"
-    with open(output_file, "w") as f:
+    # Save summaries to JSON
+    with open("panel_summaries.json", "w") as f:
         json.dump(panels, f, indent=4)
 
-    # Save geometry summary to a JSON file
-    output_geometry_file = "geometry_summary.json"
-    with open(output_geometry_file, "w") as f:
-        json.dump(segments, f, indent=4)
+    with open("tower_data.json", "w") as f:
+        json.dump(tower_data, f, indent=4)
 
-    stdscr.addstr(len(panels) + 2, 0, f"Panel summaries saved to {output_file}")
+    stdscr.addstr(len(panels) + 2, 0, "Data saved successfully.")
     stdscr.refresh()
     stdscr.getch()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     curses.wrapper(main)
