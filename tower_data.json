@@ -1,0 +1,94 @@
+{
+    "Tower Base Width": 5.0,
+    "Top Width": 2.0,
+    "Height": 42.0,
+    "total Segments": 7,
+    "Variable Segments": 6,
+    "Constant Segments": 1,
+    "Cross Section": "triangular",
+    "importance_factor": 1.0,
+    "exposure_category": "Exposure C",
+    "basic_wind_speed_service": 33.33,
+    "basic_wind_speed_ultimate": 44.44,
+    "gust_effect_factor": 0.85,
+    "ice thickness": 0.0,
+    "segment_list": [
+        {
+            "segment_number": 1,
+            "bottom level": 0.0,
+            "top level": 6.0,
+            "base_width": 5.0,
+            "top_width": 4.5,
+            "height": 6.0,
+            "area": 28.5,
+            "rwidth": 0.25,
+            "z_height": 3.0
+        },
+        {
+            "segment_number": 2,
+            "bottom level": 6.0,
+            "top level": 12.0,
+            "base_width": 4.5,
+            "top_width": 4.0,
+            "height": 6.0,
+            "area": 25.5,
+            "rwidth": 0.25,
+            "z_height": 9.0
+        },
+        {
+            "segment_number": 3,
+            "bottom level": 12.0,
+            "top level": 18.0,
+            "base_width": 4.0,
+            "top_width": 3.5,
+            "height": 6.0,
+            "area": 22.5,
+            "rwidth": 0.25,
+            "z_height": 15.0
+        },
+        {
+            "segment_number": 4,
+            "bottom level": 18.0,
+            "top level": 24.0,
+            "base_width": 3.5,
+            "top_width": 3.0,
+            "height": 6.0,
+            "area": 19.5,
+            "rwidth": 0.25,
+            "z_height": 21.0
+        },
+        {
+            "segment_number": 5,
+            "bottom level": 24.0,
+            "top level": 30.0,
+            "base_width": 3.0,
+            "top_width": 2.5,
+            "height": 6.0,
+            "area": 16.5,
+            "rwidth": 0.25,
+            "z_height": 27.0
+        },
+        {
+            "segment_number": 6,
+            "bottom level": 30.0,
+            "top level": 36.0,
+            "base_width": 2.5,
+            "top_width": 2.0,
+            "height": 6.0,
+            "area": 13.5,
+            "rwidth": 0.25,
+            "z_height": 33.0
+        },
+        {
+            "segment_number": 7,
+            "bottom level": 36.0,
+            "top level": 42.0,
+            "base_width": 2.0,
+            "top_width": 2.0,
+            "height": 6.0,
+            "area": 12.0,
+            "rwidth": 0,
+            "z_height": 39.0
+        }
+    ]
+}
