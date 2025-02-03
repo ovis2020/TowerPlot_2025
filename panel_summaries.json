@@ -2,200 +2,66 @@
     {
         "panel_type": 1,
         "leg_geometry": {
-            "leg_length": 6.0052,
+            "leg_length": 6.0208,
             "leg_width": 0.025,
-            "leg_area": 0.1501
+            "leg_area": 0.1505
         },
         "diagonal_geometry": {
-            "diagonal_length": 7.6526,
+            "diagonal_length": 6.5,
             "diagonal_width": 0.025,
-            "diagonal_area": 0.1913
+            "diagonal_area": 0.1625
         },
         "main_belt_geometry": {
-            "main_belt_length": 2.3684204308455707,
+            "main_belt_length": 1.2,
             "main_belt_width": 0.025,
-            "main_belt_area": 0.0592
+            "main_belt_area": 0.03
         },
         "projected_area": {
             "round_projected_area": 0,
-            "angle_projected_area": 0.8012
+            "angle_projected_area": 0.686
         },
-        "solidity_ratio": 0.0281,
-        "cf": 3.2706,
+        "solidity_ratio": 0.0457,
+        "cf": 3.7387,
         "kz": 0.85,
         "kzt": 1.6784,
         "ke": 1.0,
         "effective_projected_area": {
-            "epa_Normal\u00b0": 2.6204,
-            "epa_60\u00b0": 2.0963,
-            "epa_90\u00b0": 2.2273
+            "epa_Normal\u00b0": 2.5647,
+            "epa_45\u00b0": 2.6527
         },
         "section_number": 1
     },
     {
         "panel_type": 1,
         "leg_geometry": {
-            "leg_length": 6.0052,
+            "leg_length": 6.0208,
             "leg_width": 0.025,
-            "leg_area": 0.1501
+            "leg_area": 0.1505
         },
         "diagonal_geometry": {
-            "diagonal_length": 7.3527,
+            "diagonal_length": 6.1847,
             "diagonal_width": 0.025,
-            "diagonal_area": 0.1838
+            "diagonal_area": 0.1546
         },
         "main_belt_geometry": {
-            "main_belt_length": 2.117645949756058,
+            "main_belt_length": 0.6667047408830075,
             "main_belt_width": 0.025,
-            "main_belt_area": 0.0529
+            "main_belt_area": 0.0167
         },
         "projected_area": {
             "round_projected_area": 0,
-            "angle_projected_area": 0.7736
+            "angle_projected_area": 0.6436
         },
-        "solidity_ratio": 0.0303,
-        "cf": 3.2607,
+        "solidity_ratio": 0.0715,
+        "cf": 3.5986,
         "kz": 0.9792,
         "kzt": 1.2987,
         "ke": 1.0,
         "effective_projected_area": {
-            "epa_Normal\u00b0": 2.5225,
-            "epa_60\u00b0": 2.018,
-            "epa_90\u00b0": 2.1441
+            "epa_Normal\u00b0": 2.3161,
+            "epa_45\u00b0": 2.4403
         },
         "section_number": 2
-    },
-    {
-        "panel_type": 1,
-        "leg_geometry": {
-            "leg_length": 6.0052,
-            "leg_width": 0.025,
-            "leg_area": 0.1501
-        },
-        "diagonal_geometry": {
-            "diagonal_length": 7.0755,
-            "diagonal_width": 0.025,
-            "diagonal_area": 0.1769
-        },
-        "main_belt_geometry": {
-            "main_belt_length": 1.8666676159898612,
-            "main_belt_width": 0.025,
-            "main_belt_area": 0.0467
-        },
-        "projected_area": {
-            "round_projected_area": 0,
-            "angle_projected_area": 0.7474
-        },
-        "solidity_ratio": 0.0332,
-        "cf": 3.2477,
-        "kz": 1.0904,
-        "kzt": 1.1362,
-        "ke": 1.0,
-        "effective_projected_area": {
-            "epa_Normal\u00b0": 2.4273,
-            "epa_60\u00b0": 1.9419,
-            "epa_90\u00b0": 2.0632
-        },
-        "section_number": 3
-    },
-    {
-        "panel_type": 1,
-        "leg_geometry": {
-            "leg_length": 6.0052,
-            "leg_width": 0.025,
-            "leg_area": 0.1501
-        },
-        "diagonal_geometry": {
-            "diagonal_length": 6.8237,
-            "diagonal_width": 0.025,
-            "diagonal_area": 0.1706
-        },
-        "main_belt_geometry": {
-            "main_belt_length": 1.6153870475717702,
-            "main_belt_width": 0.025,
-            "main_belt_area": 0.0404
-        },
-        "projected_area": {
-            "round_projected_area": 0,
-            "angle_projected_area": 0.7222
-        },
-        "solidity_ratio": 0.037,
-        "cf": 3.2308,
-        "kz": 1.1704,
-        "kzt": 1.0633,
-        "ke": 1.0,
-        "effective_projected_area": {
-            "epa_Normal\u00b0": 2.3333,
-            "epa_60\u00b0": 1.8666,
-            "epa_90\u00b0": 1.9833
-        },
-        "section_number": 4
-    },
-    {
-        "panel_type": 1,
-        "leg_geometry": {
-            "leg_length": 6.0052,
-            "leg_width": 0.025,
-            "leg_area": 0.1501
-        },
-        "diagonal_geometry": {
-            "diagonal_length": 6.6002,
-            "diagonal_width": 0.025,
-            "diagonal_area": 0.165
-        },
-        "main_belt_geometry": {
-            "main_belt_length": 1.3636376261883256,
-            "main_belt_width": 0.025,
-            "main_belt_area": 0.0341
-        },
-        "projected_area": {
-            "round_projected_area": 0,
-            "angle_projected_area": 0.6984
-        },
-        "solidity_ratio": 0.0423,
-        "cf": 3.2073,
-        "kz": 1.234,
-        "kzt": 1.0296,
-        "ke": 1.0,
-        "effective_projected_area": {
-            "epa_Normal\u00b0": 2.24,
-            "epa_60\u00b0": 1.792,
-            "epa_90\u00b0": 1.904
-        },
-        "section_number": 5
-    },
-    {
-        "panel_type": 1,
-        "leg_geometry": {
-            "leg_length": 6.0052,
-            "leg_width": 0.025,
-            "leg_area": 0.1501
-        },
-        "diagonal_geometry": {
-            "diagonal_length": 6.408,
-            "diagonal_width": 0.025,
-            "diagonal_area": 0.1602
-        },
-        "main_belt_geometry": {
-            "main_belt_length": 1.111110617281317,
-            "main_belt_width": 0.025,
-            "main_belt_area": 0.0278
-        },
-        "projected_area": {
-            "round_projected_area": 0,
-            "angle_projected_area": 0.6762
-        },
-        "solidity_ratio": 0.0501,
-        "cf": 3.1731,
-        "kz": 1.2873,
-        "kzt": 1.0139,
-        "ke": 1.0,
-        "effective_projected_area": {
-            "epa_Normal\u00b0": 2.1457,
-            "epa_60\u00b0": 1.7165,
-            "epa_90\u00b0": 1.8238
-        },
-        "section_number": 6
     },
     {
         "panel_type": 1,
@@ -205,29 +71,28 @@
             "leg_area": 0.15
         },
         "diagonal_geometry": {
-            "diagonal_length": 6.3246,
+            "diagonal_length": 6.0828,
             "diagonal_width": 0.025,
-            "diagonal_area": 0.1581
+            "diagonal_area": 0.1521
         },
         "main_belt_geometry": {
-            "main_belt_length": 1.0,
+            "main_belt_length": 0.5,
             "main_belt_width": 0.025,
-            "main_belt_area": 0.025
+            "main_belt_area": 0.0125
         },
         "projected_area": {
             "round_projected_area": 0,
-            "angle_projected_area": 0.6662
+            "angle_projected_area": 0.6292
         },
-        "solidity_ratio": 0.0555,
-        "cf": 3.1496,
-        "kz": 1.3334,
-        "kzt": 1.0066,
+        "solidity_ratio": 0.1049,
+        "cf": 3.4251,
+        "kz": 1.0904,
+        "kzt": 1.1362,
         "ke": 1.0,
         "effective_projected_area": {
-            "epa_Normal\u00b0": 2.0983,
-            "epa_60\u00b0": 1.6786,
-            "epa_90\u00b0": 1.7835
+            "epa_Normal\u00b0": 2.1551,
+            "epa_45\u00b0": 2.3246
         },
-        "section_number": 7
+        "section_number": 3
     }
 ]

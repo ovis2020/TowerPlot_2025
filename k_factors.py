@@ -1,22 +1,21 @@
 from math import exp
-from tables import table_2_4
-from tables import table_2_5
+from tables import table_2_4, table_2_5
 
 class K_factors:
-    def __init__(self, exposure_category, z_height, crest_height, ground_elevation):
+    def __init__(self, tower_data):
         """
-        Initialize the K_factors class.
+        Initialize the K_factors class using the tower_data dictionary.
 
         Args:
-            exposure_category (str): Exposure category ("Exposure B", "Exposure C", or "Exposure D").
-            z_height (float): Height above ground level in meters.
-            crest_height (float): Height of the crest above surrounding terrain in meters.
-            ground_elevation (float): Ground elevation above sea level in meters.
+            tower_data (dict): Dictionary containing all tower-related properties.
         """
-        self.exposure_category = exposure_category
-        self.z_height = z_height
-        self.crest_height = crest_height
-        self.ground_elevation = ground_elevation
+        self.tower_data = tower_data
+
+        # Extract relevant values from tower_data
+        self.exposure_category = tower_data.get("exposure_category", "Exposure C")
+        self.crest_height = tower_data.get("crest_height", 0)  # Default crest height
+        self.ground_elevation = tower_data.get("ground_elevation", 0)  # Default ground elevation
+        self.segment_list = tower_data.get("segment_list", [])  # Get the list of segments
 
     def calculateKe(self):
         """
@@ -36,9 +35,12 @@ class K_factors:
         except Exception as e:
             raise ValueError(f"Error calculating Ke: {str(e)}")
 
-    def calculateKzt(self):
+    def calculateKzt(self, z_height):
         """
-        Calculate the topographic factor Kzt.
+        Calculate the topographic factor Kzt for a given segment.
+
+        Args:
+            z_height (float): Height above ground level in meters.
 
         Returns:
             float: Topographic factor (Kzt).
@@ -50,13 +52,14 @@ class K_factors:
             f = table_2_5["Topographic Category"]["2"]["f"]  # Height attenuation factor
 
             # Validate inputs
-            if not isinstance(self.z_height, (int, float)) or self.z_height <= 0:
-                raise ValueError(f"Invalid z_height: {self.z_height}. Must be a positive number.")
+            if not isinstance(z_height, (int, float)) or z_height <= 0:
+                raise ValueError(f"Invalid z_height: {z_height}. Must be a positive number.")
+
             if not isinstance(self.crest_height, (int, float)) or self.crest_height <= 0:
                 raise ValueError(f"Invalid crest_height: {self.crest_height}. Must be a positive number.")
 
             # Calculate Kh and Kzt
-            Kh = exp(f * self.z_height / self.crest_height)
+            Kh = exp(f * z_height / self.crest_height)
             kzt = (1 + (ke * kt / Kh)) ** 2
 
             return round(kzt, 4)
@@ -65,9 +68,12 @@ class K_factors:
         except Exception as e:
             raise ValueError(f"Error calculating Kzt: {str(e)}")
 
-    def calculateKz(self):
+    def calculateKz(self, z_height):
         """
-        Calculate the velocity pressure coefficient Kz.
+        Calculate the velocity pressure coefficient Kz for a given segment.
+
+        Args:
+            z_height (float): Height above ground level in meters.
 
         Returns:
             float: Velocity pressure coefficient (Kz).
@@ -79,11 +85,11 @@ class K_factors:
             Kzmin = table_2_4["Kzmin"][self.exposure_category]  # Minimum Kz value
 
             # Validate inputs
-            if not isinstance(self.z_height, (int, float)) or self.z_height <= 0:
-                raise ValueError(f"Invalid z_height: {self.z_height}. Must be a positive number.")
+            if not isinstance(z_height, (int, float)) or z_height <= 0:
+                raise ValueError(f"Invalid z_height: {z_height}. Must be a positive number.")
 
             # Calculate Kz using the formula: Kz = 2.01 * (z / zg)^(2 / alpha)
-            Kz = 2.01 * (self.z_height / zg) ** (2 / alpha)
+            Kz = 2.01 * (z_height / zg) ** (2 / alpha)
 
             # Ensure Kz is within valid bounds
             return round(min(max(Kz, Kzmin), 2.01), 4)
@@ -91,3 +97,26 @@ class K_factors:
             raise ValueError(f"Invalid exposure category '{self.exposure_category}'. Ensure it exists in Table 2-4.") from e
         except Exception as e:
             raise ValueError(f"Error calculating Kz: {str(e)}")
+
+    def get_factors_summary(self):
+        """
+        Get a list of dictionaries containing Kz, Kzt, and Ke values for each segment.
+
+        Returns:
+            list: A list of dictionaries, each containing Kz, Kzt, and Ke for a segment.
+        """
+        ke = self.calculateKe()
+        factors_summary = []
+
+        for segment in self.segment_list:
+            
+            z_height = segment.get("z_height")  # not use any with deafult. 
+
+            factors_summary.append({
+                "segment_number": segment.get("segment_number", "N/A"),
+                "Kz": self.calculateKz(z_height),
+                "Kzt": self.calculateKzt(z_height),
+                "Ke": ke
+            })
+
+        return factors_summary

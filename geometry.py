@@ -4,6 +4,7 @@ class Geometry:
     VALID_CROSS_SECTIONS = {'square', 'triangular'}
 
     def __init__(self, tower_base_width, top_width, height, variable_segments, constant_segments, cross_section):
+        
         self.tower_base_width = tower_base_width
         self.top_width = top_width
         self.height = height
@@ -40,15 +41,19 @@ class Geometry:
         for i in range(self.variable_segments):
             base_width = self.tower_base_width - (i * (self.tower_base_width - self.top_width) / self.variable_segments)
             top_width = self.tower_base_width - ((i + 1) * (self.tower_base_width - self.top_width) / self.variable_segments)
+            mid_width = (base_width + top_width) / 2
+            rwidth = (base_width - top_width) / 2  # Reduction in width per side
+
             segment = {
                 "segment_number": i + 1,
-                "bottom level": i * segment_height,
-                "top level": (i + 1) * segment_height,
+                "bottom_level": i * segment_height,
+                "top_level": (i + 1) * segment_height,
                 "base_width": base_width,
                 "top_width": top_width,
+                "mid_width": mid_width,
                 "height": segment_height,
+                "rwidth": rwidth,  # Corrected placement
                 "area": (base_width + top_width) * segment_height / 2,  # Trapezoid area formula
-                "rwidth": (base_width - top_width) / 2,  # Reduction in width per side
                 "z_height": i * segment_height + segment_height / 2  # Midpoint height of the segment
             }
             segments.append(segment)
@@ -57,13 +62,14 @@ class Geometry:
         for i in range(self.constant_segments):
             segment = {
                 "segment_number": self.variable_segments + i + 1,
-                "bottom level": ((self.variable_segments* segment_height)+ (i * segment_height)),
-                "top level": ((self.variable_segments* segment_height)+ (i * segment_height + segment_height)),
+                "bottom_level": ((self.variable_segments * segment_height) + (i * segment_height)),
+                "top_level": ((self.variable_segments * segment_height) + (i * segment_height + segment_height)),
                 "base_width": self.top_width,
                 "top_width": self.top_width,
+                "mid_width": self.top_width,  # No tapering at the top
                 "height": segment_height,
-                "area": self.top_width * segment_height,  # Rectangle area formula
                 "rwidth": 0,  # No reduction in width
+                "area": self.top_width * segment_height,  # Rectangle area formula
                 "z_height": (self.variable_segments + i) * segment_height + segment_height / 2  # Midpoint height
             }
             segments.append(segment)
@@ -105,6 +111,8 @@ class Geometry:
             "basic_wind_speed_service": 33.33,
             "basic_wind_speed_ultimate": 44.44,
             "gust_effect_factor": gh,
+            "crest_height": 0.0,
+            "ground_elevation": 0.0,
             "ice thickness": 0.0,
             "segment_list": self.calculate_segments()
         }
