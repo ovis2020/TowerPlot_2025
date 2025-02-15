@@ -113,6 +113,7 @@ class Geometry:
             "gust_effect_factor": gh,
             "crest_height": 0.0,
             "ground_elevation": 0.0,
+            "kd": 0.85,
             "ice thickness": 0.0,
             "segment_list": self.calculate_segments()
         }

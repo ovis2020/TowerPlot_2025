@@ -97,6 +97,38 @@ class K_factors:
             raise ValueError(f"Invalid exposure category '{self.exposure_category}'. Ensure it exists in Table 2-4.") from e
         except Exception as e:
             raise ValueError(f"Error calculating Kz: {str(e)}")
+        
+    def calculateKs(self, zr, parapet_height, xb, ws, hs):
+        """
+        Calculate the rooftop wind speed-up factor (Ks).
+
+        Args:
+            zr (float): Height above the roof in meters.
+            parapet_height (float): Parapet height in meters.
+            xb (float): Horizontal distance from windward face to center of structure in meters.
+            ws (float): Width of windward face of the building in meters.
+            hs (float): Height of windward face of the building in meters.
+
+        Returns:
+            float: Rooftop wind speed-up factor (Ks).
+        """
+        try:
+            # Calculate H1 and H2
+            H1 = parapet_height + (xb / 5)
+            H2 = parapet_height + min(hs, ws)
+
+            # Compute Ks based on zr value
+            if zr < H1:
+                return 1.0
+            elif H1 <= zr <= H2:
+                Ks = 1 + 0.3 * (ws / hs)
+                return max(Ks, 1.10)  # Ensure Ks is at least 1.10
+            else:
+                return 1.0  # Ks = 1.0 for zr > H2
+
+        except Exception as e:
+            raise ValueError(f"Error calculating Ks: {str(e)}")
+
 
     def get_factors_summary(self):
         """
@@ -109,14 +141,15 @@ class K_factors:
         factors_summary = []
 
         for segment in self.segment_list:
-            
+
             z_height = segment.get("z_height")  # not use any with deafult. 
 
             factors_summary.append({
                 "segment_number": segment.get("segment_number", "N/A"),
                 "Kz": self.calculateKz(z_height),
                 "Kzt": self.calculateKzt(z_height),
-                "Ke": ke
+                "Ke": ke,
+                "Ks": self.calculateKs(zr, parapet_height, xb, ws, hs)
             })
 
         return factors_summary
