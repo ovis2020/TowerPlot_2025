@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tower Input Form</title>
+</head>
+<body>
+    <h1>Enter Tower Specifications</h1>
+    <form action="/" method="POST">
+        <label for="tower_base_width">Tower Base Width (m):</label>
+        <input type="text" name="tower_base_width" required><br>
+
+        <label for="top_width">Top Width (m):</label>
+        <input type="text" name="top_width" required><br>
+
+        <label for="height">Total Height (m):</label>
+        <input type="text" name="height" required><br>
+
+        <label for="variable_segments">Variable Segments:</label>
+        <input type="text" name="variable_segments" required><br>
+
+        <label for="constant_segments">Constant Segments:</label>
+        <input type="text" name="constant_segments" required><br>
+
+        <label for="cross_section">Cross Section:</label>
+        <select name="cross_section">
+            <option value="square">Square</option>
+            <option value="triangular">Triangular</option>
+        </select><br>
+
+        <label for="exposure_category">Exposure Category:</label>
+        <select name="exposure_category">
+            <option value="Exposure B">Exposure B</option>
+            <option value="Exposure C">Exposure C</option>
+            <option value="Exposure D">Exposure D</option>
+        </select><br>
+
+        <label for="importance_factor">Importance Factor:</label>
+        <input type="text" name="importance_factor" required><br>
+
+        <label for="wind_speed_service">Basic Wind Speed (Service, m/s):</label>
+        <input type="text" name="wind_speed_service" required><br>
+
+        <label for="wind_speed_ultimate">Basic Wind Speed (Ultimate, m/s):</label>
+        <input type="text" name="wind_speed_ultimate" required><br>
+
+        <input type="submit" value="Generate JSON">
+    </form>
+</body>
+</html>
