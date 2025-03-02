@@ -1,120 +1,134 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from google.cloud import storage, firestore
 import json
 import os
 
+# Initialize Flask app
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "your_secret_key"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
-# ✅ User Model
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+# Google Cloud Storage setup
+BUCKET_NAME = "your-gcs-bucket-name"
+storage_client = storage.Client()
+bucket = storage_client.bucket(BUCKET_NAME)
+
+# Firestore setup
+db = firestore.Client()
+
+# User Model
+class User(UserMixin):
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    def save_to_db(self):
+        db.collection("users").document(self.username).set({
+            "username": self.username,
+            "password": self.password
+        })
+
+    @staticmethod
+    def find_by_username(username):
+        doc = db.collection("users").document(username).get()
+        return User(doc.get("username"), doc.get("password")) if doc.exists else None
 
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+def load_user(username):
+    return User.find_by_username(username)
 
-# ✅ Route: Home Page (Tower Input Form)
+# Upload JSON to Google Cloud Storage
+def upload_json_to_gcs(file_name, data):
+    blob = bucket.blob(file_name)
+    blob.upload_from_string(json.dumps(data), content_type="application/json")
+    return f"https://storage.googleapis.com/{BUCKET_NAME}/{file_name}"
+
+# Download JSON from Google Cloud Storage
+def download_json_from_gcs(file_name):
+    blob = bucket.blob(file_name)
+    if blob.exists():
+        return json.loads(blob.download_as_text())
+    return None
+
+# Home Page (Tower Input Form)
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         try:
-            tower_base_width = float(request.form["tower_base_width"])
-            top_width = float(request.form["top_width"])
-            height = float(request.form["height"])
-            variable_segments = int(request.form["variable_segments"])
-            constant_segments = int(request.form["constant_segments"])
-            cross_section = request.form["cross_section"]
-            exposure_category = request.form["exposure_category"]
-            importance_factor = float(request.form["importance_factor"])
-            wind_speed_service = float(request.form["wind_speed_service"])
-            wind_speed_ultimate = float(request.form["wind_speed_ultimate"])
-
-            # ✅ Create JSON Data
             tower_data = {
-                "Tower Base Width": tower_base_width,
-                "Top Width": top_width,
-                "Height": height,
-                "Variable Segments": variable_segments,
-                "Constant Segments": constant_segments,
-                "Total Segments": variable_segments + constant_segments,
-                "Cross Section": cross_section,
-                "Exposure Category": exposure_category,
-                "Importance Factor": importance_factor,
-                "Basic Wind Speed Service": wind_speed_service,
-                "Basic Wind Speed Ultimate": wind_speed_ultimate,
+                "Tower Base Width": float(request.form["tower_base_width"]),
+                "Top Width": float(request.form["top_width"]),
+                "Height": float(request.form["height"]),
+                "Variable Segments": int(request.form["variable_segments"]),
+                "Constant Segments": int(request.form["constant_segments"]),
+                "Total Segments": int(request.form["variable_segments"]) + int(request.form["constant_segments"]),
+                "Cross Section": request.form["cross_section"],
+                "Exposure Category": request.form["exposure_category"],
+                "Importance Factor": float(request.form["importance_factor"]),
+                "Basic Wind Speed Service": float(request.form["wind_speed_service"]),
+                "Basic Wind Speed Ultimate": float(request.form["wind_speed_ultimate"]),
             }
 
-            json_filename = "tower_data.json"
-            with open(json_filename, "w") as f:
-                json.dump(tower_data, f, indent=4)
+            file_name = f"towers/tower_{tower_data['Height']}.json"
+            file_url = upload_json_to_gcs(file_name, tower_data)
 
-            return render_template("results.html", tower_data=tower_data, json_filename=json_filename)
-
+            return render_template("results.html", tower_data=tower_data, file_url=file_url)
         except ValueError:
             return jsonify({"error": "Invalid input. Please enter numerical values."})
 
     return render_template("index.html")
 
-# ✅ Route: Download JSON File
-@app.route("/download_json/<filename>")
-def download_json(filename):
-    return f"Download JSON: <a href='/{filename}'>{filename}</a>"
+# Download Tower JSON
+@app.route("/download_json/<tower_id>")
+def download_json(tower_id):
+    file_name = f"towers/tower_{tower_id}.json"
+    tower_data = download_json_from_gcs(file_name)
+    if tower_data:
+        return jsonify(tower_data)
+    return jsonify({"error": "Tower JSON not found"}), 404
 
-# ✅ Route: User Registration
+# User Registration
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-
         hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
-        new_user = User(username=username, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
+        new_user = User(username, hashed_password)
+        new_user.save_to_db()
         return redirect(url_for("login"))
-
     return render_template("register.html")
 
-# ✅ Route: User Login
+# User Login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        user = User.query.filter_by(username=username).first()
+        user = User.find_by_username(username)
 
         if user and bcrypt.check_password_hash(user.password, password):
             login_user(user)
             return redirect(url_for("dashboard"))
-
     return render_template("login.html")
 
-# ✅ Route: User Dashboard (Requires Login)
+# User Dashboard (Requires Login)
 @app.route("/dashboard")
 @login_required
 def dashboard():
     return f"Welcome, {current_user.username}! <a href='/logout'>Logout</a>"
 
-# ✅ Route: User Logout
+# User Logout
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for("index"))
 
-# ✅ Ensure Database Tables Are Created
+# Run Flask App
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
