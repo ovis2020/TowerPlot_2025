@@ -1,53 +1,13 @@
 {
     "Tower Base Width": 3.0,
     "Top Width": 1.0,
-    "Height": 18.0,
-    "total Segments": 3,
-    "Variable Segments": 2,
+    "Height": 30.0,
+    "Variable Segments": 4,
     "Constant Segments": 1,
-    "Cross Section": "square",
-    "importance_factor": 1.0,
-    "exposure_category": "Exposure C",
-    "basic_wind_speed_service": 33.33,
-    "basic_wind_speed_ultimate": 44.44,
-    "gust_effect_factor": 0.85,
-    "ice thickness": 0.0,
-    "segment_list": [
-        {
-            "segment_number": 1,
-            "bottom_level": 0.0,
-            "top_level": 6.0,
-            "base_width": 3.0,
-            "top_width": 2.0,
-            "mid_width": 2.5,
-            "height": 6.0,
-            "rwidth": 0.5,
-            "area": 15.0,
-            "z_height": 3.0
-        },
-        {
-            "segment_number": 2,
-            "bottom_level": 6.0,
-            "top_level": 12.0,
-            "base_width": 2.0,
-            "top_width": 1.0,
-            "mid_width": 1.5,
-            "height": 6.0,
-            "rwidth": 0.5,
-            "area": 9.0,
-            "z_height": 9.0
-        },
-        {
-            "segment_number": 3,
-            "bottom_level": 12.0,
-            "top_level": 18.0,
-            "base_width": 1.0,
-            "top_width": 1.0,
-            "mid_width": 1.0,
-            "height": 6.0,
-            "rwidth": 0,
-            "area": 6.0,
-            "z_height": 15.0
-        }
-    ]
+    "Total Segments": 5,
+    "Cross Section": "triangular",
+    "Exposure Category": "Exposure B",
+    "Importance Factor": 1.0,
+    "Basic Wind Speed Service": 44.0,
+    "Basic Wind Speed Ultimate": 22.0
 }
