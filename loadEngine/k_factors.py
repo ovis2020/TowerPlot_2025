@@ -1,5 +1,5 @@
 from math import exp
-from tables import table_2_4, table_2_5
+from loadEngine.tables import table_2_4, table_2_5
 
 class K_factors:
     def __init__(self, tower_data):

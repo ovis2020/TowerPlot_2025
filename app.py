@@ -4,20 +4,24 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for, s
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from google.cloud import storage, firestore
+from dotenv import load_dotenv  # ✅ Load environment variables
 
-# ✅ Load Google Cloud credentials from environment variable
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "C:/Users/rfuen/Desktop/TowerPlot/gcs-key.json")
+# ✅ Load variables from .env file
+load_dotenv()
 
 # ✅ Initialize Flask app
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.getenv("FLASK_SECRET_KEY", "your_secure_secret_key")  # Secure secret key
+app.config["SECRET_KEY"] = os.getenv("FLASK_SECRET_KEY", "default_secret_key")
 
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
+# ✅ Set up Google Cloud credentials
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+
 # ✅ Google Cloud Storage setup
-BUCKET_NAME = "towerbucket1"
+BUCKET_NAME = os.getenv("BUCKET_NAME", "default-bucket-name")
 storage_client = storage.Client()
 bucket = storage_client.bucket(BUCKET_NAME)
 

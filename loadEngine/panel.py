@@ -1,8 +1,8 @@
 import math
-from toolkit import Toolkit
-from angle_bar import ANGLE_BARS_SI, ANGLE_BARS_IMPERIAL, ROUND_BARS_SI, ROUND_BARS_IMPERIAL
-from tables import table_2_6
-from k_factors import K_factors  # Import the updated K_factors module
+from loadEngine.toolkit import Toolkit
+from loadEngine.angle_bar import ANGLE_BARS_SI, ANGLE_BARS_IMPERIAL, ROUND_BARS_SI, ROUND_BARS_IMPERIAL
+from loadEngine.tables import table_2_6
+from loadEngine.k_factors import K_factors  # Import the updated K_factors module
 
 
 class Panel:

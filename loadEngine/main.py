@@ -1,8 +1,8 @@
 import curses
 import json
-from geometry import Geometry
-from panel import Panel
-from angle_bar import ANGLE_BARS_SI, ANGLE_BARS_IMPERIAL, ROUND_BARS_SI, ROUND_BARS_IMPERIAL
+from loadEngine.geometry import Geometry
+from loadEngine.panel import Panel
+from loadEngine.angle_bar import ANGLE_BARS_SI, ANGLE_BARS_IMPERIAL, ROUND_BARS_SI, ROUND_BARS_IMPERIAL
 
 # Global variables for bar dictionaries
 ANGLE_BARS = {}
