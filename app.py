@@ -1,9 +1,11 @@
 import os
 import json
+import io
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from google.cloud import storage, firestore
+from flask import send_file
 from dotenv import load_dotenv  # ✅ Load environment variables
 
 # ✅ Load variables from .env file
@@ -29,6 +31,7 @@ bucket = storage_client.bucket(BUCKET_NAME)
 db = firestore.Client()
 
 # ✅ User Model (Stored in Firestore)
+
 class User(UserMixin):
     def __init__(self, username, password):
         self.username = username
@@ -85,7 +88,7 @@ def index():
                 "Basic Wind Speed Ultimate": float(request.form["wind_speed_ultimate"]),
             }
 
-            file_name = f"towers/tower_{tower_data['Height']}.json"
+            file_name = f"towers/tower_{int(float(tower_data['Height']))}.json"
             file_url = upload_json_to_gcs(file_name, tower_data)
 
             return render_template("results.html", tower_data=tower_data, file_url=file_url)
@@ -98,11 +101,38 @@ def index():
 @app.route("/download_json/<tower_id>")
 def download_json(tower_id):
     """Download tower JSON from GCS."""
-    file_name = f"towers/tower_{tower_id}.json"
+    if not tower_id.isdigit():
+        print("❌ ERROR: Invalid tower_id format")
+        return jsonify({"error": "Invalid tower_id format"}), 400
+
+    file_name = f"towers/tower_{int(tower_id)}.json"
+    print(f"🔍 Looking for file: {file_name} in bucket {BUCKET_NAME}")
+
     tower_data = download_json_from_gcs(file_name)
-    if tower_data:
-        return jsonify(tower_data)
-    return jsonify({"error": "Tower JSON not found"}), 404
+
+    if tower_data is None:
+        print(f"❌ ERROR: Tower JSON {file_name} not found in {BUCKET_NAME}")
+        return jsonify({"error": f"Tower JSON {file_name} not found"}), 404
+
+    print(f"✅ Successfully retrieved {file_name}")
+    return jsonify(tower_data)
+
+@app.route("/download_json_file/<tower_id>")
+def download_json_file(tower_id):
+    """Allow users to download the JSON file."""
+    file_name = f"towers/tower_{int(tower_id)}.json"
+    tower_data = download_json_from_gcs(file_name)
+
+    if tower_data is None:
+        return jsonify({"error": f"Tower JSON {file_name} not found"}), 404
+
+    json_data = json.dumps(tower_data, indent=4)
+    return send_file(
+        io.BytesIO(json_data.encode()),
+        mimetype="application/json",
+        as_attachment=True,
+        download_name=f"tower_{tower_id}.json"
+    )
 
 # ✅ User Registration
 @app.route("/register", methods=["GET", "POST"])
