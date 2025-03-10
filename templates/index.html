@@ -1,49 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Tower Input Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tower Design Input</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Enter Tower Specifications</h1>
-    <form action="/" method="POST">
-        <label for="tower_base_width">Tower Base Width (m):</label>
-        <input type="text" name="tower_base_width" required><br>
+    <div class="container">
+        <h1>📡 Tower Design Input</h1>
 
-        <label for="top_width">Top Width (m):</label>
-        <input type="text" name="top_width" required><br>
+        <form method="POST">
+            <label>Tower Base Width (m):</label>
+            <input type="number" name="tower_base_width" step="0.1" required>
 
-        <label for="height">Total Height (m):</label>
-        <input type="text" name="height" required><br>
+            <label>Top Width (m):</label>
+            <input type="number" name="top_width" step="0.1" required>
 
-        <label for="variable_segments">Variable Segments:</label>
-        <input type="text" name="variable_segments" required><br>
+            <label>Height (m):</label>
+            <input type="number" name="height" step="1" required>
 
-        <label for="constant_segments">Constant Segments:</label>
-        <input type="text" name="constant_segments" required><br>
+            <label>Variable Segments:</label>
+            <input type="number" name="variable_segments" required>
 
-        <label for="cross_section">Cross Section:</label>
-        <select name="cross_section">
-            <option value="square">Square</option>
-            <option value="triangular">Triangular</option>
-        </select><br>
+            <label>Constant Segments:</label>
+            <input type="number" name="constant_segments" required>
 
-        <label for="exposure_category">Exposure Category:</label>
-        <select name="exposure_category">
-            <option value="Exposure B">Exposure B</option>
-            <option value="Exposure C">Exposure C</option>
-            <option value="Exposure D">Exposure D</option>
-        </select><br>
+            <label>Cross Section:</label>
+            <select name="cross_section">
+                <option value="square">Square</option>
+                <option value="triangular">Triangular</option>
+            </select>
 
-        <label for="importance_factor">Importance Factor:</label>
-        <input type="text" name="importance_factor" required><br>
+            <label>Exposure Category:</label>
+            <input type="text" name="exposure_category" required>
 
-        <label for="wind_speed_service">Basic Wind Speed (Service, m/s):</label>
-        <input type="text" name="wind_speed_service" required><br>
+            <label>Importance Factor:</label>
+            <input type="number" name="importance_factor" step="0.1" required>
 
-        <label for="wind_speed_ultimate">Basic Wind Speed (Ultimate, m/s):</label>
-        <input type="text" name="wind_speed_ultimate" required><br>
+            <label>Basic Wind Speed (Service):</label>
+            <input type="number" name="wind_speed_service" required>
 
-        <input type="submit" value="Generate JSON">
-    </form>
+            <label>Basic Wind Speed (Ultimate):</label>
+            <input type="number" name="wind_speed_ultimate" required>
+
+            <button type="submit">Submit 🚀</button>
+        </form>
+
+        <div class="links">
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+            <p>New? <a href="{{ url_for('register') }}">Register here</a></p>
+        </div>
+    </div>
 </body>
 </html>

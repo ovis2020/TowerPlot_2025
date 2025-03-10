@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from google.cloud import storage, firestore
 from flask import send_file
+
 from dotenv import load_dotenv  # ✅ Load environment variables
 
 # ✅ Load variables from .env file
@@ -117,22 +118,7 @@ def download_json(tower_id):
     print(f"✅ Successfully retrieved {file_name}")
     return jsonify(tower_data)
 
-@app.route("/download_json_file/<tower_id>")
-def download_json_file(tower_id):
-    """Allow users to download the JSON file."""
-    file_name = f"towers/tower_{int(tower_id)}.json"
-    tower_data = download_json_from_gcs(file_name)
 
-    if tower_data is None:
-        return jsonify({"error": f"Tower JSON {file_name} not found"}), 404
-
-    json_data = json.dumps(tower_data, indent=4)
-    return send_file(
-        io.BytesIO(json_data.encode()),
-        mimetype="application/json",
-        as_attachment=True,
-        download_name=f"tower_{tower_id}.json"
-    )
 
 # ✅ User Registration
 @app.route("/register", methods=["GET", "POST"])
