@@ -1,14 +1,18 @@
-<h3>✅ Tower Uploaded Successfully!</h3>
-<p>Your tower ID is: <strong>{{ tower_data['Height']|int }}</strong></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Results</title>
+</head>
+<body>
+    <h1>Generated Tower Data</h1>
+    <pre>{{ tower_data | tojson(indent=4) }}</pre>
 
-<p>
-    📥 <a href="{{ url_for('download_json', tower_id=tower_data['Height']|int) }}">
-        <button>View JSON</button>
+    <h3>Download JSON:</h3>
+    💾 <a href="{{ url_for('download_json', tower_id=tower_data['Height']|int) }}">
+        Download Tower JSON
     </a>
-</p>
 
-<p>
-    💾 <a href="{{ url_for('download_json_file', tower_id=tower_data['Height']|int) }}">
-        <button>Download JSON</button>
-    </a>
-</p>
+    <br>
+    <a href="/">Go Back</a>
+</body>
+</html>
