@@ -117,6 +117,19 @@ def create_tower():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/api/towers", methods=["GET"])
+def get_towers():
+    """Fetch all stored towers."""
+    try:
+        blobs = bucket.list_blobs(prefix="towers/")
+        towers = []
+        for blob in blobs:
+            tower_data = json.loads(blob.download_as_text())
+            towers.append(tower_data)
+        return jsonify(towers)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 # ✅ API Endpoint: Fetch Tower Data (GET)
 @app.route("/api/download_json/<tower_id>")
 def download_json(tower_id):
