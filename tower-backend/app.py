@@ -6,6 +6,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from google.cloud import storage, firestore
 from flask_cors import CORS
 from dotenv import load_dotenv
+from loadEngine.geometry import Geometry
 
 # ✅ Load environment variables
 load_dotenv()
@@ -184,6 +185,37 @@ def login():
 def logout():
     logout_user()
     return jsonify({"message": "Logged out successfully"})
+
+
+@app.route("/api/calculate/segments/<tower_id>", methods=["GET"])
+def calculate_segments_from_json(tower_id):
+    file_name = f"towers/tower_{tower_id}.json"
+    tower_data = download_json_from_gcs(file_name)
+
+    if not tower_data:
+        return jsonify({"error": "Tower data not found"}), 404
+
+    try:
+        # Initialize Geometry with tower_data
+        geometry = Geometry(
+            tower_base_width=float(tower_data["Tower Base Width"]),
+            top_width=float(tower_data["Top Width"]),
+            height=float(tower_data["Height"]),
+            variable_segments=int(tower_data["Variable Segments"]),
+            constant_segments=int(tower_data["Constant Segments"]),
+            cross_section=tower_data["Cross Section"]
+        )
+
+        segment_list = geometry.calculate_segments()
+
+        return jsonify({
+            "tower_id": tower_id,
+            "segments": segment_list
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 # ✅ Run Flask App
 if __name__ == "__main__":
