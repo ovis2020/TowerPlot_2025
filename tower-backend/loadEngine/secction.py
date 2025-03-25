@@ -26,6 +26,8 @@ class Section:
 
         currentBase = baseWidth
         coordinatesList = []
+        secction_init_x = 0.0 
+        secction_init_y = 0.0
 
         for i in range(variableSegments):
 
@@ -33,22 +35,25 @@ class Section:
 
             segmentDelta = np.tan(alpha) * segmentHeight
             phi = np.arctan(segmentHeight / (currentBase - segmentDelta))
-            gHeight = np.tan(phi) * (segmentHeight / 2)
+            gHeight = np.tan(phi) * (currentBase / 2)
             deltaG = gHeight * np.tan(alpha)
 
-            coords = {
+        
+            localCoords = {
                 'section': sectionNumber,
-                'a': [0.0, 0.0],
-                'b': [round(currentBase, 3), 0.0],
-                'c': [round(segmentDelta, 3), round(segmentHeight, 3)],
-                'd': [round(currentBase - segmentDelta, 3), round(segmentHeight, 3)],
-                'e': [round(deltaG, 3), round(gHeight, 3)],
-                'f': [round(currentBase - deltaG, 3), round(gHeight, 3)],
-                'g': [round(currentBase / 2, 3), round(gHeight, 3)],
+                'a': [round((0.0 + secction_init_x),3), round((0.0 + secction_init_y),3)],
+                'b': [round(currentBase + secction_init_x, 3), 0.0 + secction_init_y],
+                'c': [round(segmentDelta +secction_init_x, 3), round(segmentHeight + secction_init_y, 3)],
+                'd': [round((currentBase - segmentDelta) + secction_init_x, 3), round(segmentHeight + secction_init_y, 3)],
+                'e': [round(deltaG + secction_init_x, 3), round(gHeight + secction_init_y, 3)],
+                'f': [round((currentBase - deltaG) + secction_init_x, 3), round(gHeight + secction_init_y, 3)],
+                'g': [round((currentBase / 2) + secction_init_x, 3), round(gHeight + secction_init_y, 3)],
             }
 
-            coordinatesList.append(coords)
+            coordinatesList.append(localCoords)
             currentBase -= segmentDelta * 2
+            secction_init_x = secction_init_x + round(segmentDelta, 3)
+            secction_init_y = secction_init_y + round(segmentHeight, 3)
 
         return coordinatesList
 
