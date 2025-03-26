@@ -1,5 +1,6 @@
 import numpy as np
 import json
+import math
 
 class Section:
     def __init__(self, towerData):
@@ -54,21 +55,187 @@ class Section:
             currentBase -= segmentDelta * 2
             secction_init_x = secction_init_x + round(segmentDelta, 3)
             secction_init_y = secction_init_y + round(segmentHeight, 3)
+        
+        for i in range(constantSegments):
+            
+            sectionNumber = sectionNumber + 1
+
+            localCoords = {
+                'section': sectionNumber,
+                'a': [round((0.0 + secction_init_x),3), round((0.0 + secction_init_y),3)],
+                'b': [round(currentBase + secction_init_x, 3), (0.0 + secction_init_y)],
+                'c': [round(secction_init_x, 3), round(segmentHeight + secction_init_y, 3)],
+                'd': [round(currentBase + secction_init_x, 3), round(segmentHeight + secction_init_y, 3)],
+                'e': [round(secction_init_x, 3), round((segmentHeight/2) + secction_init_y, 3)],
+                'f': [round((currentBase) + secction_init_x, 3), round((segmentHeight/2) + secction_init_y, 3)],
+                'g': [round((currentBase / 2) + secction_init_x, 3), round((segmentHeight/2) + secction_init_y, 3)],
+            }
+
+            coordinatesList.append(localCoords)
+            secction_init_x = secction_init_x + round(segmentDelta, 3)
+            secction_init_y = secction_init_y + round(segmentHeight, 3)
 
         return coordinatesList
+    
+    def getElements (self):
+
+        coordinatesList = self.getCoordinates()
+        elementList = []
+        secctionElements = {}
+
+        for i in range(len(coordinatesList)):
+
+            M1 = {
+                'element': 'M1',
+                'node_i': coordinatesList[i]['a'],
+                'node_j': coordinatesList[i]['e'],
+                'lenght': self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['e']),
+                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
+                'cross_area': 60.00,
+                'projected_width': 0.01,
+                'projected_area': 0.01*self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['e']),
+            }
+
+            M2 = {
+                'element': 'M2',
+                'node_i': coordinatesList[i]['e'],
+                'node_j': coordinatesList[i]['c'],
+                'lenght': self.elementLength(coordinatesList[i]['e'], coordinatesList[i]['c']),
+                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
+                'cross_area': 60.00,
+                'projected_width': 0.01,
+                'projected_area': 0.01*self.elementLength(coordinatesList[i]['e'], coordinatesList[i]['c']),
+            } 
+
+            M3 = {
+                'element': 'M3',
+                'node_i': coordinatesList[i]['b'],
+                'node_j': coordinatesList[i]['f'],
+                'lenght': self.elementLength(coordinatesList[i]['b'], coordinatesList[i]['f']),
+                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
+                'cross_area': 60.00,
+                'projected_width': 0.01,
+                'projected_area': 0.01*self.elementLength(coordinatesList[i]['b'], coordinatesList[i]['f']),
+            } 
+
+            M4 = {
+                'element': 'M4',
+                'node_i': coordinatesList[i]['f'],
+                'node_j': coordinatesList[i]['d'],
+                'lenght': self.elementLength(coordinatesList[i]['f'], coordinatesList[i]['d']),
+                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
+                'cross_area': 60.00,
+                'projected_width': 0.01,
+                'projected_area': 0.01*self.elementLength(coordinatesList[i]['f'], coordinatesList[i]['d']),
+            } 
+
+            D1 = {
+                'element': 'D1',
+                'node_i': coordinatesList[i]['a'],
+                'node_j': coordinatesList[i]['g'],
+                'lenght': self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['g']),
+                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
+                'cross_area': 60.00,
+                'projected_width': 0.01,
+                'projected_area': 0.01*self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['g']),
+            } 
+
+            D2 = {
+                'element': 'D2',
+                'node_i': coordinatesList[i]['g'],
+                'node_j': coordinatesList[i]['d'],
+                'lenght': self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['d']),
+                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
+                'cross_area': 60.00,
+                'projected_width': 0.01,
+                'projected_area': 0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['d']),
+            } 
+
+            D3 = {
+                'element': 'D3',
+                'node_i': coordinatesList[i]['g'],
+                'node_j': coordinatesList[i]['b'],
+                'lenght': self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['b']),
+                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
+                'cross_area': 60.00,
+                'projected_width': 0.01,
+                'projected_area': 0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['b']),
+            } 
+
+            D4 = {
+                'element': 'D4',
+                'node_i': coordinatesList[i]['g'],
+                'node_j': coordinatesList[i]['c'],
+                'lenght': self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['c']),
+                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
+                'cross_area': 60.00,
+                'projected_width': 0.01,
+                'projected_area': 0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['c']),
+            } 
+
+            C1 = {
+                'element': 'C1',
+                'node_i': coordinatesList[i]['g'],
+                'node_j': coordinatesList[i]['e'],
+                'lenght': self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),
+                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
+                'cross_area': 60.00,
+                'projected_width': 0.01,
+                'projected_area': 0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),
+            } 
+
+            C2 = {
+                'element': 'C2',
+                'node_i': coordinatesList[i]['g'],
+                'node_j': coordinatesList[i]['f'],
+                'lenght': self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['f']),
+                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
+                'cross_area': 60.00,
+                'projected_width': 0.01,
+                'projected_area': 0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),
+            }
+
+            secctionElements = {
+                'section': coordinatesList[i]['section'],
+                'elements': [M1, M2, M3, M4, D1, D2, D3, D4, C1, C2]
+            } 
+
+            elementList.append(secctionElements)
+
+        return elementList
+    
+    def elementLength (self, node_i, node_j):
+
+        x1 = node_i[0]
+        y1 = node_i[1]
+        x2 = node_j[0]
+        y2 = node_j[1]
+
+        length = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+
+        return length
+
 
     def toJson(self, indent=4):
-        return json.dumps(self.getCoordinates(), indent=indent)
+
+        coordinates = self.getCoordinates()
+        elements = self.getElements()
+
+        return json.dumps({ 'coordinates': coordinates, 'elements': elements }, indent=indent)
 
     def saveToFile(self, filename: str):
+
+        coordinates = self.getCoordinates()
+        elements = self.getElements()
+
         with open(filename, 'w') as f:
-            json.dump(self.getCoordinates(), f, indent=4)
+            json.dump({ 'coordinates': coordinates, 'elements': elements }, f, indent=4)
         print(f"Saved tower sections to {filename}")
 
 if __name__ == "__main__":
     towerData = {
         "Tower_Base_Width": 3.0,
-        "Top_Width": 2.0,
+        "Top_Width": 1.0,
         "Height": 24.0,
         "Variable_Segments": 3,
         "Constant_Segments": 1
