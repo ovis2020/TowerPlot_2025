@@ -7,121 +7,431 @@
                 0.0
             ],
             "b": [
-                3.0,
+                4.0,
                 0.0
             ],
             "c": [
-                0.25,
-                6.0
+                0.104,
+                3.0
             ],
             "d": [
-                2.75,
-                6.0
+                3.896,
+                3.0
             ],
             "e": [
-                0.136,
-                3.273
+                0.053,
+                1.54
             ],
             "f": [
-                2.864,
-                3.273
+                3.947,
+                1.54
             ],
             "g": [
-                1.5,
-                3.273
+                2.0,
+                1.54
             ]
         },
         {
             "section": 2,
             "a": [
-                0.25,
-                6.0
+                0.104,
+                3.0
             ],
             "b": [
-                2.75,
-                6.0
+                3.896,
+                3.0
             ],
             "c": [
-                0.5,
-                12.0
+                0.208,
+                6.0
             ],
             "d": [
-                2.5,
-                12.0
+                3.792,
+                6.0
             ],
             "e": [
-                0.389,
-                9.333
+                0.158,
+                4.542
             ],
             "f": [
-                2.611,
-                9.333
+                3.842,
+                4.542
             ],
             "g": [
-                1.5,
-                9.333
+                2.0,
+                4.542
             ]
         },
         {
             "section": 3,
             "a": [
-                0.5,
-                12.0
+                0.208,
+                6.0
             ],
             "b": [
-                2.5,
-                12.0
+                3.791,
+                6.0
             ],
             "c": [
-                0.75,
-                18.0
+                0.312,
+                9.0
             ],
             "d": [
-                2.25,
-                18.0
+                3.687,
+                9.0
             ],
             "e": [
-                0.643,
-                15.429
+                0.262,
+                7.545
             ],
             "f": [
-                2.357,
-                15.429
+                3.738,
+                7.545
             ],
             "g": [
-                1.5,
-                15.429
+                2.0,
+                7.545
             ]
         },
         {
             "section": 4,
             "a": [
-                0.75,
+                0.312,
+                9.0
+            ],
+            "b": [
+                3.687,
+                9.0
+            ],
+            "c": [
+                0.416,
+                12.0
+            ],
+            "d": [
+                3.583,
+                12.0
+            ],
+            "e": [
+                0.366,
+                10.548
+            ],
+            "f": [
+                3.633,
+                10.548
+            ],
+            "g": [
+                1.999,
+                10.548
+            ]
+        },
+        {
+            "section": 5,
+            "a": [
+                0.416,
+                12.0
+            ],
+            "b": [
+                3.583,
+                12.0
+            ],
+            "c": [
+                0.52,
+                15.0
+            ],
+            "d": [
+                3.478,
+                15.0
+            ],
+            "e": [
+                0.47,
+                13.551
+            ],
+            "f": [
+                3.529,
+                13.551
+            ],
+            "g": [
+                1.999,
+                13.551
+            ]
+        },
+        {
+            "section": 6,
+            "a": [
+                0.52,
+                15.0
+            ],
+            "b": [
+                3.478,
+                15.0
+            ],
+            "c": [
+                0.624,
+                18.0
+            ],
+            "d": [
+                3.374,
+                18.0
+            ],
+            "e": [
+                0.574,
+                16.555
+            ],
+            "f": [
+                3.424,
+                16.555
+            ],
+            "g": [
+                1.999,
+                16.555
+            ]
+        },
+        {
+            "section": 7,
+            "a": [
+                0.624,
                 18.0
             ],
             "b": [
-                2.25,
+                3.374,
                 18.0
             ],
             "c": [
-                0.75,
+                0.728,
+                21.0
+            ],
+            "d": [
+                3.27,
+                21.0
+            ],
+            "e": [
+                0.678,
+                19.559
+            ],
+            "f": [
+                3.32,
+                19.559
+            ],
+            "g": [
+                1.999,
+                19.559
+            ]
+        },
+        {
+            "section": 8,
+            "a": [
+                0.728,
+                21.0
+            ],
+            "b": [
+                3.27,
+                21.0
+            ],
+            "c": [
+                0.832,
                 24.0
             ],
             "d": [
-                2.25,
+                3.165,
                 24.0
             ],
             "e": [
-                0.75,
-                21.0
+                0.782,
+                22.564
             ],
             "f": [
-                2.25,
-                21.0
+                3.215,
+                22.564
             ],
             "g": [
-                1.5,
-                21.0
+                1.999,
+                22.564
+            ]
+        },
+        {
+            "section": 9,
+            "a": [
+                0.832,
+                24.0
+            ],
+            "b": [
+                3.165,
+                24.0
+            ],
+            "c": [
+                0.936,
+                27.0
+            ],
+            "d": [
+                3.061,
+                27.0
+            ],
+            "e": [
+                0.887,
+                25.57
+            ],
+            "f": [
+                3.111,
+                25.57
+            ],
+            "g": [
+                1.999,
+                25.57
+            ]
+        },
+        {
+            "section": 10,
+            "a": [
+                0.936,
+                27.0
+            ],
+            "b": [
+                3.061,
+                27.0
+            ],
+            "c": [
+                1.04,
+                30.0
+            ],
+            "d": [
+                2.957,
+                30.0
+            ],
+            "e": [
+                0.991,
+                28.577
+            ],
+            "f": [
+                3.006,
+                28.577
+            ],
+            "g": [
+                1.998,
+                28.577
+            ]
+        },
+        {
+            "section": 11,
+            "a": [
+                1.04,
+                30.0
+            ],
+            "b": [
+                2.957,
+                30.0
+            ],
+            "c": [
+                1.144,
+                33.0
+            ],
+            "d": [
+                2.852,
+                33.0
+            ],
+            "e": [
+                1.095,
+                31.586
+            ],
+            "f": [
+                2.902,
+                31.586
+            ],
+            "g": [
+                1.998,
+                31.586
+            ]
+        },
+        {
+            "section": 12,
+            "a": [
+                1.144,
+                33.0
+            ],
+            "b": [
+                2.852,
+                33.0
+            ],
+            "c": [
+                1.248,
+                36.0
+            ],
+            "d": [
+                2.748,
+                36.0
+            ],
+            "e": [
+                1.199,
+                34.597
+            ],
+            "f": [
+                2.797,
+                34.597
+            ],
+            "g": [
+                1.998,
+                34.597
+            ]
+        },
+        {
+            "section": 13,
+            "a": [
+                1.248,
+                36.0
+            ],
+            "b": [
+                2.748,
+                36.0
+            ],
+            "c": [
+                1.248,
+                39.0
+            ],
+            "d": [
+                2.748,
+                39.0
+            ],
+            "e": [
+                1.248,
+                37.5
+            ],
+            "f": [
+                2.748,
+                37.5
+            ],
+            "g": [
+                1.998,
+                37.5
+            ]
+        },
+        {
+            "section": 14,
+            "a": [
+                1.248,
+                39.0
+            ],
+            "b": [
+                2.748,
+                39.0
+            ],
+            "c": [
+                1.248,
+                42.0
+            ],
+            "d": [
+                2.748,
+                42.0
+            ],
+            "e": [
+                1.248,
+                40.5
+            ],
+            "f": [
+                2.748,
+                40.5
+            ],
+            "g": [
+                1.998,
+                40.5
             ]
         }
     ],
@@ -136,62 +446,62 @@
                         0.0
                     ],
                     "node_j": [
-                        0.136,
-                        3.273
+                        0.053,
+                        1.54
                     ],
-                    "lenght": 3.2758243237389886,
+                    "lenght": 1.541,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.032758243237389885
+                    "projected_area": 0.015
                 },
                 {
                     "element": "M2",
                     "node_i": [
-                        0.136,
-                        3.273
+                        0.053,
+                        1.54
                     ],
                     "node_j": [
-                        0.25,
-                        6.0
+                        0.104,
+                        3.0
                     ],
-                    "lenght": 2.7293817981367137,
+                    "lenght": 1.461,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.02729381798136714
+                    "projected_area": 0.015
                 },
                 {
                     "element": "M3",
                     "node_i": [
-                        3.0,
+                        4.0,
                         0.0
                     ],
                     "node_j": [
-                        2.864,
-                        3.273
+                        3.947,
+                        1.54
                     ],
-                    "lenght": 3.2758243237389886,
+                    "lenght": 1.541,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.032758243237389885
+                    "projected_area": 0.015
                 },
                 {
                     "element": "M4",
                     "node_i": [
-                        2.864,
-                        3.273
+                        3.947,
+                        1.54
                     ],
                     "node_j": [
-                        2.75,
-                        6.0
+                        3.896,
+                        3.0
                     ],
-                    "lenght": 2.7293817981367137,
+                    "lenght": 1.461,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.02729381798136714
+                    "projected_area": 0.015
                 },
                 {
                     "element": "D1",
@@ -200,94 +510,94 @@
                         0.0
                     ],
                     "node_j": [
-                        1.5,
-                        3.273
+                        2.0,
+                        1.54
                     ],
-                    "lenght": 3.6003512328660383,
+                    "lenght": 2.524,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.036003512328660385
+                    "projected_area": 0.025
                 },
                 {
                     "element": "D2",
                     "node_i": [
-                        1.5,
-                        3.273
+                        2.0,
+                        1.54
                     ],
                     "node_j": [
-                        2.75,
-                        6.0
+                        3.896,
+                        3.0
                     ],
-                    "lenght": 2.9998381623014265,
+                    "lenght": 2.393,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.029998381623014266
+                    "projected_area": 0.024
                 },
                 {
                     "element": "D3",
                     "node_i": [
-                        1.5,
-                        3.273
+                        2.0,
+                        1.54
                     ],
                     "node_j": [
-                        3.0,
+                        4.0,
                         0.0
                     ],
-                    "lenght": 3.6003512328660383,
+                    "lenght": 2.524,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.036003512328660385
+                    "projected_area": 0.025
                 },
                 {
                     "element": "D4",
                     "node_i": [
-                        1.5,
-                        3.273
+                        2.0,
+                        1.54
                     ],
                     "node_j": [
-                        0.25,
-                        6.0
+                        0.104,
+                        3.0
                     ],
-                    "lenght": 2.9998381623014265,
+                    "lenght": 2.393,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.029998381623014266
+                    "projected_area": 0.024
                 },
                 {
                     "element": "C1",
                     "node_i": [
-                        1.5,
-                        3.273
+                        2.0,
+                        1.54
                     ],
                     "node_j": [
-                        0.136,
-                        3.273
+                        0.053,
+                        1.54
                     ],
-                    "lenght": 1.3639999999999999,
+                    "lenght": 1.947,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.01364
+                    "projected_area": 0.019
                 },
                 {
                     "element": "C2",
                     "node_i": [
-                        1.5,
-                        3.273
+                        2.0,
+                        1.54
                     ],
                     "node_j": [
-                        2.864,
-                        3.273
+                        3.947,
+                        1.54
                     ],
-                    "lenght": 1.3639999999999999,
+                    "lenght": 1.947,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.01364
+                    "projected_area": 0.019
                 }
             ]
         },
@@ -297,162 +607,162 @@
                 {
                     "element": "M1",
                     "node_i": [
-                        0.25,
-                        6.0
+                        0.104,
+                        3.0
                     ],
                     "node_j": [
-                        0.389,
-                        9.333
+                        0.158,
+                        4.542
                     ],
-                    "lenght": 3.335897180669692,
+                    "lenght": 1.543,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.033358971806696926
+                    "projected_area": 0.015
                 },
                 {
                     "element": "M2",
                     "node_i": [
-                        0.389,
-                        9.333
+                        0.158,
+                        4.542
                     ],
                     "node_j": [
-                        0.5,
-                        12.0
+                        0.208,
+                        6.0
                     ],
-                    "lenght": 2.6693088993220697,
+                    "lenght": 1.459,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.026693088993220697
+                    "projected_area": 0.015
                 },
                 {
                     "element": "M3",
                     "node_i": [
-                        2.75,
-                        6.0
+                        3.896,
+                        3.0
                     ],
                     "node_j": [
-                        2.611,
-                        9.333
+                        3.842,
+                        4.542
                     ],
-                    "lenght": 3.335897180669692,
+                    "lenght": 1.543,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.033358971806696926
+                    "projected_area": 0.015
                 },
                 {
                     "element": "M4",
                     "node_i": [
-                        2.611,
-                        9.333
+                        3.842,
+                        4.542
                     ],
                     "node_j": [
-                        2.5,
-                        12.0
+                        3.792,
+                        6.0
                     ],
-                    "lenght": 2.6693088993220697,
+                    "lenght": 1.459,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.026693088993220697
+                    "projected_area": 0.015
                 },
                 {
                     "element": "D1",
                     "node_i": [
-                        0.25,
-                        6.0
+                        0.104,
+                        3.0
                     ],
                     "node_j": [
-                        1.5,
-                        9.333
+                        2.0,
+                        4.542
                     ],
-                    "lenght": 3.559689452747248,
+                    "lenght": 2.444,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.03559689452747248
+                    "projected_area": 0.024
                 },
                 {
                     "element": "D2",
                     "node_i": [
-                        1.5,
-                        9.333
+                        2.0,
+                        4.542
                     ],
                     "node_j": [
-                        2.5,
-                        12.0
+                        3.792,
+                        6.0
                     ],
-                    "lenght": 2.848313360569725,
+                    "lenght": 2.31,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.02848313360569725
+                    "projected_area": 0.023
                 },
                 {
                     "element": "D3",
                     "node_i": [
-                        1.5,
-                        9.333
+                        2.0,
+                        4.542
                     ],
                     "node_j": [
-                        2.75,
-                        6.0
+                        3.896,
+                        3.0
                     ],
-                    "lenght": 3.559689452747248,
+                    "lenght": 2.444,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.03559689452747248
+                    "projected_area": 0.024
                 },
                 {
                     "element": "D4",
                     "node_i": [
-                        1.5,
-                        9.333
+                        2.0,
+                        4.542
                     ],
                     "node_j": [
-                        0.5,
-                        12.0
+                        0.208,
+                        6.0
                     ],
-                    "lenght": 2.848313360569725,
+                    "lenght": 2.31,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.02848313360569725
+                    "projected_area": 0.023
                 },
                 {
                     "element": "C1",
                     "node_i": [
-                        1.5,
-                        9.333
+                        2.0,
+                        4.542
                     ],
                     "node_j": [
-                        0.389,
-                        9.333
+                        0.158,
+                        4.542
                     ],
-                    "lenght": 1.111,
+                    "lenght": 1.842,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.01111
+                    "projected_area": 0.018
                 },
                 {
                     "element": "C2",
                     "node_i": [
-                        1.5,
-                        9.333
+                        2.0,
+                        4.542
                     ],
                     "node_j": [
-                        2.611,
-                        9.333
+                        3.842,
+                        4.542
                     ],
-                    "lenght": 1.1110000000000002,
+                    "lenght": 1.842,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.01111
+                    "projected_area": 0.018
                 }
             ]
         },
@@ -462,162 +772,162 @@
                 {
                     "element": "M1",
                     "node_i": [
-                        0.5,
-                        12.0
+                        0.208,
+                        6.0
                     ],
                     "node_j": [
-                        0.643,
-                        15.429
+                        0.262,
+                        7.545
                     ],
-                    "lenght": 3.431980477799954,
+                    "lenght": 1.546,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.03431980477799954
+                    "projected_area": 0.015
                 },
                 {
                     "element": "M2",
                     "node_i": [
-                        0.643,
-                        15.429
+                        0.262,
+                        7.545
                     ],
                     "node_j": [
-                        0.75,
-                        18.0
+                        0.312,
+                        9.0
                     ],
-                    "lenght": 2.5732256022354507,
+                    "lenght": 1.456,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.02573225602235451
+                    "projected_area": 0.015
                 },
                 {
                     "element": "M3",
                     "node_i": [
-                        2.5,
-                        12.0
+                        3.791,
+                        6.0
                     ],
                     "node_j": [
-                        2.357,
-                        15.429
+                        3.738,
+                        7.545
                     ],
-                    "lenght": 3.431980477799954,
+                    "lenght": 1.546,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.03431980477799954
+                    "projected_area": 0.015
                 },
                 {
                     "element": "M4",
                     "node_i": [
-                        2.357,
-                        15.429
+                        3.738,
+                        7.545
                     ],
                     "node_j": [
-                        2.25,
-                        18.0
+                        3.687,
+                        9.0
                     ],
-                    "lenght": 2.5732256022354507,
+                    "lenght": 1.456,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.02573225602235451
+                    "projected_area": 0.015
                 },
                 {
                     "element": "D1",
                     "node_i": [
-                        0.5,
-                        12.0
+                        0.208,
+                        6.0
                     ],
                     "node_j": [
-                        1.5,
-                        15.429
+                        2.0,
+                        7.545
                     ],
-                    "lenght": 3.571840002015768,
+                    "lenght": 2.366,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.03571840002015768
+                    "projected_area": 0.024
                 },
                 {
                     "element": "D2",
                     "node_i": [
-                        1.5,
-                        15.429
+                        2.0,
+                        7.545
                     ],
                     "node_j": [
-                        2.25,
-                        18.0
+                        3.687,
+                        9.0
                     ],
-                    "lenght": 2.6781600026884127,
+                    "lenght": 2.228,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.026781600026884126
+                    "projected_area": 0.022
                 },
                 {
                     "element": "D3",
                     "node_i": [
-                        1.5,
-                        15.429
+                        2.0,
+                        7.545
                     ],
                     "node_j": [
-                        2.5,
-                        12.0
+                        3.791,
+                        6.0
                     ],
-                    "lenght": 3.571840002015768,
+                    "lenght": 2.365,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.03571840002015768
+                    "projected_area": 0.024
                 },
                 {
                     "element": "D4",
                     "node_i": [
-                        1.5,
-                        15.429
+                        2.0,
+                        7.545
                     ],
                     "node_j": [
-                        0.75,
-                        18.0
+                        0.312,
+                        9.0
                     ],
-                    "lenght": 2.6781600026884127,
+                    "lenght": 2.229,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.026781600026884126
+                    "projected_area": 0.022
                 },
                 {
                     "element": "C1",
                     "node_i": [
-                        1.5,
-                        15.429
+                        2.0,
+                        7.545
                     ],
                     "node_j": [
-                        0.643,
-                        15.429
+                        0.262,
+                        7.545
                     ],
-                    "lenght": 0.857,
+                    "lenght": 1.738,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.00857
+                    "projected_area": 0.017
                 },
                 {
                     "element": "C2",
                     "node_i": [
-                        1.5,
-                        15.429
+                        2.0,
+                        7.545
                     ],
                     "node_j": [
-                        2.357,
-                        15.429
+                        3.738,
+                        7.545
                     ],
-                    "lenght": 0.8570000000000002,
+                    "lenght": 1.738,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.00857
+                    "projected_area": 0.017
                 }
             ]
         },
@@ -627,162 +937,1812 @@
                 {
                     "element": "M1",
                     "node_i": [
-                        0.75,
-                        18.0
+                        0.312,
+                        9.0
                     ],
                     "node_j": [
-                        0.75,
-                        21.0
+                        0.366,
+                        10.548
                     ],
-                    "lenght": 3.0,
+                    "lenght": 1.549,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.03
+                    "projected_area": 0.015
                 },
                 {
                     "element": "M2",
                     "node_i": [
-                        0.75,
-                        21.0
+                        0.366,
+                        10.548
                     ],
                     "node_j": [
-                        0.75,
-                        24.0
+                        0.416,
+                        12.0
                     ],
-                    "lenght": 3.0,
+                    "lenght": 1.453,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.03
+                    "projected_area": 0.015
                 },
                 {
                     "element": "M3",
                     "node_i": [
-                        2.25,
-                        18.0
+                        3.687,
+                        9.0
                     ],
                     "node_j": [
-                        2.25,
-                        21.0
+                        3.633,
+                        10.548
                     ],
-                    "lenght": 3.0,
+                    "lenght": 1.549,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.03
+                    "projected_area": 0.015
                 },
                 {
                     "element": "M4",
                     "node_i": [
-                        2.25,
-                        21.0
+                        3.633,
+                        10.548
                     ],
                     "node_j": [
-                        2.25,
-                        24.0
+                        3.583,
+                        12.0
                     ],
-                    "lenght": 3.0,
+                    "lenght": 1.453,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.03
+                    "projected_area": 0.015
                 },
                 {
                     "element": "D1",
                     "node_i": [
-                        0.75,
-                        18.0
+                        0.312,
+                        9.0
                     ],
                     "node_j": [
-                        1.5,
-                        21.0
+                        1.999,
+                        10.548
                     ],
-                    "lenght": 3.092329219213245,
+                    "lenght": 2.29,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.030923292192132454
+                    "projected_area": 0.023
                 },
                 {
                     "element": "D2",
                     "node_i": [
-                        1.5,
-                        21.0
+                        1.999,
+                        10.548
                     ],
                     "node_j": [
-                        2.25,
-                        24.0
+                        3.583,
+                        12.0
                     ],
-                    "lenght": 3.092329219213245,
+                    "lenght": 2.149,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.030923292192132454
+                    "projected_area": 0.021
                 },
                 {
                     "element": "D3",
                     "node_i": [
-                        1.5,
-                        21.0
+                        1.999,
+                        10.548
                     ],
                     "node_j": [
-                        2.25,
-                        18.0
+                        3.687,
+                        9.0
                     ],
-                    "lenght": 3.092329219213245,
+                    "lenght": 2.29,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.030923292192132454
+                    "projected_area": 0.023
                 },
                 {
                     "element": "D4",
                     "node_i": [
-                        1.5,
-                        21.0
+                        1.999,
+                        10.548
                     ],
                     "node_j": [
-                        0.75,
-                        24.0
+                        0.416,
+                        12.0
                     ],
-                    "lenght": 3.092329219213245,
+                    "lenght": 2.148,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.030923292192132454
+                    "projected_area": 0.021
                 },
                 {
                     "element": "C1",
                     "node_i": [
-                        1.5,
-                        21.0
+                        1.999,
+                        10.548
                     ],
                     "node_j": [
-                        0.75,
-                        21.0
+                        0.366,
+                        10.548
                     ],
-                    "lenght": 0.75,
+                    "lenght": 1.633,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.0075
+                    "projected_area": 0.016
                 },
                 {
                     "element": "C2",
                     "node_i": [
-                        1.5,
+                        1.999,
+                        10.548
+                    ],
+                    "node_j": [
+                        3.633,
+                        10.548
+                    ],
+                    "lenght": 1.634,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                }
+            ]
+        },
+        {
+            "section": 5,
+            "elements": [
+                {
+                    "element": "M1",
+                    "node_i": [
+                        0.416,
+                        12.0
+                    ],
+                    "node_j": [
+                        0.47,
+                        13.551
+                    ],
+                    "lenght": 1.552,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M2",
+                    "node_i": [
+                        0.47,
+                        13.551
+                    ],
+                    "node_j": [
+                        0.52,
+                        15.0
+                    ],
+                    "lenght": 1.45,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "M3",
+                    "node_i": [
+                        3.583,
+                        12.0
+                    ],
+                    "node_j": [
+                        3.529,
+                        13.551
+                    ],
+                    "lenght": 1.552,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M4",
+                    "node_i": [
+                        3.529,
+                        13.551
+                    ],
+                    "node_j": [
+                        3.478,
+                        15.0
+                    ],
+                    "lenght": 1.45,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "D1",
+                    "node_i": [
+                        0.416,
+                        12.0
+                    ],
+                    "node_j": [
+                        1.999,
+                        13.551
+                    ],
+                    "lenght": 2.216,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.022
+                },
+                {
+                    "element": "D2",
+                    "node_i": [
+                        1.999,
+                        13.551
+                    ],
+                    "node_j": [
+                        3.478,
+                        15.0
+                    ],
+                    "lenght": 2.071,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.021
+                },
+                {
+                    "element": "D3",
+                    "node_i": [
+                        1.999,
+                        13.551
+                    ],
+                    "node_j": [
+                        3.583,
+                        12.0
+                    ],
+                    "lenght": 2.217,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.022
+                },
+                {
+                    "element": "D4",
+                    "node_i": [
+                        1.999,
+                        13.551
+                    ],
+                    "node_j": [
+                        0.52,
+                        15.0
+                    ],
+                    "lenght": 2.071,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.021
+                },
+                {
+                    "element": "C1",
+                    "node_i": [
+                        1.999,
+                        13.551
+                    ],
+                    "node_j": [
+                        0.47,
+                        13.551
+                    ],
+                    "lenght": 1.529,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.015
+                },
+                {
+                    "element": "C2",
+                    "node_i": [
+                        1.999,
+                        13.551
+                    ],
+                    "node_j": [
+                        3.529,
+                        13.551
+                    ],
+                    "lenght": 1.53,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.015
+                }
+            ]
+        },
+        {
+            "section": 6,
+            "elements": [
+                {
+                    "element": "M1",
+                    "node_i": [
+                        0.52,
+                        15.0
+                    ],
+                    "node_j": [
+                        0.574,
+                        16.555
+                    ],
+                    "lenght": 1.556,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M2",
+                    "node_i": [
+                        0.574,
+                        16.555
+                    ],
+                    "node_j": [
+                        0.624,
+                        18.0
+                    ],
+                    "lenght": 1.446,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "M3",
+                    "node_i": [
+                        3.478,
+                        15.0
+                    ],
+                    "node_j": [
+                        3.424,
+                        16.555
+                    ],
+                    "lenght": 1.556,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M4",
+                    "node_i": [
+                        3.424,
+                        16.555
+                    ],
+                    "node_j": [
+                        3.374,
+                        18.0
+                    ],
+                    "lenght": 1.446,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "D1",
+                    "node_i": [
+                        0.52,
+                        15.0
+                    ],
+                    "node_j": [
+                        1.999,
+                        16.555
+                    ],
+                    "lenght": 2.146,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.021
+                },
+                {
+                    "element": "D2",
+                    "node_i": [
+                        1.999,
+                        16.555
+                    ],
+                    "node_j": [
+                        3.374,
+                        18.0
+                    ],
+                    "lenght": 1.995,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.02
+                },
+                {
+                    "element": "D3",
+                    "node_i": [
+                        1.999,
+                        16.555
+                    ],
+                    "node_j": [
+                        3.478,
+                        15.0
+                    ],
+                    "lenght": 2.146,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.021
+                },
+                {
+                    "element": "D4",
+                    "node_i": [
+                        1.999,
+                        16.555
+                    ],
+                    "node_j": [
+                        0.624,
+                        18.0
+                    ],
+                    "lenght": 1.995,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.02
+                },
+                {
+                    "element": "C1",
+                    "node_i": [
+                        1.999,
+                        16.555
+                    ],
+                    "node_j": [
+                        0.574,
+                        16.555
+                    ],
+                    "lenght": 1.425,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "C2",
+                    "node_i": [
+                        1.999,
+                        16.555
+                    ],
+                    "node_j": [
+                        3.424,
+                        16.555
+                    ],
+                    "lenght": 1.425,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                }
+            ]
+        },
+        {
+            "section": 7,
+            "elements": [
+                {
+                    "element": "M1",
+                    "node_i": [
+                        0.624,
+                        18.0
+                    ],
+                    "node_j": [
+                        0.678,
+                        19.559
+                    ],
+                    "lenght": 1.56,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M2",
+                    "node_i": [
+                        0.678,
+                        19.559
+                    ],
+                    "node_j": [
+                        0.728,
+                        21.0
+                    ],
+                    "lenght": 1.442,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "M3",
+                    "node_i": [
+                        3.374,
+                        18.0
+                    ],
+                    "node_j": [
+                        3.32,
+                        19.559
+                    ],
+                    "lenght": 1.56,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M4",
+                    "node_i": [
+                        3.32,
+                        19.559
+                    ],
+                    "node_j": [
+                        3.27,
+                        21.0
+                    ],
+                    "lenght": 1.442,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "D1",
+                    "node_i": [
+                        0.624,
+                        18.0
+                    ],
+                    "node_j": [
+                        1.999,
+                        19.559
+                    ],
+                    "lenght": 2.079,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.021
+                },
+                {
+                    "element": "D2",
+                    "node_i": [
+                        1.999,
+                        19.559
+                    ],
+                    "node_j": [
+                        3.27,
+                        21.0
+                    ],
+                    "lenght": 1.921,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.019
+                },
+                {
+                    "element": "D3",
+                    "node_i": [
+                        1.999,
+                        19.559
+                    ],
+                    "node_j": [
+                        3.374,
+                        18.0
+                    ],
+                    "lenght": 2.079,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.021
+                },
+                {
+                    "element": "D4",
+                    "node_i": [
+                        1.999,
+                        19.559
+                    ],
+                    "node_j": [
+                        0.728,
+                        21.0
+                    ],
+                    "lenght": 1.921,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.019
+                },
+                {
+                    "element": "C1",
+                    "node_i": [
+                        1.999,
+                        19.559
+                    ],
+                    "node_j": [
+                        0.678,
+                        19.559
+                    ],
+                    "lenght": 1.321,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.013
+                },
+                {
+                    "element": "C2",
+                    "node_i": [
+                        1.999,
+                        19.559
+                    ],
+                    "node_j": [
+                        3.32,
+                        19.559
+                    ],
+                    "lenght": 1.321,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.013
+                }
+            ]
+        },
+        {
+            "section": 8,
+            "elements": [
+                {
+                    "element": "M1",
+                    "node_i": [
+                        0.728,
                         21.0
                     ],
                     "node_j": [
-                        2.25,
+                        0.782,
+                        22.564
+                    ],
+                    "lenght": 1.565,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M2",
+                    "node_i": [
+                        0.782,
+                        22.564
+                    ],
+                    "node_j": [
+                        0.832,
+                        24.0
+                    ],
+                    "lenght": 1.437,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "M3",
+                    "node_i": [
+                        3.27,
                         21.0
+                    ],
+                    "node_j": [
+                        3.215,
+                        22.564
+                    ],
+                    "lenght": 1.565,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M4",
+                    "node_i": [
+                        3.215,
+                        22.564
+                    ],
+                    "node_j": [
+                        3.165,
+                        24.0
+                    ],
+                    "lenght": 1.437,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "D1",
+                    "node_i": [
+                        0.728,
+                        21.0
+                    ],
+                    "node_j": [
+                        1.999,
+                        22.564
+                    ],
+                    "lenght": 2.015,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.02
+                },
+                {
+                    "element": "D2",
+                    "node_i": [
+                        1.999,
+                        22.564
+                    ],
+                    "node_j": [
+                        3.165,
+                        24.0
+                    ],
+                    "lenght": 1.85,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.018
+                },
+                {
+                    "element": "D3",
+                    "node_i": [
+                        1.999,
+                        22.564
+                    ],
+                    "node_j": [
+                        3.27,
+                        21.0
+                    ],
+                    "lenght": 2.015,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.02
+                },
+                {
+                    "element": "D4",
+                    "node_i": [
+                        1.999,
+                        22.564
+                    ],
+                    "node_j": [
+                        0.832,
+                        24.0
+                    ],
+                    "lenght": 1.85,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.019
+                },
+                {
+                    "element": "C1",
+                    "node_i": [
+                        1.999,
+                        22.564
+                    ],
+                    "node_j": [
+                        0.782,
+                        22.564
+                    ],
+                    "lenght": 1.217,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.012
+                },
+                {
+                    "element": "C2",
+                    "node_i": [
+                        1.999,
+                        22.564
+                    ],
+                    "node_j": [
+                        3.215,
+                        22.564
+                    ],
+                    "lenght": 1.216,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.012
+                }
+            ]
+        },
+        {
+            "section": 9,
+            "elements": [
+                {
+                    "element": "M1",
+                    "node_i": [
+                        0.832,
+                        24.0
+                    ],
+                    "node_j": [
+                        0.887,
+                        25.57
+                    ],
+                    "lenght": 1.571,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M2",
+                    "node_i": [
+                        0.887,
+                        25.57
+                    ],
+                    "node_j": [
+                        0.936,
+                        27.0
+                    ],
+                    "lenght": 1.431,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "M3",
+                    "node_i": [
+                        3.165,
+                        24.0
+                    ],
+                    "node_j": [
+                        3.111,
+                        25.57
+                    ],
+                    "lenght": 1.571,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M4",
+                    "node_i": [
+                        3.111,
+                        25.57
+                    ],
+                    "node_j": [
+                        3.061,
+                        27.0
+                    ],
+                    "lenght": 1.431,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "D1",
+                    "node_i": [
+                        0.832,
+                        24.0
+                    ],
+                    "node_j": [
+                        1.999,
+                        25.57
+                    ],
+                    "lenght": 1.956,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.02
+                },
+                {
+                    "element": "D2",
+                    "node_i": [
+                        1.999,
+                        25.57
+                    ],
+                    "node_j": [
+                        3.061,
+                        27.0
+                    ],
+                    "lenght": 1.781,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.018
+                },
+                {
+                    "element": "D3",
+                    "node_i": [
+                        1.999,
+                        25.57
+                    ],
+                    "node_j": [
+                        3.165,
+                        24.0
+                    ],
+                    "lenght": 1.956,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.02
+                },
+                {
+                    "element": "D4",
+                    "node_i": [
+                        1.999,
+                        25.57
+                    ],
+                    "node_j": [
+                        0.936,
+                        27.0
+                    ],
+                    "lenght": 1.782,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.018
+                },
+                {
+                    "element": "C1",
+                    "node_i": [
+                        1.999,
+                        25.57
+                    ],
+                    "node_j": [
+                        0.887,
+                        25.57
+                    ],
+                    "lenght": 1.112,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.011
+                },
+                {
+                    "element": "C2",
+                    "node_i": [
+                        1.999,
+                        25.57
+                    ],
+                    "node_j": [
+                        3.111,
+                        25.57
+                    ],
+                    "lenght": 1.112,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.011
+                }
+            ]
+        },
+        {
+            "section": 10,
+            "elements": [
+                {
+                    "element": "M1",
+                    "node_i": [
+                        0.936,
+                        27.0
+                    ],
+                    "node_j": [
+                        0.991,
+                        28.577
+                    ],
+                    "lenght": 1.578,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M2",
+                    "node_i": [
+                        0.991,
+                        28.577
+                    ],
+                    "node_j": [
+                        1.04,
+                        30.0
+                    ],
+                    "lenght": 1.424,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "M3",
+                    "node_i": [
+                        3.061,
+                        27.0
+                    ],
+                    "node_j": [
+                        3.006,
+                        28.577
+                    ],
+                    "lenght": 1.578,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M4",
+                    "node_i": [
+                        3.006,
+                        28.577
+                    ],
+                    "node_j": [
+                        2.957,
+                        30.0
+                    ],
+                    "lenght": 1.424,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "D1",
+                    "node_i": [
+                        0.936,
+                        27.0
+                    ],
+                    "node_j": [
+                        1.998,
+                        28.577
+                    ],
+                    "lenght": 1.901,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.019
+                },
+                {
+                    "element": "D2",
+                    "node_i": [
+                        1.998,
+                        28.577
+                    ],
+                    "node_j": [
+                        2.957,
+                        30.0
+                    ],
+                    "lenght": 1.716,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.017
+                },
+                {
+                    "element": "D3",
+                    "node_i": [
+                        1.998,
+                        28.577
+                    ],
+                    "node_j": [
+                        3.061,
+                        27.0
+                    ],
+                    "lenght": 1.902,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.019
+                },
+                {
+                    "element": "D4",
+                    "node_i": [
+                        1.998,
+                        28.577
+                    ],
+                    "node_j": [
+                        1.04,
+                        30.0
+                    ],
+                    "lenght": 1.715,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.017
+                },
+                {
+                    "element": "C1",
+                    "node_i": [
+                        1.998,
+                        28.577
+                    ],
+                    "node_j": [
+                        0.991,
+                        28.577
+                    ],
+                    "lenght": 1.007,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.01
+                },
+                {
+                    "element": "C2",
+                    "node_i": [
+                        1.998,
+                        28.577
+                    ],
+                    "node_j": [
+                        3.006,
+                        28.577
+                    ],
+                    "lenght": 1.008,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.01
+                }
+            ]
+        },
+        {
+            "section": 11,
+            "elements": [
+                {
+                    "element": "M1",
+                    "node_i": [
+                        1.04,
+                        30.0
+                    ],
+                    "node_j": [
+                        1.095,
+                        31.586
+                    ],
+                    "lenght": 1.587,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M2",
+                    "node_i": [
+                        1.095,
+                        31.586
+                    ],
+                    "node_j": [
+                        1.144,
+                        33.0
+                    ],
+                    "lenght": 1.415,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "M3",
+                    "node_i": [
+                        2.957,
+                        30.0
+                    ],
+                    "node_j": [
+                        2.902,
+                        31.586
+                    ],
+                    "lenght": 1.587,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M4",
+                    "node_i": [
+                        2.902,
+                        31.586
+                    ],
+                    "node_j": [
+                        2.852,
+                        33.0
+                    ],
+                    "lenght": 1.415,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "D1",
+                    "node_i": [
+                        1.04,
+                        30.0
+                    ],
+                    "node_j": [
+                        1.998,
+                        31.586
+                    ],
+                    "lenght": 1.853,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.019
+                },
+                {
+                    "element": "D2",
+                    "node_i": [
+                        1.998,
+                        31.586
+                    ],
+                    "node_j": [
+                        2.852,
+                        33.0
+                    ],
+                    "lenght": 1.652,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.017
+                },
+                {
+                    "element": "D3",
+                    "node_i": [
+                        1.998,
+                        31.586
+                    ],
+                    "node_j": [
+                        2.957,
+                        30.0
+                    ],
+                    "lenght": 1.853,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.019
+                },
+                {
+                    "element": "D4",
+                    "node_i": [
+                        1.998,
+                        31.586
+                    ],
+                    "node_j": [
+                        1.144,
+                        33.0
+                    ],
+                    "lenght": 1.652,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.017
+                },
+                {
+                    "element": "C1",
+                    "node_i": [
+                        1.998,
+                        31.586
+                    ],
+                    "node_j": [
+                        1.095,
+                        31.586
+                    ],
+                    "lenght": 0.903,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.009
+                },
+                {
+                    "element": "C2",
+                    "node_i": [
+                        1.998,
+                        31.586
+                    ],
+                    "node_j": [
+                        2.902,
+                        31.586
+                    ],
+                    "lenght": 0.904,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.009
+                }
+            ]
+        },
+        {
+            "section": 12,
+            "elements": [
+                {
+                    "element": "M1",
+                    "node_i": [
+                        1.144,
+                        33.0
+                    ],
+                    "node_j": [
+                        1.199,
+                        34.597
+                    ],
+                    "lenght": 1.598,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M2",
+                    "node_i": [
+                        1.199,
+                        34.597
+                    ],
+                    "node_j": [
+                        1.248,
+                        36.0
+                    ],
+                    "lenght": 1.404,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "M3",
+                    "node_i": [
+                        2.852,
+                        33.0
+                    ],
+                    "node_j": [
+                        2.797,
+                        34.597
+                    ],
+                    "lenght": 1.598,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "M4",
+                    "node_i": [
+                        2.797,
+                        34.597
+                    ],
+                    "node_j": [
+                        2.748,
+                        36.0
+                    ],
+                    "lenght": 1.404,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.014
+                },
+                {
+                    "element": "D1",
+                    "node_i": [
+                        1.144,
+                        33.0
+                    ],
+                    "node_j": [
+                        1.998,
+                        34.597
+                    ],
+                    "lenght": 1.811,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.018
+                },
+                {
+                    "element": "D2",
+                    "node_i": [
+                        1.998,
+                        34.597
+                    ],
+                    "node_j": [
+                        2.748,
+                        36.0
+                    ],
+                    "lenght": 1.591,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "D3",
+                    "node_i": [
+                        1.998,
+                        34.597
+                    ],
+                    "node_j": [
+                        2.852,
+                        33.0
+                    ],
+                    "lenght": 1.811,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.018
+                },
+                {
+                    "element": "D4",
+                    "node_i": [
+                        1.998,
+                        34.597
+                    ],
+                    "node_j": [
+                        1.248,
+                        36.0
+                    ],
+                    "lenght": 1.591,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.016
+                },
+                {
+                    "element": "C1",
+                    "node_i": [
+                        1.998,
+                        34.597
+                    ],
+                    "node_j": [
+                        1.199,
+                        34.597
+                    ],
+                    "lenght": 0.799,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.008
+                },
+                {
+                    "element": "C2",
+                    "node_i": [
+                        1.998,
+                        34.597
+                    ],
+                    "node_j": [
+                        2.797,
+                        34.597
+                    ],
+                    "lenght": 0.799,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.008
+                }
+            ]
+        },
+        {
+            "section": 13,
+            "elements": [
+                {
+                    "element": "M1",
+                    "node_i": [
+                        1.248,
+                        36.0
+                    ],
+                    "node_j": [
+                        1.248,
+                        37.5
+                    ],
+                    "lenght": 1.5,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.015
+                },
+                {
+                    "element": "M2",
+                    "node_i": [
+                        1.248,
+                        37.5
+                    ],
+                    "node_j": [
+                        1.248,
+                        39.0
+                    ],
+                    "lenght": 1.5,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.015
+                },
+                {
+                    "element": "M3",
+                    "node_i": [
+                        2.748,
+                        36.0
+                    ],
+                    "node_j": [
+                        2.748,
+                        37.5
+                    ],
+                    "lenght": 1.5,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.015
+                },
+                {
+                    "element": "M4",
+                    "node_i": [
+                        2.748,
+                        37.5
+                    ],
+                    "node_j": [
+                        2.748,
+                        39.0
+                    ],
+                    "lenght": 1.5,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.015
+                },
+                {
+                    "element": "D1",
+                    "node_i": [
+                        1.248,
+                        36.0
+                    ],
+                    "node_j": [
+                        1.998,
+                        37.5
+                    ],
+                    "lenght": 1.677,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.017
+                },
+                {
+                    "element": "D2",
+                    "node_i": [
+                        1.998,
+                        37.5
+                    ],
+                    "node_j": [
+                        2.748,
+                        39.0
+                    ],
+                    "lenght": 1.677,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.017
+                },
+                {
+                    "element": "D3",
+                    "node_i": [
+                        1.998,
+                        37.5
+                    ],
+                    "node_j": [
+                        2.748,
+                        36.0
+                    ],
+                    "lenght": 1.677,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.017
+                },
+                {
+                    "element": "D4",
+                    "node_i": [
+                        1.998,
+                        37.5
+                    ],
+                    "node_j": [
+                        1.248,
+                        39.0
+                    ],
+                    "lenght": 1.677,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.017
+                },
+                {
+                    "element": "C1",
+                    "node_i": [
+                        1.998,
+                        37.5
+                    ],
+                    "node_j": [
+                        1.248,
+                        37.5
                     ],
                     "lenght": 0.75,
                     "secction_type": "round",
                     "cross_area": 60.0,
                     "projected_width": 0.01,
-                    "projected_area": 0.0075
+                    "projected_area": 0.007
+                },
+                {
+                    "element": "C2",
+                    "node_i": [
+                        1.998,
+                        37.5
+                    ],
+                    "node_j": [
+                        2.748,
+                        37.5
+                    ],
+                    "lenght": 0.75,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.007
+                }
+            ]
+        },
+        {
+            "section": 14,
+            "elements": [
+                {
+                    "element": "M1",
+                    "node_i": [
+                        1.248,
+                        39.0
+                    ],
+                    "node_j": [
+                        1.248,
+                        40.5
+                    ],
+                    "lenght": 1.5,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.015
+                },
+                {
+                    "element": "M2",
+                    "node_i": [
+                        1.248,
+                        40.5
+                    ],
+                    "node_j": [
+                        1.248,
+                        42.0
+                    ],
+                    "lenght": 1.5,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.015
+                },
+                {
+                    "element": "M3",
+                    "node_i": [
+                        2.748,
+                        39.0
+                    ],
+                    "node_j": [
+                        2.748,
+                        40.5
+                    ],
+                    "lenght": 1.5,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.015
+                },
+                {
+                    "element": "M4",
+                    "node_i": [
+                        2.748,
+                        40.5
+                    ],
+                    "node_j": [
+                        2.748,
+                        42.0
+                    ],
+                    "lenght": 1.5,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.015
+                },
+                {
+                    "element": "D1",
+                    "node_i": [
+                        1.248,
+                        39.0
+                    ],
+                    "node_j": [
+                        1.998,
+                        40.5
+                    ],
+                    "lenght": 1.677,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.017
+                },
+                {
+                    "element": "D2",
+                    "node_i": [
+                        1.998,
+                        40.5
+                    ],
+                    "node_j": [
+                        2.748,
+                        42.0
+                    ],
+                    "lenght": 1.677,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.017
+                },
+                {
+                    "element": "D3",
+                    "node_i": [
+                        1.998,
+                        40.5
+                    ],
+                    "node_j": [
+                        2.748,
+                        39.0
+                    ],
+                    "lenght": 1.677,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.017
+                },
+                {
+                    "element": "D4",
+                    "node_i": [
+                        1.998,
+                        40.5
+                    ],
+                    "node_j": [
+                        1.248,
+                        42.0
+                    ],
+                    "lenght": 1.677,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.017
+                },
+                {
+                    "element": "C1",
+                    "node_i": [
+                        1.998,
+                        40.5
+                    ],
+                    "node_j": [
+                        1.248,
+                        40.5
+                    ],
+                    "lenght": 0.75,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.007
+                },
+                {
+                    "element": "C2",
+                    "node_i": [
+                        1.998,
+                        40.5
+                    ],
+                    "node_j": [
+                        2.748,
+                        40.5
+                    ],
+                    "lenght": 0.75,
+                    "secction_type": "round",
+                    "cross_area": 60.0,
+                    "projected_width": 0.01,
+                    "projected_area": 0.007
                 }
             ]
         }

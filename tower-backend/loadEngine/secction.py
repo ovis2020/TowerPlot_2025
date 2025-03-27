@@ -23,7 +23,7 @@ class Section:
 
         segmentHeight = totalHeight / (variableSegments + constantSegments)
         taperDelta = (baseWidth - topWidth) / 2
-        alpha = np.arctan(taperDelta / totalHeight)
+        alpha = np.arctan(taperDelta / (variableSegments*segmentHeight))
 
         currentBase = baseWidth
         coordinatesList = []
@@ -72,7 +72,6 @@ class Section:
             }
 
             coordinatesList.append(localCoords)
-            secction_init_x = secction_init_x + round(segmentDelta, 3)
             secction_init_y = secction_init_y + round(segmentHeight, 3)
 
         return coordinatesList
@@ -89,110 +88,110 @@ class Section:
                 'element': 'M1',
                 'node_i': coordinatesList[i]['a'],
                 'node_j': coordinatesList[i]['e'],
-                'lenght': self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['e']),
+                'lenght': round(self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['e']),3),
                 'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
                 'cross_area': 60.00,
                 'projected_width': 0.01,
-                'projected_area': 0.01*self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['e']),
+                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['e']),3),
             }
 
             M2 = {
                 'element': 'M2',
                 'node_i': coordinatesList[i]['e'],
                 'node_j': coordinatesList[i]['c'],
-                'lenght': self.elementLength(coordinatesList[i]['e'], coordinatesList[i]['c']),
+                'lenght': round(self.elementLength(coordinatesList[i]['e'], coordinatesList[i]['c']),3),
                 'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
                 'cross_area': 60.00,
                 'projected_width': 0.01,
-                'projected_area': 0.01*self.elementLength(coordinatesList[i]['e'], coordinatesList[i]['c']),
+                'projected_area':round(0.01*self.elementLength(coordinatesList[i]['e'], coordinatesList[i]['c']),3),
             } 
 
             M3 = {
                 'element': 'M3',
                 'node_i': coordinatesList[i]['b'],
                 'node_j': coordinatesList[i]['f'],
-                'lenght': self.elementLength(coordinatesList[i]['b'], coordinatesList[i]['f']),
+                'lenght': round(self.elementLength(coordinatesList[i]['b'], coordinatesList[i]['f']),3),
                 'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
                 'cross_area': 60.00,
                 'projected_width': 0.01,
-                'projected_area': 0.01*self.elementLength(coordinatesList[i]['b'], coordinatesList[i]['f']),
+                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['b'], coordinatesList[i]['f']),3),
             } 
 
             M4 = {
                 'element': 'M4',
                 'node_i': coordinatesList[i]['f'],
                 'node_j': coordinatesList[i]['d'],
-                'lenght': self.elementLength(coordinatesList[i]['f'], coordinatesList[i]['d']),
+                'lenght': round(self.elementLength(coordinatesList[i]['f'], coordinatesList[i]['d']),3),
                 'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
                 'cross_area': 60.00,
                 'projected_width': 0.01,
-                'projected_area': 0.01*self.elementLength(coordinatesList[i]['f'], coordinatesList[i]['d']),
+                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['f'], coordinatesList[i]['d']),3),
             } 
 
             D1 = {
                 'element': 'D1',
                 'node_i': coordinatesList[i]['a'],
                 'node_j': coordinatesList[i]['g'],
-                'lenght': self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['g']),
+                'lenght': round(self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['g']),3),
                 'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
                 'cross_area': 60.00,
                 'projected_width': 0.01,
-                'projected_area': 0.01*self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['g']),
+                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['g']),3),
             } 
 
             D2 = {
                 'element': 'D2',
                 'node_i': coordinatesList[i]['g'],
                 'node_j': coordinatesList[i]['d'],
-                'lenght': self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['d']),
+                'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['d']),3),
                 'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
                 'cross_area': 60.00,
                 'projected_width': 0.01,
-                'projected_area': 0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['d']),
+                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['d']),3),
             } 
 
             D3 = {
                 'element': 'D3',
                 'node_i': coordinatesList[i]['g'],
                 'node_j': coordinatesList[i]['b'],
-                'lenght': self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['b']),
+                'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['b']),3),
                 'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
                 'cross_area': 60.00,
                 'projected_width': 0.01,
-                'projected_area': 0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['b']),
+                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['b']),3),
             } 
 
             D4 = {
                 'element': 'D4',
                 'node_i': coordinatesList[i]['g'],
                 'node_j': coordinatesList[i]['c'],
-                'lenght': self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['c']),
+                'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['c']),3),
                 'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
                 'cross_area': 60.00,
                 'projected_width': 0.01,
-                'projected_area': 0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['c']),
+                'projected_area':round(0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['c']),3),
             } 
 
             C1 = {
                 'element': 'C1',
                 'node_i': coordinatesList[i]['g'],
                 'node_j': coordinatesList[i]['e'],
-                'lenght': self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),
+                'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),3),
                 'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
                 'cross_area': 60.00,
                 'projected_width': 0.01,
-                'projected_area': 0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),
+                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),3),
             } 
 
             C2 = {
                 'element': 'C2',
                 'node_i': coordinatesList[i]['g'],
                 'node_j': coordinatesList[i]['f'],
-                'lenght': self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['f']),
+                'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['f']),3),
                 'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
                 'cross_area': 60.00,
                 'projected_width': 0.01,
-                'projected_area': 0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),
+                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),3),
             }
 
             secctionElements = {
@@ -234,11 +233,11 @@ class Section:
 
 if __name__ == "__main__":
     towerData = {
-        "Tower_Base_Width": 3.0,
-        "Top_Width": 1.0,
-        "Height": 24.0,
-        "Variable_Segments": 3,
-        "Constant_Segments": 1
+        "Tower_Base_Width": 4.0,
+        "Top_Width": 1.5,
+        "Height": 42.0,
+        "Variable_Segments": 12,
+        "Constant_Segments": 2
     }
 
     section = Section(towerData)
