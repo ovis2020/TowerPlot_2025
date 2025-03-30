@@ -34,7 +34,7 @@ for i, section in enumerate(elements):
             x=x_vals,
             y=y_vals,
             mode='lines',
-            line=dict(color=color, width=1.5),
+            line=dict(color=color, width=2),
             showlegend=False
         ))
 

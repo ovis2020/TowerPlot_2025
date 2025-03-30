@@ -7,6 +7,9 @@ from google.cloud import storage, firestore
 from flask_cors import CORS
 from dotenv import load_dotenv
 from loadEngine.geometry import Geometry
+from secction import Section  
+from utils import normalizeTowerDataKeys
+
 
 # ✅ Load environment variables
 load_dotenv()
@@ -211,6 +214,48 @@ def calculate_segments_from_json(tower_id):
         return jsonify({
             "tower_id": tower_id,
             "segments": segment_list
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route("/api/calculate/section/<tower_id>", methods=["POST"])
+def calculate_section_and_save(tower_id):
+    try:
+        tower_data = request.json
+        towerData = normalizeTowerDataKeys(tower_data)
+
+        section = Section(towerData)
+        result = {
+            "coordinates": section.getCoordinates(),
+            "elements": section.getElements()
+        }
+
+        file_name = f"sections/tower_sections_{tower_id}.json"
+        file_url = upload_json_to_gcs(file_name, result)
+
+        return jsonify({
+            "message": "Section data calculated and uploaded successfully",
+            "tower_id": tower_id,
+            "url": file_url,
+            "data": result
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/calculate/section-json", methods=["POST"])
+def calculate_section_from_json():
+    try:
+        tower_data = request.json
+        towerData = normalizeTowerDataKeys(tower_data)
+
+        section = Section(towerData)
+
+        return jsonify({
+            "coordinates": section.getCoordinates(),
+            "elements": section.getElements()
         })
 
     except Exception as e:

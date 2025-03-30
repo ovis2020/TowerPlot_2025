@@ -9,7 +9,7 @@ const TowerForm = () => {
     height: "",
     variable_segments: "",
     constant_segments: "",
-    cross_section: "square",
+    cross_section: "",
     exposure_category: "",
     importance_factor: "",
     wind_speed_service: "",
@@ -37,28 +37,57 @@ const TowerForm = () => {
     }));
   };
 
-  // ✅ Submit form and redirect
+  // ✅ Submit form and trigger backend section calculation
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting Tower Data:", formData);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/towers", {
+      // 1️⃣ Upload base tower data to /api/towers
+      const towerRes = await fetch("http://127.0.0.1:5000/api/towers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       });
 
-      const result = await response.json();
+      const towerResult = await towerRes.json();
 
-      if (response.ok) {
-        navigate("/results", { state: { towerData: formData } });
-      } else {
-        alert(result.error || "Failed to submit tower data.");
+      if (!towerRes.ok) {
+        alert(towerResult.error || "Failed to submit tower data.");
+        return;
       }
+
+      // 2️⃣ Call /api/calculate/section/<tower_id>
+      const sectionRes = await fetch(`http://127.0.0.1:5000/api/calculate/section/${formData.tower_id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          "Tower Base Width": parseFloat(formData.tower_base_width),
+          "Top Width": parseFloat(formData.top_width),
+          "Height": parseFloat(formData.height),
+          "Variable Segments": parseInt(formData.variable_segments),
+          "Constant Segments": parseInt(formData.constant_segments)
+        })
+      });
+
+      const sectionResult = await sectionRes.json();
+
+      if (!sectionRes.ok) {
+        alert(sectionResult.error || "Section calculation failed.");
+        return;
+      }
+
+      // 3️⃣ Redirect with all data
+      navigate("/results", {
+        state: {
+          towerData: formData,
+          sectionData: sectionResult
+        }
+      });
+
     } catch (error) {
-      console.error("Error submitting tower data:", error);
-      alert("Failed to submit tower data.");
+      console.error("Error:", error);
+      alert("Something went wrong during tower submission.");
     }
   };
 
