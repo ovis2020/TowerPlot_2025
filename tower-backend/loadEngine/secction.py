@@ -233,10 +233,10 @@ class Section:
 
 if __name__ == "__main__":
     towerData = {
-        "Tower_Base_Width": 4.0,
-        "Top_Width": 1.5,
-        "Height": 42.0,
-        "Variable_Segments": 12,
+        "Tower_Base_Width": 3.6,
+        "Top_Width": 2,
+        "Height": 29.3,
+        "Variable_Segments": 8,
         "Constant_Segments": 2
     }
 
