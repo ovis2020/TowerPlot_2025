@@ -1,79 +1,72 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Plot from "react-plotly.js";
 
-const TowerPlot = ({ coordinates = [], elements = [] }) => {
-  if (!coordinates.length || !elements.length) {
-    return <p className="text-red-400">⚠️ No section data to display.</p>;
-  }
+const TowerPlot = ({ coordinates, elements }) => {
+  const plotRef = useRef(null);
 
-  // Unique nodes for red dots
-  const uniqueNodes = new Set();
-  coordinates.forEach(section => {
-    Object.values(section).forEach(point => {
-      if (Array.isArray(point)) {
-        uniqueNodes.add(JSON.stringify(point));
-      }
-    });
-  });
-  const nodeCoords = Array.from(uniqueNodes).map(p => JSON.parse(p));
-  const xNodes = nodeCoords.map(p => p[0]);
-  const yNodes = nodeCoords.map(p => p[1]);
+  if (!coordinates || !elements) return null;
 
-  // Plot structure lines
-  const structureTraces = [];
-  const sectionColors = ["red", "white"];
-
-  elements.forEach((section, sectionIndex) => {
-    const color = sectionColors[sectionIndex % sectionColors.length];
-    section.elements.forEach((elem) => {
-      const x = [elem.node_i[0], elem.node_j[0]];
-      const y = [elem.node_i[1], elem.node_j[1]];
-      structureTraces.push({
-        x,
-        y,
-        mode: "lines",
-        line: { color, width: 2 },
-        type: "scatter",
-        showlegend: false
-      });
+  // Extract node points
+  const nodeSet = new Set();
+  coordinates.forEach((coord) => {
+    Object.values(coord).forEach((pt) => {
+      if (Array.isArray(pt)) nodeSet.add(pt.toString());
     });
   });
 
-  // Red node dots
+  const nodes = Array.from(nodeSet).map((pt) => pt.split(",").map(Number));
+  const xNodes = nodes.map((n) => n[0]);
+  const yNodes = nodes.map((n) => n[1]);
+
+  // Plot lines
+  const lineTraces = elements.map((section, i) => {
+    const color = i % 2 === 0 ? "red" : "white";
+    return section.elements.map((el) => ({
+      x: [el.node_i[0], el.node_j[0]],
+      y: [el.node_i[1], el.node_j[1]],
+      mode: "lines",
+      line: { color, width: 2 },
+      type: "scatter",
+      showlegend: false
+    }));
+  }).flat();
+
   const nodeTrace = {
     x: xNodes,
     y: yNodes,
     mode: "markers",
-    type: "scatter",
     marker: { color: "red", size: 6 },
+    type: "scatter",
     showlegend: false
+  };
+
+  const layout = {
+    autosize: true,
+    margin: { l: 10, r: 10, t: 10, b: 10 },
+    plot_bgcolor: "#1e293b",
+    paper_bgcolor: "#1e293b",
+    xaxis: {
+      showgrid: true,
+      gridcolor: "#FFCC99",
+      dtick: 1
+    },
+    yaxis: {
+      showgrid: true,
+      gridcolor: "#FFCC99",
+      dtick: 1,
+      scaleanchor: "x",
+      scaleratio: 1
+    }
   };
 
   return (
     <Plot
-      data={[...structureTraces, nodeTrace]}
-      layout={{
-        title: "📊 Tower Structure Plot",
-        paper_bgcolor: "#1f2937",
-        plot_bgcolor: "#1f2937",
-        font: { color: "white" },
-        xaxis: {
-          showgrid: true,
-          gridcolor: "#FFCC99",
-          zeroline: false
-        },
-        yaxis: {
-          showgrid: true,
-          gridcolor: "#FFCC99",
-          scaleanchor: "x",
-          scaleratio: 1,
-          zeroline: false
-        },
-        margin: { l: 10, r: 10, t: 40, b: 10 },
-        height: 500
-      }}
-      config={{ responsive: true }}
+      ref={plotRef}
+      data={[...lineTraces, nodeTrace]}
+      layout={layout}
+      useResizeHandler={true}
       style={{ width: "100%", height: "100%" }}
+      config={{ responsive: true }}
     />
   );
 };

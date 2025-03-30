@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import TowerPlot from "../components/TowerPlot"; // ✅ Make sure this is correctly imported
+import TowerPlot from "../components/TowerPlot";
+import "../Results.css";
+
+
 
 const ResultsPage = () => {
   const location = useLocation();
@@ -9,14 +12,12 @@ const ResultsPage = () => {
 
   const [activeTab, setActiveTab] = useState("tower");
 
-  // ✅ Debugging state
   useEffect(() => {
     console.log("📦 ResultsPage state:", { towerData, sectionData });
     console.log("🧩 Section Coordinates:", sectionData?.data?.coordinates);
     console.log("🧩 Section Elements:", sectionData?.data?.elements);
   }, []);
 
-  // ✅ Fallback if state not passed
   if (!towerData || !sectionData) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
@@ -66,46 +67,50 @@ const ResultsPage = () => {
         </button>
       </div>
 
-      {/* JSON Viewer */}
-      <div className="bg-gray-800 rounded-xl p-4 shadow max-w-5xl mx-auto">
-        <h2 className="text-xl font-semibold mb-2">{jsonData.title}</h2>
-        <pre className="bg-gray-700 rounded p-3 overflow-x-auto max-h-[70vh]">
-          {JSON.stringify(jsonData.data, null, 2)}
-        </pre>
-      </div>
+      {/* Two-column layout (JSON + Plot) */}
+      <div className="results-columns">
+        {/* Left JSON panel */}
+        <div className="panel-box">
+          <h2 className="text-xl font-semibold mb-2">{jsonData.title}</h2>
+          <pre className="json-preview">
+            {JSON.stringify(jsonData.data, null, 2)}
+          </pre>
 
-      {/* Buttons */}
-      <div className="flex justify-center mt-6 gap-4">
-        <button
-          className="px-6 py-2 bg-green-600 hover:bg-green-700 rounded font-bold"
-          onClick={() =>
-            navigator.clipboard.writeText(
-              JSON.stringify(jsonData.data, null, 2)
-            )
-          }
-        >
-          📋 Copy JSON
-        </button>
-        <button
-          className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded font-bold"
-          onClick={() => navigate("/")}
-        >
-          🔙 Back to Form
-        </button>
-      </div>
+          <div className="action-buttons">
+            <button
+              className="copy-btn"
+              onClick={() =>
+                navigator.clipboard.writeText(
+                  JSON.stringify(jsonData.data, null, 2)
+                )
+              }
+            >
+              📋 Copy JSON
+            </button>
+            <button
+              className="back-btn"
+              onClick={() => navigate("/")}
+            >
+              🔙 Back to Form
+            </button>
+          </div>
+        </div>
 
-      <h2 className="text-xl font-semibold text-center mt-10 mb-2">📊 Tower Plot</h2>
-      <div className="w-full h-[600px] bg-gray-800 rounded-xl p-2 flex justify-center items-center">
-      {sectionData.data?.coordinates && sectionData.data?.elements ? (
-          <TowerPlot
-            coordinates={sectionData.data.coordinates}
-            elements={sectionData.data.elements}
-          />
-        ) : (
-          <p className="text-yellow-300">⚠️ No section data to display.</p>
-        )}
+        {/* Right Plot panel */}
+        <div className="flex-1 bg-gray-800 rounded-xl p-4 shadow-lg">
+          <h2 className="text-xl font-semibold mb-2">📊 Tower Plot</h2>
+          <div className="plot-container">
+            {sectionData.data?.coordinates && sectionData.data?.elements ? (
+              <TowerPlot
+                coordinates={sectionData.data.coordinates}
+                elements={sectionData.data.elements}
+              />
+            ) : (
+              <p className="text-yellow-300">⚠️ No section data to display.</p>
+            )}
+          </div>
+        </div>
       </div>
-
     </div>
   );
 };

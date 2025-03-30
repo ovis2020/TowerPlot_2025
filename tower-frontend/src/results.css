@@ -1,0 +1,97 @@
+/* General container and typography */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  h1,
+  h2 {
+    margin: 0 0 1rem 0;
+  }
+  
+  /* Main layout container */
+  .results-page {
+    padding: 2rem;
+    background-color: #1a1a1a;
+    color: white;
+    min-height: 100vh;
+  }
+  
+  /* Flex row for JSON + Plotly split view */
+  .results-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  @media (min-width: 1024px) {
+    .results-columns {
+      flex-direction: row;
+    }
+  }
+  
+  /* Shared box styling */
+  .panel-box {
+    background-color: #2a2a2a;
+    padding: 1.5rem;
+    border-radius: 12px;
+    flex: 1;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* JSON preview area */
+  .json-preview {
+    background-color: #333;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    max-height: 70vh;
+    font-size: 0.85rem;
+    color: #eee;
+    text-align: left;
+    white-space: pre-wrap;
+  }
+  
+  /* Button group */
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .action-buttons button {
+    padding: 0.6rem 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .copy-btn {
+    background-color: #16a34a;
+    color: white;
+  }
+  
+  .copy-btn:hover {
+    background-color: #15803d;
+  }
+  
+  .back-btn {
+    background-color: #2563eb;
+    color: white;
+  }
+  
+  .back-btn:hover {
+    background-color: #1d4ed8;
+  }
+  
+  /* Tower Plot area */
+  .plot-container {
+    width: 100%;
+    height: 600px;
+    background-color: #222;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
