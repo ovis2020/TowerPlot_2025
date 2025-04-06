@@ -89,9 +89,11 @@ body {
   /* Tower Plot area */
   .plot-container {
     width: 100%;
+    max-width: 1200px;        /* 👈 This is what you add */
     height: 600px;
     background-color: #222;
     border-radius: 8px;
     padding: 1rem;
+    margin: 0 auto;            /* ✅ Optional: center it */
   }
   

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import TowerPlot from "../components/TowerPlot";
-import "../Results.css";
+import "../results.css";
+
 
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Plot from "react-plotly.js";
 
 const TowerPlot = ({ coordinates, elements }) => {
@@ -43,16 +43,16 @@ const TowerPlot = ({ coordinates, elements }) => {
   const layout = {
     autosize: true,
     margin: { l: 10, r: 10, t: 10, b: 10 },
-    plot_bgcolor: "#1e293b",
-    paper_bgcolor: "#1e293b",
+    plot_bgcolor: "#000000",
+    paper_bgcolor: "#000000",
     xaxis: {
       showgrid: true,
-      gridcolor: "#FFCC99",
+      gridcolor: "#413f3a",
       dtick: 1
     },
     yaxis: {
       showgrid: true,
-      gridcolor: "#FFCC99",
+      gridcolor: "#413f3a",
       dtick: 1,
       scaleanchor: "x",
       scaleratio: 1
