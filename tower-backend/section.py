@@ -12,6 +12,16 @@ class Section:
         for key in requiredKeys:
             if key not in self.towerData:
                 raise ValueError(f"Missing required parameter: {key}")
+            
+    DEFAULT_ELEMENT_PROPERTIES = {
+        "secction_type": "round",
+        "cross_area": 1222.6,             # mm²
+        "projected_width": 0.0508,        # meters
+        "density": 7850,                  # kg/m³
+        "young_modulus": 200000,          # MPa (N/mm²)
+        "moment_of_inertia": 275000.0     # mm⁴
+        }
+
 
     def getCoordinates(self):
         
@@ -89,10 +99,11 @@ class Section:
                 'node_i': coordinatesList[i]['a'],
                 'node_j': coordinatesList[i]['e'],
                 'lenght': round(self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['e']),3),
-                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
-                'cross_area': 60.00,
-                'projected_width': 0.01,
-                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['e']),3),
+                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
+                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
+                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
+                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['e']), 3)
+
             }
 
             M2 = {
@@ -100,10 +111,11 @@ class Section:
                 'node_i': coordinatesList[i]['e'],
                 'node_j': coordinatesList[i]['c'],
                 'lenght': round(self.elementLength(coordinatesList[i]['e'], coordinatesList[i]['c']),3),
-                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
-                'cross_area': 60.00,
-                'projected_width': 0.01,
-                'projected_area':round(0.01*self.elementLength(coordinatesList[i]['e'], coordinatesList[i]['c']),3),
+                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
+                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
+                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
+                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['e'], coordinatesList[i]['c']), 3)
+
             } 
 
             M3 = {
@@ -111,10 +123,11 @@ class Section:
                 'node_i': coordinatesList[i]['b'],
                 'node_j': coordinatesList[i]['f'],
                 'lenght': round(self.elementLength(coordinatesList[i]['b'], coordinatesList[i]['f']),3),
-                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
-                'cross_area': 60.00,
-                'projected_width': 0.01,
-                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['b'], coordinatesList[i]['f']),3),
+                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
+                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
+                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
+                'projected_area':  round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['b'], coordinatesList[i]['f']), 3)
+
             } 
 
             M4 = {
@@ -122,10 +135,11 @@ class Section:
                 'node_i': coordinatesList[i]['f'],
                 'node_j': coordinatesList[i]['d'],
                 'lenght': round(self.elementLength(coordinatesList[i]['f'], coordinatesList[i]['d']),3),
-                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
-                'cross_area': 60.00,
-                'projected_width': 0.01,
-                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['f'], coordinatesList[i]['d']),3),
+                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
+                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
+                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
+                'projected_area':  round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['f'], coordinatesList[i]['d']), 3)
+
             } 
 
             D1 = {
@@ -133,10 +147,11 @@ class Section:
                 'node_i': coordinatesList[i]['a'],
                 'node_j': coordinatesList[i]['g'],
                 'lenght': round(self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['g']),3),
-                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
-                'cross_area': 60.00,
-                'projected_width': 0.01,
-                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['g']),3),
+                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
+                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
+                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
+                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['g']), 3)
+
             } 
 
             D2 = {
@@ -144,10 +159,11 @@ class Section:
                 'node_i': coordinatesList[i]['g'],
                 'node_j': coordinatesList[i]['d'],
                 'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['d']),3),
-                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
-                'cross_area': 60.00,
-                'projected_width': 0.01,
-                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['d']),3),
+                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
+                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
+                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
+                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['d']), 3)
+
             } 
 
             D3 = {
@@ -155,10 +171,10 @@ class Section:
                 'node_i': coordinatesList[i]['g'],
                 'node_j': coordinatesList[i]['b'],
                 'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['b']),3),
-                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
-                'cross_area': 60.00,
-                'projected_width': 0.01,
-                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['b']),3),
+                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
+                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
+                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
+                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['b']), 3)
             } 
 
             D4 = {
@@ -166,10 +182,10 @@ class Section:
                 'node_i': coordinatesList[i]['g'],
                 'node_j': coordinatesList[i]['c'],
                 'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['c']),3),
-                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
-                'cross_area': 60.00,
-                'projected_width': 0.01,
-                'projected_area':round(0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['c']),3),
+                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
+                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
+                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
+                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['c']), 3)
             } 
 
             C1 = {
@@ -177,10 +193,10 @@ class Section:
                 'node_i': coordinatesList[i]['g'],
                 'node_j': coordinatesList[i]['e'],
                 'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),3),
-                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
-                'cross_area': 60.00,
-                'projected_width': 0.01,
-                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),3),
+                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
+                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
+                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
+                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']), 3)
             } 
 
             C2 = {
@@ -188,10 +204,10 @@ class Section:
                 'node_i': coordinatesList[i]['g'],
                 'node_j': coordinatesList[i]['f'],
                 'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['f']),3),
-                'secction_type': 'round', #must be chosse from 'angular', 'circular', 'rectangular
-                'cross_area': 60.00,
-                'projected_width': 0.01,
-                'projected_area': round(0.01*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),3),
+                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
+                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
+                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
+                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['f']), 3)
             }
 
             secctionElements = {

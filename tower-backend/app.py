@@ -7,7 +7,7 @@ from google.cloud import storage, firestore
 from flask_cors import CORS
 from dotenv import load_dotenv
 from loadEngine.geometry import Geometry
-from secction import Section  
+from section import Section  
 from utils import normalizeTowerDataKeys
 
 
@@ -260,6 +260,15 @@ def calculate_section_from_json():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route("/api/sections/library", methods=["GET"])
+def get_section_library():
+    try:
+        data = download_json_from_gcs("sections/section_library.json")
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 
 # ✅ Run Flask App

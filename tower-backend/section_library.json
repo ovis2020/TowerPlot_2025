@@ -1,0 +1,150 @@
+{
+    "round": [
+        {
+            "name": "RD10",
+            "projected_width": 0.01,
+            "cross_area": 78.54,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 490.87
+        },
+        {
+            "name": "RD30",
+            "projected_width": 0.03,
+            "cross_area": 706.86,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 39760.78
+        },
+        {
+            "name": "RD50",
+            "projected_width": 0.05,
+            "cross_area": 1963.5,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 306796.16
+        },
+        {
+            "name": "RD70",
+            "projected_width": 0.07,
+            "cross_area": 3848.45,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 1178588.12
+        },
+        {
+            "name": "RD90",
+            "projected_width": 0.09,
+            "cross_area": 6361.73,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 3220623.34
+        },
+        {
+            "name": "RD110",
+            "projected_width": 0.11,
+            "cross_area": 9503.32,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 7186884.07
+        },
+        {
+            "name": "RD130",
+            "projected_width": 0.13,
+            "cross_area": 13273.23,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 14019848.09
+        },
+        {
+            "name": "RD150",
+            "projected_width": 0.15,
+            "cross_area": 17671.46,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 24850488.76
+        },
+        {
+            "name": "RD170",
+            "projected_width": 0.17,
+            "cross_area": 22698.01,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 40998275.0
+        },
+        {
+            "name": "RD190",
+            "projected_width": 0.19,
+            "cross_area": 28352.87,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 63971171.28
+        }
+    ],
+    "angular": [
+        {
+            "name": "L38x38x3",
+            "projected_width": 0.0381,
+            "cross_area": 219.6,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 171.45
+        },
+        {
+            "name": "L50x50x3",
+            "projected_width": 0.0508,
+            "cross_area": 295.8,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 228.6
+        },
+        {
+            "name": "L76x76x3",
+            "projected_width": 0.0762,
+            "cross_area": 448.2,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 342.9
+        },
+        {
+            "name": "L101x101x3",
+            "projected_width": 0.1016,
+            "cross_area": 600.6,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 457.2
+        },
+        {
+            "name": "L127x127x3",
+            "projected_width": 0.127,
+            "cross_area": 753.0,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 571.5
+        },
+        {
+            "name": "L152x152x3",
+            "projected_width": 0.1524,
+            "cross_area": 905.4,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 685.8
+        },
+        {
+            "name": "L177x177x3",
+            "projected_width": 0.1778,
+            "cross_area": 1057.8,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 800.1
+        },
+        {
+            "name": "L203x203x3",
+            "projected_width": 0.2032,
+            "cross_area": 1210.2,
+            "density": 7850,
+            "young_modulus": 200000,
+            "moment_of_inertia": 914.4
+        }
+    ]
+}
