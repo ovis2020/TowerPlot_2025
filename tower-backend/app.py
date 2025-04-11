@@ -261,13 +261,45 @@ def calculate_section_from_json():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 @app.route("/api/sections/library", methods=["GET"])
 def get_section_library():
     try:
-        data = download_json_from_gcs("sections/section_library.json")
+        data = download_json_from_gcs("sections/element_sections/section_library.json")
         return jsonify(data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/sections/generate', methods=['POST'])
+def generate_section_with_elements():
+    try:
+        data = request.get_json()
+
+        print("📩 Raw POST payload:", data)
+
+        rawTowerData = data.get("towerData", {})
+        towerData = normalizeTowerDataKeys(rawTowerData)
+
+        print("🧾 Normalized towerData:", towerData)
+
+        elementSections = data.get("elementSections", {})
+        print("🔧 Element Sections:", elementSections)
+
+        sectionLibrary = download_json_from_gcs("sections/element_sections/section_library.json")
+        print("📚 Loaded section library:", sectionLibrary)
+
+        section = Section(towerData, elementSections, sectionLibrary)
+
+        return jsonify({
+            "coordinates": section.getCoordinates(),
+            "elements": section.getElements()
+        })
+
+    except Exception as e:
+        print("❌ Error in /api/sections/generate:", str(e))
+        return jsonify({"error": str(e)}), 500
+
 
 
 

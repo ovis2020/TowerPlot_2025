@@ -6,12 +6,20 @@ import ResultsPage from "./pages/ResultsPage";
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-900 text-white p-4">
-        <Routes>
-          <Route path="/" element={<TowerForm />} />
-          <Route path="/results" element={<ResultsPage />} />
-        </Routes>
-      </div>
+      <Routes>
+        {/* Centered layout for TowerForm */}
+        <Route
+          path="/"
+          element={
+            <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white p-4">
+              <TowerForm />
+            </div>
+          }
+        />
+
+        {/* Full layout for results page */}
+        <Route path="/results" element={<ResultsPage />} />
+      </Routes>
     </Router>
   );
 }

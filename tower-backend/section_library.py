@@ -1,32 +1,28 @@
-import json
 import os
-from dotenv import load_dotenv
+import json
 from google.cloud import storage
+from dotenv import load_dotenv
 
-# ✅ Load .env variables
+# ✅ Load environment variables
 load_dotenv()
 
-# ✅ Extract environment variables
-gcs_key_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-bucket_name = os.getenv("BUCKET_NAME")
+# ✅ Set GCS credentials
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
-# ✅ Sanity checks
-if not gcs_key_path or not os.path.exists(gcs_key_path):
-    raise FileNotFoundError(f"❌ GCS key not found at {gcs_key_path}")
-if not bucket_name:
-    raise ValueError("❌ BUCKET_NAME not set in .env")
+# ✅ Define bucket
+bucket_name = os.getenv("BUCKET_NAME", "towerbucket1")
 
-# ✅ Set up credentials for GCS
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcs_key_path
+# ✅ Path to your section_library.json
+json_path = "C:/Users/rfuen/Desktop/TowerPlot/tower-backend/section_library.json"
 
-# ✅ Load local section data
-with open("section_library.json", "r") as f:
+# ✅ Load the JSON file
+with open(json_path, "r") as f:
     section_data = json.load(f)
 
-# ✅ Upload to nested folder in GCS
+# ✅ Upload to Google Cloud Storage
 client = storage.Client()
 bucket = client.bucket(bucket_name)
-blob = bucket.blob("sections/element_sections/section_library.json")  # 👈 Nested path
+blob = bucket.blob("sections/element_sections/section_library.json")  # 👈 this must match app.py
 blob.upload_from_string(json.dumps(section_data), content_type="application/json")
 
-print("✅ section_library.json uploaded to sections/element_sections/ in GCS.")
+print("✅ Uploaded section_library.json to GCS at sections/element_sections/")

@@ -3,8 +3,11 @@ import json
 import math
 
 class Section:
-    def __init__(self, towerData):
+
+    def __init__(self, towerData, elementSections=None, sectionLibrary=None):
         self.towerData = towerData
+        self.elementSections = elementSections or {}  # maps section → element → name
+        self.sectionLibrary = sectionLibrary or {}    # maps round/angular data
         self._validateInputs()
 
     def _validateInputs(self):
@@ -21,6 +24,16 @@ class Section:
         "young_modulus": 200000,          # MPa (N/mm²)
         "moment_of_inertia": 275000.0     # mm⁴
         }
+
+    def getSectionProps(self, sectionType: str, sectionName: str):
+        if sectionType not in self.sectionLibrary:
+            return self.DEFAULT_ELEMENT_PROPERTIES
+
+        for entry in self.sectionLibrary[sectionType]:
+            if entry["name"] == sectionName:
+                return entry
+
+        return self.DEFAULT_ELEMENT_PROPERTIES
 
 
     def getCoordinates(self):
@@ -86,138 +99,62 @@ class Section:
 
         return coordinatesList
     
-    def getElements (self):
+    def getElements(self):
 
         coordinatesList = self.getCoordinates()
         elementList = []
-        secctionElements = {}
 
         for i in range(len(coordinatesList)):
 
-            M1 = {
-                'element': 'M1',
-                'node_i': coordinatesList[i]['a'],
-                'node_j': coordinatesList[i]['e'],
-                'lenght': round(self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['e']),3),
-                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
-                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
-                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
-                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['e']), 3)
+            sectionNumber = str(coordinatesList[i]["section"])
 
-            }
+            assignedElements = self.elementSections.get(sectionNumber, {})
 
-            M2 = {
-                'element': 'M2',
-                'node_i': coordinatesList[i]['e'],
-                'node_j': coordinatesList[i]['c'],
-                'lenght': round(self.elementLength(coordinatesList[i]['e'], coordinatesList[i]['c']),3),
-                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
-                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
-                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
-                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['e'], coordinatesList[i]['c']), 3)
+            def buildElement(name, node_i, node_j):
 
-            } 
+                assigned = assignedElements.get(name, None)
 
-            M3 = {
-                'element': 'M3',
-                'node_i': coordinatesList[i]['b'],
-                'node_j': coordinatesList[i]['f'],
-                'lenght': round(self.elementLength(coordinatesList[i]['b'], coordinatesList[i]['f']),3),
-                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
-                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
-                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
-                'projected_area':  round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['b'], coordinatesList[i]['f']), 3)
+                if assigned:
+                    sectionType = "round" if assigned.startswith("RD") else "angular"
+                    props = self.getSectionProps(sectionType, assigned)
+                    secType = sectionType
+                else:
+                    props = self.DEFAULT_ELEMENT_PROPERTIES
+                    secType = props["secction_type"]
 
-            } 
+                length = round(self.elementLength(node_i, node_j), 3)
 
-            M4 = {
-                'element': 'M4',
-                'node_i': coordinatesList[i]['f'],
-                'node_j': coordinatesList[i]['d'],
-                'lenght': round(self.elementLength(coordinatesList[i]['f'], coordinatesList[i]['d']),3),
-                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
-                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
-                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
-                'projected_area':  round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['f'], coordinatesList[i]['d']), 3)
+                return {
+                    "element": name,
+                    "node_i": node_i,
+                    "node_j": node_j,
+                    "lenght": length,
+                    "secction_type": secType,
+                    "cross_area": props["cross_area"],
+                    "projected_width": props["projected_width"],
+                    "projected_area": round(props["projected_width"] * length, 3)
+                }
 
-            } 
+            elements = [
+                buildElement("M1", coordinatesList[i]['a'], coordinatesList[i]['e']),
+                buildElement("M2", coordinatesList[i]['e'], coordinatesList[i]['c']),
+                buildElement("M3", coordinatesList[i]['b'], coordinatesList[i]['f']),
+                buildElement("M4", coordinatesList[i]['f'], coordinatesList[i]['d']),
+                buildElement("D1", coordinatesList[i]['a'], coordinatesList[i]['g']),
+                buildElement("D2", coordinatesList[i]['g'], coordinatesList[i]['d']),
+                buildElement("D3", coordinatesList[i]['g'], coordinatesList[i]['b']),
+                buildElement("D4", coordinatesList[i]['g'], coordinatesList[i]['c']),
+                buildElement("C1", coordinatesList[i]['g'], coordinatesList[i]['e']),
+                buildElement("C2", coordinatesList[i]['g'], coordinatesList[i]['f']),
+            ]
 
-            D1 = {
-                'element': 'D1',
-                'node_i': coordinatesList[i]['a'],
-                'node_j': coordinatesList[i]['g'],
-                'lenght': round(self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['g']),3),
-                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
-                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
-                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
-                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['a'], coordinatesList[i]['g']), 3)
-
-            } 
-
-            D2 = {
-                'element': 'D2',
-                'node_i': coordinatesList[i]['g'],
-                'node_j': coordinatesList[i]['d'],
-                'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['d']),3),
-                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
-                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
-                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
-                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['d']), 3)
-
-            } 
-
-            D3 = {
-                'element': 'D3',
-                'node_i': coordinatesList[i]['g'],
-                'node_j': coordinatesList[i]['b'],
-                'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['b']),3),
-                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
-                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
-                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
-                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['b']), 3)
-            } 
-
-            D4 = {
-                'element': 'D4',
-                'node_i': coordinatesList[i]['g'],
-                'node_j': coordinatesList[i]['c'],
-                'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['c']),3),
-                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
-                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
-                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
-                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['c']), 3)
-            } 
-
-            C1 = {
-                'element': 'C1',
-                'node_i': coordinatesList[i]['g'],
-                'node_j': coordinatesList[i]['e'],
-                'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']),3),
-                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
-                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
-                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
-                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['e']), 3)
-            } 
-
-            C2 = {
-                'element': 'C2',
-                'node_i': coordinatesList[i]['g'],
-                'node_j': coordinatesList[i]['f'],
-                'lenght': round(self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['f']),3),
-                'secction_type': self.DEFAULT_ELEMENT_PROPERTIES["secction_type"],
-                'cross_area':  self.DEFAULT_ELEMENT_PROPERTIES["cross_area"],
-                'projected_width': self.DEFAULT_ELEMENT_PROPERTIES["projected_width"],
-                'projected_area': round(self.DEFAULT_ELEMENT_PROPERTIES["projected_width"]*self.elementLength(coordinatesList[i]['g'], coordinatesList[i]['f']), 3)
-            }
-
-            secctionElements = {
-                'section': coordinatesList[i]['section'],
-                'elements': [M1, M2, M3, M4, D1, D2, D3, D4, C1, C2]
-            } 
-
-            elementList.append(secctionElements)
+            elementList.append({
+                "section": coordinatesList[i]["section"],
+                "elements": elements
+            })
 
         return elementList
+
     
     def elementLength (self, node_i, node_j):
 
