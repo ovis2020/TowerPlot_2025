@@ -36,13 +36,11 @@ class Section:
         return self.DEFAULT_ELEMENT_PROPERTIES
 
     def getCoordinates(self):
-        
         baseWidth = self.towerData["tower_base_width"]
         topWidth = self.towerData["top_width"]
         totalHeight = self.towerData["height"]
         variableSegments = self.towerData["variable_segments"]
         constantSegments = self.towerData["constant_segments"]
-
 
         segmentHeight = totalHeight / (variableSegments + constantSegments)
         taperDelta = (baseWidth - topWidth) / 2
@@ -50,7 +48,7 @@ class Section:
 
         currentBase = baseWidth
         coordinatesList = []
-        secction_init_x = 0.0 
+        secction_init_x = 0.0
         secction_init_y = 0.0
 
         for i in range(variableSegments):
@@ -84,9 +82,9 @@ class Section:
                 'b': [round(currentBase + secction_init_x, 3), round(0.0 + secction_init_y, 3)],
                 'c': [round(secction_init_x, 3), round(segmentHeight + secction_init_y, 3)],
                 'd': [round(currentBase + secction_init_x, 3), round(segmentHeight + secction_init_y, 3)],
-                'e': [round(secction_init_x, 3), round((segmentHeight/2) + secction_init_y, 3)],
-                'f': [round(currentBase + secction_init_x, 3), round((segmentHeight/2) + secction_init_y, 3)],
-                'g': [round((currentBase / 2) + secction_init_x, 3), round((segmentHeight/2) + secction_init_y, 3)],
+                'e': [round(secction_init_x, 3), round((segmentHeight / 2) + secction_init_y, 3)],
+                'f': [round(currentBase + secction_init_x, 3), round((segmentHeight / 2) + secction_init_y, 3)],
+                'g': [round((currentBase / 2) + secction_init_x, 3), round((segmentHeight / 2) + secction_init_y, 3)],
             }
 
             coordinatesList.append(localCoords)
@@ -100,10 +98,11 @@ class Section:
 
         for i, coords in enumerate(coordinatesList):
             sectionNumber = str(coords["section"])
-            assignedElements = self.elementSections.get(sectionNumber, {})
+            assignedGroup = self.elementSections.get(sectionNumber, {})
 
             def buildElement(name, node_i, node_j):
-                assigned = assignedElements.get(name)
+                group = name[0]  # M, D, or C
+                assigned = assignedGroup.get(group)
                 if assigned:
                     sectionType = "round" if assigned.startswith("RD") else "angular"
                     props = self.getSectionProps(sectionType, assigned)

@@ -221,24 +221,27 @@ def calculate_segments_from_json(tower_id):
     
     
 @app.route("/api/calculate/section/<tower_id>", methods=["POST"])
-
 def calculate_section_and_save(tower_id):
     try:
-        payload = request.json
-        tower_data = payload.get("towerData")  # ✅ pull from nested key
-        element_sections = payload.get("elementSections")  # 🧩 if needed later
+        payload = request.get_json()
+        print("📦 Received Payload:", payload)
 
-        if not tower_data:
+        # Expecting nested towerData and elementSections
+        rawTowerData = payload.get("towerData")
+        if not rawTowerData:
             return jsonify({"error": "Missing towerData"}), 400
 
-        towerData = normalizeTowerDataKeys(tower_data)
+        towerData = normalizeTowerDataKeys(rawTowerData)
+        print("🧾 Normalized towerData:", towerData)
 
+        # Generate geometry (no section assignment at this stage)
         section = Section(towerData)
         result = {
             "coordinates": section.getCoordinates(),
             "elements": section.getElements()
         }
 
+        # Upload to GCS
         file_name = f"sections/tower_sections_{tower_id}.json"
         file_url = upload_json_to_gcs(file_name, result)
 
@@ -250,7 +253,7 @@ def calculate_section_and_save(tower_id):
         })
 
     except Exception as e:
-        print(f"❌ Error in /api/calculate/section/{tower_id}: {str(e)}")
+        print("❌ Error in /api/calculate/section/<tower_id>:", str(e))
         return jsonify({"error": str(e)}), 500
 
 
@@ -275,10 +278,18 @@ def calculate_section_from_json():
 @app.route("/api/sections/library", methods=["GET"])
 def get_section_library():
     try:
+        print("📦 Request received: /api/sections/library")
+        print("🪵 Trying to fetch 'sections/element_sections/section_library.json' from GCS...")
+
         data = download_json_from_gcs("sections/element_sections/section_library.json")
+
+        print("✅ Successfully loaded section library from GCS")
         return jsonify(data)
     except Exception as e:
+        print("❌ Failed to load section library:", str(e))
         return jsonify({"error": str(e)}), 500
+
+
 
 
 @app.route('/api/sections/generate', methods=['POST'])

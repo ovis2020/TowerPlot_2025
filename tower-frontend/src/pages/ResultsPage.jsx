@@ -35,18 +35,19 @@ const ResultsPage = () => {
 
   useEffect(() => {
     if (sectionData?.data?.coordinates) {
-      const init = {};
-      sectionData.data.coordinates.forEach((coord) => {
-        const sec = coord.section.toString();
-        init[sec] = {
-          M1: "", M2: "", M3: "", M4: "",
-          D1: "", D2: "", D3: "", D4: "",
-          C1: "", C2: ""
-        };
+      setElementSections((prev) => {
+        const updated = { ...prev };
+        sectionData.data.coordinates.forEach((coord) => {
+          const sec = coord.section.toString();
+          if (!updated[sec]) {
+            updated[sec] = { M: "", D: "", C: "" };
+          }
+        });
+        return updated;
       });
-      setElementSections(init);
     }
   }, [sectionData]);
+  
 
   const handleRecalculate = async () => {
     try {
@@ -145,15 +146,17 @@ const ResultsPage = () => {
             return (
               <div key={sec} className="bg-neutral-800 p-4 mb-4 rounded">
                 <h4 className="font-bold text-white mb-2">Section {sec}</h4>
-                {Object.keys(elementSections?.[sec] || {}).map((el) => (
-                  <div key={el} className="flex items-center mb-2">
-                    <label className="w-12 text-white">{el}</label>
+                {["M", "D", "C"].map((group) => (
+                  <div key={group} className="flex items-center mb-2">
+                    <label className="w-24 text-white">
+                      {group === "M" ? "Legs (M)" : group === "D" ? "Diagonals (D)" : "Horizontals (C)"}
+                    </label>
                     <select
                       className="flex-1 bg-gray-700 text-white rounded px-2 py-1"
-                      value={elementSections[sec][el]}
+                      value={elementSections[sec]?.[group] || ""}
                       onChange={(e) => {
                         const updated = { ...elementSections };
-                        updated[sec][el] = e.target.value;
+                        updated[sec] = { ...updated[sec], [group]: e.target.value };
                         setElementSections(updated);
                       }}
                     >
@@ -161,18 +164,14 @@ const ResultsPage = () => {
                       {sectionLibrary?.round?.length > 0 && (
                         <optgroup label="Round">
                           {sectionLibrary.round.map((opt) => (
-                            <option key={opt.name} value={opt.name}>
-                              {opt.name}
-                            </option>
+                            <option key={opt.name} value={opt.name}>{opt.name}</option>
                           ))}
                         </optgroup>
                       )}
                       {sectionLibrary?.angular?.length > 0 && (
                         <optgroup label="Angular">
                           {sectionLibrary.angular.map((opt) => (
-                            <option key={opt.name} value={opt.name}>
-                              {opt.name}
-                            </option>
+                            <option key={opt.name} value={opt.name}>{opt.name}</option>
                           ))}
                         </optgroup>
                       )}
