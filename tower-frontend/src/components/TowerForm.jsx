@@ -18,7 +18,6 @@ const TowerForm = () => {
 
   const navigate = useNavigate();
 
-  // ✅ Dynamically update tower_id based on height
   useEffect(() => {
     if (formData.height) {
       setFormData((prev) => ({
@@ -38,10 +37,9 @@ const TowerForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("📤 Submitting tower data:", formData);
 
     try {
-      // Step 1: Upload base data
+      // Upload base data
       const towerRes = await fetch("http://127.0.0.1:5000/api/towers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -55,18 +53,22 @@ const TowerForm = () => {
         return;
       }
 
-      // Step 2: Calculate section geometry
+      // Generate section geometry
       const sectionRes = await fetch(
         `http://127.0.0.1:5000/api/calculate/section/${formData.tower_id}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            "Tower Base Width": parseFloat(formData.tower_base_width),
-            "Top Width": parseFloat(formData.top_width),
-            "Height": parseFloat(formData.height),
-            "Variable Segments": parseInt(formData.variable_segments),
-            "Constant Segments": parseInt(formData.constant_segments)
+            towerData: {
+              "Tower Base Width": parseFloat(formData.tower_base_width),
+              "Top Width": parseFloat(formData.top_width),
+              "Height": parseFloat(formData.height),
+              "Variable Segments": parseInt(formData.variable_segments),
+              "Constant Segments": parseInt(formData.constant_segments),
+              "Cross Section": formData.cross_section
+            },
+            elementSections: {}
           })
         }
       );
@@ -78,13 +80,9 @@ const TowerForm = () => {
         return;
       }
 
-      console.log("✅ Navigating with state:", {
-        towerData: formData,
-        sectionData: sectionResult
-      });
-      
+      localStorage.setItem("towerData", JSON.stringify(formData));
+      localStorage.setItem("sectionData", JSON.stringify(sectionResult));
 
-      // Step 3: Navigate to /results with tower + section data
       navigate("/results", {
         state: {
           towerData: formData,

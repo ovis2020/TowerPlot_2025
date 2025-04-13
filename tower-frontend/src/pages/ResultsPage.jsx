@@ -7,29 +7,32 @@ import "../results.css";
 const ResultsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { towerData, sectionData: initialSectionData } = location.state || {};
+
+  const storedTowerData = JSON.parse(localStorage.getItem("towerData"));
+  const storedSectionData = JSON.parse(localStorage.getItem("sectionData"));
+
+  const { towerData: navTowerData, sectionData: navSectionData } = location.state || {};
+  const towerData = navTowerData || storedTowerData;
+  const initialSectionData = navSectionData || storedSectionData;
 
   const [activeTab, setActiveTab] = useState("tower");
   const [sectionData, setSectionData] = useState(initialSectionData || {});
   const [elementSections, setElementSections] = useState({});
   const [sectionLibrary, setSectionLibrary] = useState({ round: [], angular: [] });
 
-  // Load section profile library from backend
   useEffect(() => {
     axios
       .get("/api/sections/library")
       .then((res) => {
-        console.log("📦 Section Library:", res.data);  // <-- You must see this!
+        console.log("📦 Section Library:", res.data);
         setSectionLibrary(res.data);
       })
       .catch((err) => {
-        console.error("❌ Failed to load section library:", err);  // <-- Or this!
+        console.error("❌ Failed to load section library:", err);
         setSectionLibrary({ round: [], angular: [] });
       });
   }, []);
-  
 
-  // Initialize dropdown state for each section and element
   useEffect(() => {
     if (sectionData?.data?.coordinates) {
       const init = {};
@@ -45,7 +48,6 @@ const ResultsPage = () => {
     }
   }, [sectionData]);
 
-  // Handle recalculation with assigned section profiles
   const handleRecalculate = async () => {
     try {
       const res = await axios.post("/api/sections/generate", {
@@ -61,6 +63,33 @@ const ResultsPage = () => {
     } catch (err) {
       console.error("❌ Failed to recalculate:", err);
       alert("❌ Error while recalculating section.");
+    }
+  };
+
+  const handleSaveFinalSection = async () => {
+    console.log("🧠 towerData at save time:", towerData);
+
+    if (!towerData) {
+      alert("⚠️ towerData is missing. Cannot save.");
+      return;
+    }
+
+    console.log("📦 Sending to backend:", {
+      towerData,
+      elementSections
+    });
+
+    try {
+      const res = await axios.post(`/api/calculate/section/${towerData.tower_id}`, {
+        towerData,
+        elementSections
+      });
+
+      alert("✅ Final section saved to cloud storage.");
+      console.log("🗂️ Saved:", res.data.url);
+    } catch (err) {
+      console.error("❌ Failed to save section:", err);
+      alert(err.response?.data?.error || "❌ Error saving section");
     }
   };
 
@@ -109,7 +138,6 @@ const ResultsPage = () => {
       </div>
 
       <div className="results-columns">
-        {/* Left: Dropdown UI */}
         <div className="dropdown-box">
           <h2 className="text-xl font-semibold mb-4">🧰 Define Element Sections</h2>
           {sectionData.data?.coordinates?.map((coord) => {
@@ -155,16 +183,21 @@ const ResultsPage = () => {
             );
           })}
 
-          {/* Recalculate button */}
           <button
             onClick={handleRecalculate}
             className="w-full mt-4 px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded"
           >
             🔄 Recalculate Section with Assigned Elements
           </button>
+
+          <button
+            onClick={handleSaveFinalSection}
+            className="w-full mt-4 px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded"
+          >
+            💾 Save Final JSON to Cloud
+          </button>
         </div>
 
-        {/* Center: Tower Plot */}
         <div className="plot-box">
           <h2 className="text-xl font-semibold mb-2">📊 Tower Plot</h2>
           <div className="plot-container">
@@ -179,7 +212,6 @@ const ResultsPage = () => {
           </div>
         </div>
 
-        {/* Right: JSON */}
         <div className="panel-box">
           <h2 className="text-xl font-semibold mb-2">{jsonData.title}</h2>
           <pre className="json-preview">

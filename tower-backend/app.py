@@ -219,10 +219,18 @@ def calculate_segments_from_json(tower_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
+    
 @app.route("/api/calculate/section/<tower_id>", methods=["POST"])
+
 def calculate_section_and_save(tower_id):
     try:
-        tower_data = request.json
+        payload = request.json
+        tower_data = payload.get("towerData")  # ✅ pull from nested key
+        element_sections = payload.get("elementSections")  # 🧩 if needed later
+
+        if not tower_data:
+            return jsonify({"error": "Missing towerData"}), 400
+
         towerData = normalizeTowerDataKeys(tower_data)
 
         section = Section(towerData)
@@ -242,7 +250,9 @@ def calculate_section_and_save(tower_id):
         })
 
     except Exception as e:
+        print(f"❌ Error in /api/calculate/section/{tower_id}: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
 
 
 @app.route("/api/calculate/section-json", methods=["POST"])
