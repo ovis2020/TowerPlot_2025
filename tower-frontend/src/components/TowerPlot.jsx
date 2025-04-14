@@ -1,74 +1,83 @@
-import React, { useRef } from "react";
-import Plot from "react-plotly.js";
+import React, { memo, useRef, useEffect } from 'react'
+import { Canvas } from '@react-three/fiber'
+import { Grid, OrbitControls, Environment, GizmoHelper, GizmoViewport } from '@react-three/drei'
+import { useControls } from 'leva'
+import * as THREE from 'three'
 
-const TowerPlot = ({ coordinates, elements }) => {
-  const plotRef = useRef(null);
+const TowerPlot = ({ coordinates = [], elements = [] }) => {
+  const { gridSize, lineThickness, ...gridConfig } = useControls({
+    gridSize: [10.5, 10.5],
+    sectionSize: { value: 3.3, min: 0, max: 10, step: 0.1 },
+    sectionThickness: { value: 1.5, min: 0, max: 5, step: 0.1 },
+    sectionColor: '#575d9b',
+    lineThickness: { value: 4, min: 1, max: 10, step: 1 },
+    fadeDistance: { value: 25, min: 0, max: 100, step: 1 },
+    fadeStrength: { value: 1, min: 0, max: 1, step: 0.1 },
+    followCamera: false,
+    infiniteGrid: true
+  })
 
-  if (!coordinates || !elements) return null;
+  const cameraRef = useRef()
 
-  // Extract node points
-  const nodeSet = new Set();
-  coordinates.forEach((coord) => {
-    Object.values(coord).forEach((pt) => {
-      if (Array.isArray(pt)) nodeSet.add(pt.toString());
-    });
-  });
-
-  const nodes = Array.from(nodeSet).map((pt) => pt.split(",").map(Number));
-  const xNodes = nodes.map((n) => n[0]);
-  const yNodes = nodes.map((n) => n[1]);
-
-  // Plot lines
-  const lineTraces = elements.map((section, i) => {
-    const color = i % 2 === 0 ? "red" : "white";
-    return section.elements.map((el) => ({
-      x: [el.node_i[0], el.node_j[0]],
-      y: [el.node_i[1], el.node_j[1]],
-      mode: "lines",
-      line: { color, width: 2 },
-      type: "scatter",
-      showlegend: false
-    }));
-  }).flat();
-
-  const nodeTrace = {
-    x: xNodes,
-    y: yNodes,
-    mode: "markers",
-    marker: { color: "red", size: 6 },
-    type: "scatter",
-    showlegend: false
-  };
-
-  const layout = {
-    autosize: true,
-    margin: { l: 10, r: 10, t: 10, b: 10 },
-    plot_bgcolor: "#000000",
-    paper_bgcolor: "#000000",
-    xaxis: {
-      showgrid: true,
-      gridcolor: "#413f3a",
-      dtick: 1
-    },
-    yaxis: {
-      showgrid: true,
-      gridcolor: "#413f3a",
-      dtick: 1,
-      scaleanchor: "x",
-      scaleratio: 1
+  useEffect(() => {
+    if (cameraRef.current) {
+      cameraRef.current.position.set(0, 0, 40)
+      cameraRef.current.lookAt(0, 0, 0)
     }
-  };
+  }, [])
 
   return (
-    <Plot
-      ref={plotRef}
-      data={[...lineTraces, nodeTrace]}
-      layout={layout}
-      useResizeHandler={true}
-      style={{ width: "100%", height: "100%" }}
-      config={{ responsive: true }}
-    />
-  );
-};
+    <Canvas shadows camera={{ position: [0, 0, 40], fov: 25 }} style={{ height: '100%', width: '100%' }}>
+      <Grid
+        position={[0, 0, -1]}
+        args={gridSize}
+        sectionSize={gridConfig.sectionSize}
+        sectionThickness={gridConfig.sectionThickness}
+        sectionColor={gridConfig.sectionColor}
+        fadeDistance={gridConfig.fadeDistance}
+        fadeStrength={gridConfig.fadeStrength}
+        followCamera={gridConfig.followCamera}
+        infiniteGrid={gridConfig.infiniteGrid}
+        renderOrder={0}
+      />
 
-export default TowerPlot;
+      <group position={[0, 0, 0]}>
+        {elements.map((section, idx) => (
+          <group key={`section-${idx}`}>
+            {section.elements.map((el, i) => {
+              const geometry = new THREE.BufferGeometry().setFromPoints([
+                new THREE.Vector3(el.node_i[0], 0, -el.node_i[1]),
+                new THREE.Vector3(el.node_j[0], 0, -el.node_j[1])
+              ])
+              const color = idx % 2 === 0 ? '#ff0000' : '#ffffff'
+              return (
+                <line key={`el-${i}`} geometry={geometry} renderOrder={2}>
+                  <lineBasicMaterial attach="material" color={color} linewidth={lineThickness} depthTest={false} />
+                </line>
+              )
+            })}
+          </group>
+        ))}
+
+        {coordinates.map((coord, index) => (
+          Object.entries(coord).map(([key, val]) => (
+            Array.isArray(val) ? (
+              <mesh key={`${index}-${key}`} position={[val[0], 0, -val[1]]} renderOrder={3}>
+                <sphereGeometry args={[0.08, 8, 8]} />
+                <meshStandardMaterial color="red" depthTest={false} />
+              </mesh>
+            ) : null
+          ))
+        ))}
+      </group>
+
+      <OrbitControls makeDefault enableRotate={false} enableZoom={true} enablePan={true} target={[0, 0, 0]} />
+      <Environment preset="city" />
+      <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
+        <GizmoViewport axisColors={['#9d4b4b', '#2f7f4f', '#3b5b9d']} labelColor="white" />
+      </GizmoHelper>
+    </Canvas>
+  )
+}
+
+export default memo(TowerPlot)
