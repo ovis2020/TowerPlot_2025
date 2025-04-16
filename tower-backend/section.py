@@ -71,8 +71,8 @@ class Section:
 
             coordinatesList.append(localCoords)
             currentBase -= segmentDelta * 2
-            secction_init_x += round(segmentDelta, 3)
-            secction_init_y += round(segmentHeight, 3)
+            secction_init_x += segmentDelta
+            secction_init_y += segmentHeight
 
         for i in range(constantSegments):
             sectionNumber += 1

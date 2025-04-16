@@ -1,10 +1,12 @@
-import React, { memo, useRef, useEffect } from 'react'
+import React, { memo, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Grid, OrbitControls, Environment, GizmoHelper, GizmoViewport } from '@react-three/drei'
+import { Grid, OrbitControls, Environment, GizmoHelper, GizmoViewport, Html } from '@react-three/drei'
 import { useControls } from 'leva'
 import * as THREE from 'three'
 
 const TowerPlot = ({ coordinates = [], elements = [] }) => {
+  const [selectedNode, setSelectedNode] = useState(null)
+
   const { gridSize, lineThickness, ...gridConfig } = useControls({
     gridSize: [10.5, 10.5],
     sectionSize: { value: 3.3, min: 0, max: 10, step: 0.1 },
@@ -17,17 +19,16 @@ const TowerPlot = ({ coordinates = [], elements = [] }) => {
     infiniteGrid: true
   })
 
-  const cameraRef = useRef()
-
-  useEffect(() => {
-    if (cameraRef.current) {
-      cameraRef.current.position.set(0, 0, 40)
-      cameraRef.current.lookAt(0, 0, 0)
-    }
-  }, [])
-
   return (
-    <Canvas shadows camera={{ position: [0, 0, 40], fov: 25 }} style={{ height: '100%', width: '100%' }}>
+    <Canvas
+      shadows
+      camera={{ position: [0, 40, 0], fov: 25 }}
+      style={{ height: '100%', width: '100%' }}
+      onCreated={({ camera }) => {
+        camera.up.set(0, 0, 1)
+        camera.lookAt(0, 0, 0)
+      }}
+    >
       <Grid
         position={[0, 0, -1]}
         args={gridSize}
@@ -41,7 +42,7 @@ const TowerPlot = ({ coordinates = [], elements = [] }) => {
         renderOrder={0}
       />
 
-      <group position={[0, 0, 0]}>
+      <group position={[0, 0, 0]} rotation={[0, Math.PI, 0]}>
         {elements.map((section, idx) => (
           <group key={`section-${idx}`}>
             {section.elements.map((el, i) => {
@@ -59,16 +60,35 @@ const TowerPlot = ({ coordinates = [], elements = [] }) => {
           </group>
         ))}
 
-        {coordinates.map((coord, index) => (
-          Object.entries(coord).map(([key, val]) => (
+        {coordinates.map((coord, index) =>
+          Object.entries(coord).map(([key, val]) =>
             Array.isArray(val) ? (
-              <mesh key={`${index}-${key}`} position={[val[0], 0, -val[1]]} renderOrder={3}>
-                <sphereGeometry args={[0.08, 8, 8]} />
-                <meshStandardMaterial color="red" depthTest={false} />
-              </mesh>
+              <mesh
+              key={`${index}-${key}`}
+              position={[val[0], 0, -val[1]]}
+              renderOrder={3}
+              onClick={(e) => {
+                e.stopPropagation()
+                if (selectedNode?.x === val[0] && selectedNode?.y === -val[1]) {
+                  setSelectedNode(null)
+                } else {
+                  setSelectedNode({ x: val[0], y: -val[1], key })
+                }
+              }}
+            >
+              <sphereGeometry args={[0.08, 8, 8]} />
+              <meshStandardMaterial color="red" depthTest={false} />
+
+              {selectedNode?.x === val[0] && selectedNode?.y === -val[1] && (
+                <Html distanceFactor={10} style={{ pointerEvents: 'none', color: 'white', fontSize: '12px' }}>
+                  {selectedNode.key} ({selectedNode.x.toFixed(2)}, {selectedNode.y.toFixed(2)})
+                </Html>
+              )}
+            </mesh>
+
             ) : null
-          ))
-        ))}
+          )
+        )}
       </group>
 
       <OrbitControls makeDefault enableRotate={false} enableZoom={true} enablePan={true} target={[0, 0, 0]} />
