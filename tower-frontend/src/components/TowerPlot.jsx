@@ -2,6 +2,7 @@ import React, { memo, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Grid, OrbitControls, Environment, GizmoHelper, GizmoViewport, Html } from '@react-three/drei'
 import { useControls } from 'leva'
+import { Text } from '@react-three/drei'
 import * as THREE from 'three'
 
 const TowerPlot = ({ coordinates = [], elements = [] }) => {
@@ -22,15 +23,12 @@ const TowerPlot = ({ coordinates = [], elements = [] }) => {
   return (
     <Canvas
       shadows
-      camera={{ position: [0, 40, 0], fov: 25 }}
+      camera={{ position: [0, 40, 40], fov: 25 }}
       style={{ height: '100%', width: '100%' }}
-      onCreated={({ camera }) => {
-        camera.up.set(0, 0, 1)
-        camera.lookAt(0, 0, 0)
-      }}
     >
       <Grid
-        position={[0, 0, -1]}
+        position={[0, 0, 0]}
+        rotation={[0, 0, 0]} // Rotate from XY to XZ
         args={gridSize}
         sectionSize={gridConfig.sectionSize}
         sectionThickness={gridConfig.sectionThickness}
@@ -38,17 +36,30 @@ const TowerPlot = ({ coordinates = [], elements = [] }) => {
         fadeDistance={gridConfig.fadeDistance}
         fadeStrength={gridConfig.fadeStrength}
         followCamera={gridConfig.followCamera}
-        infiniteGrid={gridConfig.infiniteGrid}
+        infiniteGrid={true} // 🔥 Force manual orientation
         renderOrder={0}
       />
 
-      <group position={[0, 0, 0]} rotation={[0, Math.PI, 0]}>
+      {/* Axis Labels */}
+      <Text position={[2, 0, 0]} fontSize={0.5} color="red">
+        X
+      </Text>
+      <Text position={[0, 2, 0]} fontSize={0.5} color="green">
+        Y
+      </Text>
+      <Text position={[0, 0, 2]} fontSize={0.5} color="blue">
+        Z
+      </Text>
+
+
+      <group position={[0, 0, 0]}>
+        {/* Tower Elements */}
         {elements.map((section, idx) => (
           <group key={`section-${idx}`}>
             {section.elements.map((el, i) => {
               const geometry = new THREE.BufferGeometry().setFromPoints([
-                new THREE.Vector3(el.node_i[0], 0, -el.node_i[1]),
-                new THREE.Vector3(el.node_j[0], 0, -el.node_j[1])
+                new THREE.Vector3(...el.node_i),
+                new THREE.Vector3(...el.node_j)
               ])
               const color = idx % 2 === 0 ? '#ff0000' : '#ffffff'
               return (
@@ -60,41 +71,59 @@ const TowerPlot = ({ coordinates = [], elements = [] }) => {
           </group>
         ))}
 
+        {/* Tower Nodes */}
         {coordinates.map((coord, index) =>
           Object.entries(coord).map(([key, val]) =>
             Array.isArray(val) ? (
               <mesh
-              key={`${index}-${key}`}
-              position={[val[0], 0, -val[1]]}
-              renderOrder={3}
-              onClick={(e) => {
-                e.stopPropagation()
-                if (selectedNode?.x === val[0] && selectedNode?.y === -val[1]) {
-                  setSelectedNode(null)
-                } else {
-                  setSelectedNode({ x: val[0], y: -val[1], key })
-                }
-              }}
-            >
-              <sphereGeometry args={[0.08, 8, 8]} />
-              <meshStandardMaterial color="red" depthTest={false} />
+                key={`${index}-${key}`}
+                position={[val[0], val[1], val[2]]}
+                renderOrder={3}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  if (
+                    selectedNode?.x === val[0] &&
+                    selectedNode?.y === val[1] &&
+                    selectedNode?.z === val[2]
+                  ) {
+                    setSelectedNode(null)
+                  } else {
+                    setSelectedNode({ x: val[0], y: val[1], z: val[2], key })
+                  }
+                }}
+              >
+                <sphereGeometry args={[0.08, 8, 8]} />
+                <meshStandardMaterial color="red" depthTest={false} />
 
-              {selectedNode?.x === val[0] && selectedNode?.y === -val[1] && (
-                <Html distanceFactor={10} style={{ pointerEvents: 'none', color: 'white', fontSize: '12px' }}>
-                  {selectedNode.key} ({selectedNode.x.toFixed(2)}, {selectedNode.y.toFixed(2)})
-                </Html>
-              )}
-            </mesh>
-
+                {selectedNode?.x === val[0] &&
+                  selectedNode?.y === val[1] &&
+                  selectedNode?.z === val[2] && (
+                    <Html
+                      distanceFactor={10}
+                      style={{ pointerEvents: 'none', color: 'white', fontSize: '12px' }}
+                    >
+                      {selectedNode.key} (
+                      {selectedNode.x.toFixed(2)}, {selectedNode.y.toFixed(2)}, {selectedNode.z.toFixed(2)})
+                    </Html>
+                  )}
+              </mesh>
             ) : null
           )
         )}
       </group>
 
-      <OrbitControls makeDefault enableRotate={false} enableZoom={true} enablePan={true} target={[0, 0, 0]} />
+      <OrbitControls
+        makeDefault
+        enableRotate={true}
+        enableZoom={true}
+        enablePan={true}
+        target={[0, 20, 0]}
+      />
+
       <Environment preset="city" />
+
       <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
-        <GizmoViewport axisColors={['#9d4b4b', '#2f7f4f', '#3b5b9d']} labelColor="white" />
+        <GizmoViewport axisColors={['#ff4d4d', '#4dff4d', '#4d4dff']} labelColor="white" />
       </GizmoHelper>
     </Canvas>
   )

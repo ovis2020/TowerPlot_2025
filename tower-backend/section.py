@@ -50,6 +50,7 @@ class Section:
         coordinatesList = []
         secction_init_x = 0.0
         secction_init_y = 0.0
+        secction_init_z = 0.0
 
         for i in range(variableSegments):
             sectionNumber = i + 1
@@ -60,31 +61,32 @@ class Section:
 
             localCoords = {
                 'section': sectionNumber,
-                'a': [round(0.0 + secction_init_x, 3), round(0.0 + secction_init_y, 3)],
-                'b': [round(currentBase + secction_init_x, 3), round(0.0 + secction_init_y, 3)],
-                'c': [round(segmentDelta + secction_init_x, 3), round(segmentHeight + secction_init_y, 3)],
-                'd': [round((currentBase - segmentDelta) + secction_init_x, 3), round(segmentHeight + secction_init_y, 3)],
-                'e': [round(deltaG + secction_init_x, 3), round(gHeight + secction_init_y, 3)],
-                'f': [round((currentBase - deltaG) + secction_init_x, 3), round(gHeight + secction_init_y, 3)],
-                'g': [round((currentBase / 2) + secction_init_x, 3), round(gHeight + secction_init_y, 3)],
+                'a': [round(0.0 + secction_init_x, 3), round(0.0 + secction_init_y, 3 ), round(secction_init_z, 3)],
+                'b': [round(currentBase + secction_init_x, 3), round(0.0 + secction_init_y, 3), round(secction_init_z, 3)],
+                'c': [round(segmentDelta + secction_init_x, 3), round(segmentHeight + secction_init_y, 3), round(segmentDelta + secction_init_z, 3)],
+                'd': [round((currentBase - segmentDelta) + secction_init_x, 3), round(segmentHeight + secction_init_y, 3),round(segmentDelta + secction_init_z, 3)],
+                'e': [round(deltaG + secction_init_x, 3), round(gHeight + secction_init_y, 3), round(deltaG + secction_init_z, 3)],
+                'f': [round((currentBase - deltaG) + secction_init_x, 3), round(gHeight + secction_init_y, 3), round(deltaG + secction_init_z, 3)],
+                'g': [round((currentBase / 2) + secction_init_x, 3), round(gHeight + secction_init_y, 3), round(deltaG + secction_init_z, 3)],
             }
 
             coordinatesList.append(localCoords)
             currentBase -= segmentDelta * 2
             secction_init_x += segmentDelta
             secction_init_y += segmentHeight
+            secction_init_z += segmentDelta
 
         for i in range(constantSegments):
             sectionNumber += 1
             localCoords = {
                 'section': sectionNumber,
-                'a': [round(0.0 + secction_init_x, 3), round(0.0 + secction_init_y, 3)],
-                'b': [round(currentBase + secction_init_x, 3), round(0.0 + secction_init_y, 3)],
-                'c': [round(secction_init_x, 3), round(segmentHeight + secction_init_y, 3)],
-                'd': [round(currentBase + secction_init_x, 3), round(segmentHeight + secction_init_y, 3)],
-                'e': [round(secction_init_x, 3), round((segmentHeight / 2) + secction_init_y, 3)],
-                'f': [round(currentBase + secction_init_x, 3), round((segmentHeight / 2) + secction_init_y, 3)],
-                'g': [round((currentBase / 2) + secction_init_x, 3), round((segmentHeight / 2) + secction_init_y, 3)],
+                'a': [round(0.0 + secction_init_x, 3), round(0.0 + secction_init_y, 3), round(secction_init_z, 3)],
+                'b': [round(currentBase + secction_init_x, 3), round(0.0 + secction_init_y, 3), round(secction_init_z, 3)],
+                'c': [round(secction_init_x, 3), round(segmentHeight + secction_init_y, 3),round(secction_init_z, 3)],
+                'd': [round(currentBase + secction_init_x, 3), round(segmentHeight + secction_init_y, 3),round(secction_init_z, 3)],
+                'e': [round(secction_init_x, 3), round((segmentHeight / 2) + secction_init_y, 3),round(secction_init_z, 3)],
+                'f': [round(currentBase + secction_init_x, 3), round((segmentHeight / 2) + secction_init_y, 3),round(secction_init_z, 3)],
+                'g': [round((currentBase / 2) + secction_init_x, 3), round((segmentHeight / 2) + secction_init_y, 3),round(secction_init_z, 3)],
             }
 
             coordinatesList.append(localCoords)
