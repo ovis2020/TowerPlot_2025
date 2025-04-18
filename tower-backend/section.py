@@ -53,7 +53,9 @@ class Section:
 
         segmentHeight = totalHeight / (variableSegments + constantSegments)
         taperDelta = (baseWidth - topWidth) / 2
-        alpha = np.arctan(taperDelta / (variableSegments * segmentHeight))
+        alpha  = np.arctan(taperDelta / (variableSegments * segmentHeight))
+        alphaZ = np.arctan( (np.cos(np.deg2rad(30)) * taperDelta )/ (variableSegments * segmentHeight) )
+
 
         currentBase = baseWidth
         coordinatesList = []
@@ -64,11 +66,15 @@ class Section:
         zinitial = np.sin(np.deg2rad(60))*baseWidth
 
         for i in range(variableSegments):
+
             sectionNumber = i + 1
             segmentDelta = np.tan(alpha) * segmentHeight
+            segmentDeltaZ = np.tan(alphaZ) * segmentHeight
+
             phi = np.arctan(segmentHeight / (currentBase - segmentDelta))
             gHeight = np.tan(phi) * (currentBase / 2)
             deltaG = gHeight * np.tan(alpha)
+            deltaGZ = gHeight * np.tan(alphaZ)
 
             localCoords = {
                 'section': sectionNumber,
@@ -80,8 +86,8 @@ class Section:
                 'f': [round((currentBase - deltaG) + secction_init_x, 3), round(gHeight + secction_init_y, 3), round(deltaG + secction_init_z, 3)],
                 'g': [round((currentBase / 2) + secction_init_x, 3), round(gHeight + secction_init_y, 3), round(deltaG + secction_init_z, 3)],
                 'h': [round((currentBase / 2) + secction_init_x, 3), round(0.0 + secction_init_y, 3), round(zinitial - secction_init_z, 3)],
-                'l': [round((currentBase / 2) + secction_init_x, 3), round(segmentHeight + secction_init_y, 3), round((zinitial - segmentDelta) - secction_init_z, 3)],
-                'm': [round((currentBase / 2) + secction_init_x, 3), round(gHeight + secction_init_y, 3), round((zinitial - deltaG) - secction_init_z, 3)],
+                'l': [round((currentBase / 2) + secction_init_x, 3), round(segmentHeight + secction_init_y, 3), round((zinitial - segmentDeltaZ) - secction_init_z, 3)],
+                'm': [round((currentBase / 2) + secction_init_x, 3), round(gHeight + secction_init_y, 3), round((zinitial - deltaGZ) - secction_init_z, 3)],
             }
 
             # ✅ Now calculate midpoints n and o
@@ -92,7 +98,7 @@ class Section:
             currentBase -= segmentDelta * 2
             secction_init_x += segmentDelta
             secction_init_y += segmentHeight
-            secction_init_z += segmentDelta
+            secction_init_z += segmentDeltaZ
 
 
         for i in range(constantSegments):

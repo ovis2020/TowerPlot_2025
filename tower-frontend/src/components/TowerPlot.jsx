@@ -7,6 +7,8 @@ import * as THREE from 'three'
 const TowerPlot = ({ coordinates = [], elements = [] }) => {
   const [selectedNode, setSelectedNode] = useState(null)
   const [hoveredElement, setHoveredElement] = useState(null)
+  const [selectedElement, setSelectedElement] = useState(null)
+
 
   const { gridSize, ...gridConfig } = useControls({
     gridSize: [10.5, 10.5],
@@ -21,7 +23,7 @@ const TowerPlot = ({ coordinates = [], elements = [] }) => {
   })
 
   const sphereRadius = 0.08
-  const cylinderRadius = sphereRadius / 5
+  const cylinderRadius = sphereRadius / 4.5
 
   return (
     <Canvas shadows camera={{ position: [0, 40, 40], fov: 25 }} style={{ height: '100%', width: '100%' }}>
@@ -75,8 +77,19 @@ const TowerPlot = ({ coordinates = [], elements = [] }) => {
                   renderOrder={2}
                   onPointerOver={() => setHoveredElement(`${idx}-${i}`)}
                   onPointerOut={() => setHoveredElement(null)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setSelectedElement({ key: `${idx}-${i}`, length, position })
+                  }}
+                  
                 >
+
                   <cylinderGeometry args={[cylinderRadius, cylinderRadius, length, 8]} />
+                  {selectedElement?.key === `${idx}-${i}` && (
+                    <Html distanceFactor={10} position={[0, 0, 0]} style={{ color: 'white', fontSize: '12px' }}>
+                      Length: {selectedElement.length.toFixed(3)} m
+                    </Html>
+                  )}
                   <meshStandardMaterial color={color} depthTest={false} />
                 </mesh>
               )
