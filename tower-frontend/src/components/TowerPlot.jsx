@@ -1,14 +1,14 @@
 import React, { memo, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Grid, OrbitControls, Environment, GizmoHelper, GizmoViewport, Html } from '@react-three/drei'
+import { Grid, OrbitControls, Environment, GizmoHelper, GizmoViewport, Html, Text } from '@react-three/drei'
 import { useControls } from 'leva'
-import { Text } from '@react-three/drei'
 import * as THREE from 'three'
 
 const TowerPlot = ({ coordinates = [], elements = [] }) => {
   const [selectedNode, setSelectedNode] = useState(null)
+  const [hoveredElement, setHoveredElement] = useState(null)
 
-  const { gridSize, lineThickness, ...gridConfig } = useControls({
+  const { gridSize, ...gridConfig } = useControls({
     gridSize: [10.5, 10.5],
     sectionSize: { value: 3.3, min: 0, max: 10, step: 0.1 },
     sectionThickness: { value: 1.5, min: 0, max: 5, step: 0.1 },
@@ -20,15 +20,14 @@ const TowerPlot = ({ coordinates = [], elements = [] }) => {
     infiniteGrid: true
   })
 
+  const sphereRadius = 0.08
+  const cylinderRadius = sphereRadius / 5
+
   return (
-    <Canvas
-      shadows
-      camera={{ position: [0, 40, 40], fov: 25 }}
-      style={{ height: '100%', width: '100%' }}
-    >
+    <Canvas shadows camera={{ position: [0, 40, 40], fov: 25 }} style={{ height: '100%', width: '100%' }}>
       <Grid
         position={[0, 0, 0]}
-        rotation={[0, 0, 0]} // Rotate from XY to XZ
+        rotation={[0, 0, 0]}
         args={gridSize}
         sectionSize={gridConfig.sectionSize}
         sectionThickness={gridConfig.sectionThickness}
@@ -36,42 +35,56 @@ const TowerPlot = ({ coordinates = [], elements = [] }) => {
         fadeDistance={gridConfig.fadeDistance}
         fadeStrength={gridConfig.fadeStrength}
         followCamera={gridConfig.followCamera}
-        infiniteGrid={true} // 🔥 Force manual orientation
+        infiniteGrid={true}
         renderOrder={0}
       />
 
       {/* Axis Labels */}
-      <Text position={[2, 0, 0]} fontSize={0.5} color="red">
-        X
-      </Text>
-      <Text position={[0, 2, 0]} fontSize={0.5} color="green">
-        Y
-      </Text>
-      <Text position={[0, 0, 2]} fontSize={0.5} color="blue">
-        Z
-      </Text>
-
+      <Text position={[2, 0, 0]} fontSize={0.5} color="red">X</Text>
+      <Text position={[0, 2, 0]} fontSize={0.5} color="green">Y</Text>
+      <Text position={[0, 0, 2]} fontSize={0.5} color="blue">Z</Text>
 
       <group position={[0, 0, 0]}>
-        {/* Tower Elements */}
+        {/* Tower Elements as cylinders */}
         {elements.map((section, idx) => (
           <group key={`section-${idx}`}>
             {section.elements.map((el, i) => {
-              const geometry = new THREE.BufferGeometry().setFromPoints([
-                new THREE.Vector3(...el.node_i),
-                new THREE.Vector3(...el.node_j)
-              ])
-              const color = idx % 2 === 0 ? '#ff0000' : '#ffffff'
+              const nodeStart = el.node_i
+              const nodeEnd = el.node_j
+
+              const startVec = new THREE.Vector3(...nodeStart)
+              const endVec = new THREE.Vector3(...nodeEnd)
+              const direction = new THREE.Vector3().subVectors(endVec, startVec)
+              const length = direction.length()
+              const position = new THREE.Vector3().addVectors(startVec, endVec).multiplyScalar(0.5)
+
+              const quaternion = new THREE.Quaternion()
+              quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.clone().normalize())
+
+              let color = idx % 2 === 0 ? '#ff0000' : '#ffffff' // 🔁 red/white alternation
+
+              if (hoveredElement === `${idx}-${i}`) {
+                color = '#00ffcc'
+              }
+
               return (
-                <line key={`el-${i}`} geometry={geometry} renderOrder={2}>
-                  <lineBasicMaterial attach="material" color={color} linewidth={lineThickness} depthTest={false} />
-                </line>
+                <mesh
+                  key={`el-${idx}-${i}`}
+                  position={position}
+                  quaternion={quaternion}
+                  renderOrder={2}
+                  onPointerOver={() => setHoveredElement(`${idx}-${i}`)}
+                  onPointerOut={() => setHoveredElement(null)}
+                >
+                  <cylinderGeometry args={[cylinderRadius, cylinderRadius, length, 8]} />
+                  <meshStandardMaterial color={color} depthTest={false} />
+                </mesh>
               )
             })}
           </group>
         ))}
 
-        {/* Tower Nodes */}
+        {/* Tower Nodes as spheres */}
         {coordinates.map((coord, index) =>
           Object.entries(coord).map(([key, val]) =>
             Array.isArray(val) ? (
@@ -92,20 +105,14 @@ const TowerPlot = ({ coordinates = [], elements = [] }) => {
                   }
                 }}
               >
-                <sphereGeometry args={[0.08, 8, 8]} />
+                <sphereGeometry args={[sphereRadius, 8, 8]} />
                 <meshStandardMaterial color="red" depthTest={false} />
-
-                {selectedNode?.x === val[0] &&
-                  selectedNode?.y === val[1] &&
-                  selectedNode?.z === val[2] && (
-                    <Html
-                      distanceFactor={10}
-                      style={{ pointerEvents: 'none', color: 'white', fontSize: '12px' }}
-                    >
-                      {selectedNode.key} (
-                      {selectedNode.x.toFixed(2)}, {selectedNode.y.toFixed(2)}, {selectedNode.z.toFixed(2)})
-                    </Html>
-                  )}
+                {selectedNode?.x === val[0] && selectedNode?.y === val[1] && selectedNode?.z === val[2] && (
+                  <Html distanceFactor={10} style={{ pointerEvents: 'none', color: 'white', fontSize: '12px' }}>
+                    {selectedNode.key} (
+                    {selectedNode.x.toFixed(2)}, {selectedNode.y.toFixed(2)}, {selectedNode.z.toFixed(2)})
+                  </Html>
+                )}
               </mesh>
             ) : null
           )
